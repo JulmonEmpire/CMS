@@ -9,6 +9,9 @@ import Patients from "./pages/Patients";
 import Users from "./pages/Users";
 import UsersList from "./components/Users/UsersList";
 import AddUser from "./components/Users/AddUser";
+import PatientDetail from "./components/Patients/PatientDetail";
+import MedicalAid from "./components/Patients/MedicalAid";
+import PatientContact from "./components/Patients/PatientContact";
 
 function App() {
   return (
@@ -19,7 +22,11 @@ function App() {
           <Route path="dashboard" element={<Layout><Dashboard /></Layout>}></Route>
           <Route path="patients" element={<Layout><Patients /></Layout>}>
             <Route index element={<PatientsList />}></Route>
-            <Route end path="add-patient" element={<AddPatient />}></Route>
+            <Route end path="add-patient" element={<AddPatient />}>
+              <Route index element={<PatientDetail/>}></Route>
+              <Route path="medical-aid" element={<MedicalAid/>}></Route>
+              <Route path="contact" element={<PatientContact/>}></Route>
+            </Route>
           </Route>
           <Route path="users" element={<Layout><Users /></Layout>}>
             <Route index element={<UsersList />}></Route>

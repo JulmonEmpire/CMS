@@ -3,18 +3,18 @@ import { CgDetailsMore } from "react-icons/cg"
 import { useNavigate } from 'react-router-dom';
 
 export default function PatientDetail() {
-  const formRef=useRef();
-  const navigate=useNavigate();
+  const formRef = useRef();
+  const navigate = useNavigate();
 
-    const formSubmitHandler=async (e)=>{
-      e.preventDefault();
-      navigate("/home/patients/add-patient/medical-aid")
-    } 
+  const formSubmitHandler = async (e) => {
+    e.preventDefault();
+    navigate("/home/patients/add-patient/medical-aid")
+  }
 
   return (
     <div className='pt-8 px-4 h-full'>
       <div className='flex gap-4'>
-        <div className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] w-16 h-14 flex justify-center items-center shadow-md'>
+        <div className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] w-16 h-14 flex justify-center items-center shadow-md rounded-sm'>
           <CgDetailsMore className='text-white text-2xl' />
         </div>
         <h1 className='self-end mb-2 font-bold text-xl text-[#595659]'>PATIENT’S DETAILS</h1>
@@ -48,8 +48,7 @@ export default function PatientDetail() {
         <input className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Employer/School' type={"text"} />
         <input className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Marital Status' type={"text"} />
         <input className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Race' type={"text"} />
-
-        <button className='w-32 h-12 bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Next</button>
+        <button className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Next</button>
       </form>
     </div>
   )

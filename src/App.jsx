@@ -12,6 +12,7 @@ import AddUser from "./components/Users/AddUser";
 import PatientDetail from "./components/Patients/PatientDetail";
 import MedicalAid from "./components/Patients/MedicalAid";
 import PatientContact from "./components/Patients/PatientContact";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+
   )
 }
 

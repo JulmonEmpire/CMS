@@ -14,7 +14,7 @@ export default function MedicalAid() {
   return (
     <div className='pt-8 px-4 h-[87vh]'>
       <div className='flex gap-4'>
-        <div className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] w-16 h-14 flex justify-center items-center shadow-md'>
+        <div className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] w-16 h-14 flex justify-center items-center shadow-md rounded-sm'>
           <AiFillMedicineBox className='text-white text-2xl' />
         </div>
         <h1 className='self-end mb-2 font-bold text-xl text-[#595659]'>MEDICAL AID DETAILS</h1>
@@ -36,7 +36,7 @@ export default function MedicalAid() {
         </select>
         <div className='flex gap-4 mt-2'>
           <button onClick={()=> navigate(-1)} className='w-32 h-12 border-2 border-[#AE89A5] text-xl text-[#AE89A5] hover:bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:text-white'>Back</button>
-          <button className='w-32 h-12 bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Next</button>
+          <button className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Next</button>
         </div>
       </form>
     </div>

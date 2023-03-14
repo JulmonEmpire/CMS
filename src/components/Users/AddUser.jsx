@@ -31,12 +31,10 @@ export default function AddUser() {
     },
     onSuccess: () => {
       toast.success("User created successfully");
-      console.log("success");
       navigate('/home/users');
     },
     onError: () => {
       toast.error("Error creating user");
-      console.log("error");
     }
   });
 
@@ -49,6 +47,8 @@ export default function AddUser() {
       password: formRef.current.password.value,
       location: formRef.current.location.value,
       role: formRef.current.role.value,
+      isBlocked:false,
+      firstPasswordChange:false,
     }
 
     console.log(data);

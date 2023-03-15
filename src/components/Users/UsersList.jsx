@@ -12,17 +12,18 @@ export default function UsersList() {
     console.log(userQuery)
 
     querySnapshot.forEach((doc) => {
-      data.push(doc.data());
+      let usersdata = doc.data()
+      if (usersdata.role !== "Super User") {
+        data.push(usersdata);
+      }
     })
     return data;
   });
 
-  console.log(userQuery.data)
-
   return (
     <div>
       {userQuery.isLoading ? <img className='w-[50px] m-auto mt-10' src='/Loading.svg' /> :
-        <table className="table-auto w-full mt-8">
+        <table className="table-auto w-full mt-4">
           <thead className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] h-16'>
             <tr className='text-white text-left'>
               <th className='p-2'>First Name</th>
@@ -36,6 +37,9 @@ export default function UsersList() {
           </thead>
           <tbody>
             {userQuery?.data?.map((user, index) => {
+              if (user.role === "Super User") {
+                return
+              };
               return (
                 <UserTableRow key={user.uid} user={user} index={index} />
               )

@@ -13,6 +13,7 @@ import PatientDetail from "./components/Patients/PatientDetail";
 import MedicalAid from "./components/Patients/MedicalAid";
 import PatientContact from "./components/Patients/PatientContact";
 import { ToastContainer } from "react-toastify";
+import EditUser from "./components/Users/EditUser";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="users" element={<Layout><Users /></Layout>}>
             <Route index element={<UsersList />}></Route>
             <Route end path="add-users" element={<AddUser />}></Route>
+            <Route end path="edit-user" element={<EditUser />}></Route>
           </Route>
         </Route>
       </Routes>

@@ -3,13 +3,9 @@ import React, { useRef } from 'react'
 import { CgDetailsMore } from 'react-icons/cg';
 import { auth, db } from '../Utils/firebase';
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
 import { doc, setDoc } from "firebase/firestore";
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-
-
-
 
 export default function AddUser() {
   const formRef = useRef();
@@ -21,8 +17,6 @@ export default function AddUser() {
         .then(async (userCredentials) => {
           delete data.password;
           data.uid = userCredentials.user.uid
-          // const myCollection = collection(db, "users");
-          // await addDoc(myCollection, data, userCredentials.user.uid);
           await setDoc(doc(db, "users", userCredentials.user.uid), data);
         })
         .catch((error) => {
@@ -57,7 +51,7 @@ export default function AddUser() {
 
 
   return (
-    <div className='pt-8 px-4 h-full'>
+    <div className='pt-4 px-4 h-full'>
       <div className='flex gap-4'>
         <div className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] w-16 h-14 flex justify-center items-center shadow-md rounded-sm'>
           <CgDetailsMore className='text-white text-2xl' />

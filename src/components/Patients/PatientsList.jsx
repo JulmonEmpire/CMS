@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function PatientsList() {
   return (
-    <div>PatientsList</div>
+    <div className='mt-4'>PatientsList</div>
   )
 }

@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { MdContactEmergency } from 'react-icons/md';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { doc, setDoc } from "firebase/firestore";
@@ -12,6 +12,14 @@ export default function PatientContact() {
   const navigate = useNavigate();
 
   const location=useLocation();
+
+  const [formData, setFormData] = useState({});
+
+  useEffect(() => {
+    if (location.state && location.state.data) {
+      setFormData(location.state.data);
+    }
+  }, [location]);
 
   const addPatientMutation=useMutation({
     mutationFn:async (data)=>{
@@ -33,7 +41,7 @@ export default function PatientContact() {
   const formSubmitHandler = async (e) => {
     e.preventDefault();
     const data={
-      ...location.state.medicalAid,
+      ...location.state.data,
       emergencyFirstName:formRef.current.emergencyFirstName.value,
       emergencylastName:formRef.current.emergencylastName.value,
       emergencyrelationShipToPatient:formRef.current.emergencyrelationShipToPatient.value,
@@ -42,6 +50,19 @@ export default function PatientContact() {
       emergencyCellPhone:formRef.current.emergencyCellPhone.value,
     };
     addPatientMutation.mutate(data);
+  }
+
+  const backNavigationHandler = () => {
+    let data = {
+      ...location.state.data,
+      emergencyFirstName:formRef.current.emergencyFirstName.value,
+      emergencylastName:formRef.current.emergencylastName.value,
+      emergencyrelationShipToPatient:formRef.current.emergencyrelationShipToPatient.value,
+      emergencyHomePhone:formRef.current.emergencyHomePhone.value,
+      emergencyWorkPhone:formRef.current.emergencyWorkPhone.value,
+      emergencyCellPhone:formRef.current.emergencyCellPhone.value,
+    }
+    navigate("/home/patients/add-patient/medical-aid",{state:{data:data}})
   }
   return (
     <div className='pt-4 px-4 h-[87vh]'>
@@ -53,16 +74,16 @@ export default function PatientContact() {
       </div>
       <form onSubmit={formSubmitHandler} ref={formRef} className='py-8 flex flex-col gap-4 w-[60%] text-[#595659]'>
         <div className='flex gap-4'>
-          <input name="emergencyFirstName" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[50%]' placeholder='First Name' />
-          <input name="emergencylastName" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[50%]' placeholder='Last Name' />
+          <input defaultValue={formData.emergencyFirstName} name="emergencyFirstName" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[50%]' placeholder='First Name' />
+          <input defaultValue={formData.emergencylastName} name="emergencylastName" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[50%]' placeholder='Last Name' />
         </div>
-        <input name="emergencyrelationShipToPatient" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Relationship to Patient:' type={"text"} />
-        <input name="emergencyHomePhone" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Home Phone:' type={"number"} />
-        <input name="emergencyWorkPhone" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Work Phone:' type={"number"} />
-        <input name="emergencyCellPhone" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Cell Phone:' type={"number"} />
+        <input defaultValue={formData.emergencyrelationShipToPatient} name="emergencyrelationShipToPatient" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Relationship to Patient:' type={"text"} />
+        <input defaultValue={formData.emergencyHomePhone} name="emergencyHomePhone" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Home Phone:' type={"number"} />
+        <input defaultValue={formData.emergencyWorkPhone} name="emergencyWorkPhone" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Work Phone:' type={"number"} />
+        <input defaultValue={formData.emergencyCellPhone} name="emergencyCellPhone" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Cell Phone:' type={"number"} />
         <div className='flex gap-4 mt-2'>
-          <button onClick={() => navigate(-1,{state:{data:"location.state.medicalAid"}})} className='w-32 h-12 border-2 border-[#AE89A5] text-xl text-[#AE89A5] hover:bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:text-white'>Back</button>
-          <button className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Submit</button>
+          <button onClick={() => {backNavigationHandler()}} type="button" className='w-32 h-12 border-2 border-[#AE89A5] text-xl text-[#AE89A5] hover:bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:text-white'>Back</button>
+          <button type='submit' className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Submit</button>
         </div>
       </form>
     </div>

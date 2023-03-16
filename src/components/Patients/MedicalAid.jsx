@@ -49,7 +49,6 @@ export default function MedicalAid() {
     navigate("/home/patients/add-patient", { state: { data: data} })
   }
 
-
   return (
     <div className='pt-4 px-4 h-[87vh]'>
       <div className='flex gap-4'>
@@ -59,14 +58,14 @@ export default function MedicalAid() {
         <h1 className='self-end mb-2 font-bold text-xl text-[#595659]'>MEDICAL AID DETAILS</h1>
       </div>
       <form onSubmit={formSubmitHandler} ref={formRef} className='py-8 flex flex-col gap-4 w-[60%] text-[#595659]'>
-        <input defaultValue={formData.medicalAid} name="medicalAid" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Medical Aid' />
-        <input defaultValue={formData.medicalAidNo} name="medicalAidNo" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Medical Aid No' type={"number"} />
-        <input defaultValue={formData.groupNo} name="groupNo" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Group No' type={"number"} />
-        <input defaultValue={formData.effectiveDate} name="effectiveDate" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Effective Date' type={"number"} onFocus={(e) => { e.target.type = "date"; }} onBlur={(e) => { if (e.target.value === "") { e.target.type = "text" }; }} />
-        <input defaultValue={formData.accountHolder} name="accountHolder" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Account Holder' />
-        <input defaultValue={formData.birthDate} name="birthDate" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Birthdate' type={"number"} onFocus={(e) => { e.target.type = "date"; }} onBlur={(e) => { if (e.target.value === "") { e.target.type = "text" }; }} />
-        <input defaultValue={formData.idNo} name="idNo" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='ID No' />
-        <select defaultValue={formData.relationShipToPatient} name="relationShipToPatient" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
+        <input defaultValue={formData?.medicalAid} name="medicalAid" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Medical Aid' />
+        <input defaultValue={formData?.medicalAidNo} name="medicalAidNo" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Medical Aid No' type={"number"} />
+        <input defaultValue={formData?.groupNo} name="groupNo" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Group No' type={"number"} />
+        <input defaultValue={formData?.effectiveDate} name="effectiveDate" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Effective Date' type={"text"} onFocus={(e) => { e.target.type = "date"; }} onBlur={(e) => { if (e.target.value === "") { e.target.type = "text" }; }} />
+        <input defaultValue={formData?.accountHolder} name="accountHolder" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Account Holder' />
+        <input defaultValue={formData?.birthDate} name="birthDate" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Birth Date' type={"text"} onFocus={(e) => { e.target.type = "date"; }} onBlur={(e) => { if (e.target.value === "") { e.target.type = "text" }; }} />
+        <input defaultValue={formData?.idNo} name="idNo" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='ID No' />
+        <select defaultValue={location.state?.data?.relationShipToPatient} name="relationShipToPatient" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
           <option selected disabled value={null}>Relationship to Patient</option>
           <option value={"Self"}>Self</option>
           <option value={"Spouse"}>Spouse</option>

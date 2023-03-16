@@ -7,6 +7,7 @@ export default function PatientDetail() {
   const navigate = useNavigate();
   const location=useLocation();
   const [formData,setFormData]=useState({});
+  console.log("1",location.state)
 
   useEffect(() => {
     if (location.state && location.state.data) {
@@ -58,8 +59,8 @@ export default function PatientDetail() {
         <input defaultValue={formData?.hospital} name='hospital' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Hospital' />
         <input defaultValue={formData?.dateOfBirth} name='dateOfBirth' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Date of Birth' type={"text"} onFocus={(e) => { e.target.type = "date"; }} onBlur={(e) => { if (e.target.value === "") { e.target.type = "text" }; }} />
         <input defaultValue={formData?.idNumber} name='idNumber' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='ID Number' type={"number"} />
-        <select defaultValue={formData?.gender} name='gender' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
-          <option selected disabled value={null}>Gender</option>
+        <select defaultValue={location.state?.data?.gender} name='gender' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
+          <option selected disabled value={"null"}>Gender</option>
           <option value={"Male"}>Male</option>
           <option value={"Female"}>Female</option>
         </select>

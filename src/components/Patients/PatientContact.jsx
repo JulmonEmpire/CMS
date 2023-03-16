@@ -31,6 +31,7 @@ export default function PatientContact() {
     },
     onSuccess:()=>{
       toast.success("Patient Added");
+      navigate("/home/patients");
     },
     onError:(error)=>{
       toast.error("Error adding Patient");
@@ -82,8 +83,8 @@ export default function PatientContact() {
         <input defaultValue={formData.emergencyWorkPhone} name="emergencyWorkPhone" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Work Phone:' type={"number"} />
         <input defaultValue={formData.emergencyCellPhone} name="emergencyCellPhone" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Cell Phone:' type={"number"} />
         <div className='flex gap-4 mt-2'>
-          <button onClick={() => {backNavigationHandler()}} type="button" className='w-32 h-12 border-2 border-[#AE89A5] text-xl text-[#AE89A5] hover:bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:text-white'>Back</button>
-          <button type='submit' className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Submit</button>
+          <button onClick={(e) => {backNavigationHandler();e.stopPropagation()}} type="button" className='w-32 h-12 border-2 border-[#AE89A5] text-xl text-[#AE89A5] hover:bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:text-white'>Back</button>
+          <button disabled={addPatientMutation.isLoading?true:false} type='submit' className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>{addPatientMutation.isLoading?<img className='w-[30p] m-auto' src='/WhiteLoading.svg'/>:"Submit"}</button>
         </div>
       </form>
     </div>

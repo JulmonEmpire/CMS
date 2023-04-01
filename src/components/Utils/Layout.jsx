@@ -5,6 +5,9 @@ import { FaUserInjured } from "react-icons/fa"
 import { ImUser } from "react-icons/im"
 import { useQueryClient } from '@tanstack/react-query';
 import { BiLogOut } from "react-icons/bi"
+import { ImAidKit } from "react-icons/im"
+import { RiHospitalFill } from "react-icons/ri"
+import { FaUserMd } from "react-icons/fa"
 import { signOut } from "firebase/auth";
 import {auth} from "./firebase"
 
@@ -47,6 +50,18 @@ export default function Layout({ children }) {
               <ImUser className='text-2xl' />
               <li> Users</li>
             </NavLink>
+            <NavLink to={"/home/users"} className={({ isActive }) => isActive || location.pathname.includes("/home/users") ? 'bg-gradient-to-r from-[#6C526F] to-[#AE89A5] text-[#fff] flex items-center space-x-4 h-14 p-4 rounded-xl transition-all duration-500' : 'flex items-center space-x-4 h-14 p-4 rounded-xl text-[#595659] hover:text-[#6C526F] transition-all duration-500 hover:bg-[rgba(0,0,0,0.1)]'}>
+              <ImAidKit className='text-2xl' />
+              <li> Medical Aids</li>
+            </NavLink>
+            <NavLink to={"/home/users"} className={({ isActive }) => isActive || location.pathname.includes("/home/users") ? 'bg-gradient-to-r from-[#6C526F] to-[#AE89A5] text-[#fff] flex items-center space-x-4 h-14 p-4 rounded-xl transition-all duration-500' : 'flex items-center space-x-4 h-14 p-4 rounded-xl text-[#595659] hover:text-[#6C526F] transition-all duration-500 hover:bg-[rgba(0,0,0,0.1)]'}>
+              <FaUserMd className='text-2xl' />
+              <li> Doctor</li>
+            </NavLink>
+            <NavLink to={"/home/users"} className={({ isActive }) => isActive || location.pathname.includes("/home/users") ? 'bg-gradient-to-r from-[#6C526F] to-[#AE89A5] text-[#fff] flex items-center space-x-4 h-14 p-4 rounded-xl transition-all duration-500' : 'flex items-center space-x-4 h-14 p-4 rounded-xl text-[#595659] hover:text-[#6C526F] transition-all duration-500 hover:bg-[rgba(0,0,0,0.1)]'}>
+              <RiHospitalFill className='text-2xl' />
+              <li> Hospital</li>
+            </NavLink>
           </ul>
           {/* <NavLink to={'/'} onClick={()=> {localStorage.clear();useQuery.removeQueries();}} className="flex items-center space-x-4 h-14 p-4 rounded-xl hover:bg-[#AF91E920] transition-colors">
             <RiLogoutBoxRLine className='text-2xl' />
@@ -63,7 +78,7 @@ export default function Layout({ children }) {
                 <p className='text-xl font-bold text-white'>{user?.firstName[0].toUpperCase()}</p>
               </div>
               <div className='flex flex-col justify-center'>
-                <h1 className='text-md font-bold text-[#595659] leading-[18px]'>{user?.firstName + " " + user?.lastName}</h1>
+                <h1 className='text-[16px] font-bold text-[#595659] leading-[18px]'>{user?.firstName + " " + user?.lastName}</h1>
                 <p className='text-sm text-[#595659] leading-[18px]'>{user?.role }</p>
               </div>
             </div>

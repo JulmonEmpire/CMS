@@ -5,9 +5,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 export default function PatientDetail() {
   const formRef = useRef();
   const navigate = useNavigate();
-  const location=useLocation();
-  const [formData,setFormData]=useState({});
-  console.log("1",location.state)
+  const location = useLocation();
+  const [formData, setFormData] = useState({});
 
   useEffect(() => {
     if (location.state && location.state.data) {
@@ -18,28 +17,60 @@ export default function PatientDetail() {
   const formSubmitHandler = async (e) => {
     e.preventDefault();
 
-    let data={
+    let data = {
       ...location.state?.data,
-      firstName:formRef.current.firstName.value,
-      lastName:formRef.current.lastName.value,
-      refferingDoctor:formRef.current.refferingDoctor.value,
-      hospital:formRef.current.hospital.value,
-      dateOfBirth:formRef.current.dateOfBirth.value,
-      idNumber:formRef.current.idNumber.value,
-      gender:formRef.current.gender.value,
-      physicalAddress:formRef.current.physicalAddress.value,
-      city:formRef.current.city.value,
-      province:formRef.current.province.value,
-      postalCode:formRef.current.postalCode.value,
-      homePhone:formRef.current.homePhone.value,
-      cellPhone:formRef.current.cellPhone.value,
-      workPhone:formRef.current.workPhone.value,
-      employementStatus:formRef.current.employementStatus.value,
-      employee_school:formRef.current.employee_school.value,
-      martialStatus:formRef.current.martialStatus.value,
-      race:formRef.current.race.value,
+      firstName: formRef.current.firstName.value,
+      lastName: formRef.current.lastName.value,
+      refferingDoctor: formRef.current.refferingDoctor.value,
+      doctorPracticeNumber: formRef.current.doctorPracticeNumber.value,
+      hospital: formRef.current.hospital.value,
+      dateOfBirth: formRef.current.dateOfBirth.value,
+      idNumber: formRef.current.idNumber.value,
+      gender: formRef.current.gender.value,
+      physicalAddress: formRef.current.physicalAddress.value,
+      city: formRef.current.city.value,
+      province: formRef.current.province.value,
+      postalCode: formRef.current.postalCode.value,
+      // homePhone:formRef.current.homePhone.value,
+      cellPhone: formRef.current.cellPhone.value,
+      workPhone: formRef.current.workPhone.value,
+      // employementStatus:formRef.current.employementStatus.value,
+      // employee_school:formRef.current.employee_school.value,
+      martialStatus: formRef.current.martialStatus.value,
+      race: formRef.current.race.value,
     }
-    navigate("/home/patients/add-patient/medical-aid",{state:{data:data}})
+    navigate("/home/patients/add-patient/medical-aid", { state: { data: data } })
+  }
+
+  const [automaticDate, setAutomaticDate] = useState();
+
+  const handleBlur = (e) => {
+    console.log(e.target.value.length === 6)
+    console.log(e.target.value === "")
+    console.log(e.target.value === null)
+    console.log(e.target.value === undefined)
+    if (e.target.value === "" || e.target.value === null || e.target.value === undefined || e.target.value.length !== 6) {
+      if(formData?.dateOfBirth){
+        formRef.current.dateOfBirth.type = "text";
+      }
+      setAutomaticDate(null);
+      return
+    }
+
+    let year = e.target.value.slice(0, 2);
+    const month = e.target.value.slice(2, 4);
+    const day = e.target.value.slice(4, 6);
+    let currentYear = new Date()
+    let newCurrentYear = currentYear.getFullYear().toString().slice(2, 4)
+    if (+year < +newCurrentYear && +year >= "00") {
+      year = currentYear.getFullYear().toString().slice(0, 2) + year;
+    } else {
+      year = "19" + year;
+    }
+    formRef.current.dateOfBirth.type = "date";
+    const date = year + '-' + month + '-' + day;
+    formRef.current.dateOfBirth.defaultValue = date;
+    setAutomaticDate(date);
   }
 
   return (
@@ -56,9 +87,10 @@ export default function PatientDetail() {
           <input defaultValue={formData?.lastName} name='lastName' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[50%]' placeholder='Last Name' />
         </div>
         <input defaultValue={formData?.refferingDoctor} name='refferingDoctor' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Referring Doctor' />
+        <input defaultValue={formData?.doctorPracticeNumber} name='doctorPracticeNumber' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' type="number" placeholder="Doctor's Practice Number" />
         <input defaultValue={formData?.hospital} name='hospital' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Hospital' />
-        <input defaultValue={formData?.dateOfBirth} name='dateOfBirth' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Date of Birth' type={"text"} onFocus={(e) => { e.target.type = "date"; }} onBlur={(e) => { if (e.target.value === "") { e.target.type = "text" }; }} />
-        <input defaultValue={formData?.idNumber} name='idNumber' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='ID Number' type={"number"} />
+        <input onBlur={(e) => { handleBlur(e) }} defaultValue={formData?.idNumber} name='idNumber' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='ID Number' type={"number"} />
+        <input value={automaticDate || formData?.dateOfBirth} name='dateOfBirth' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Date of Birth' type={formData?.dateOfBirth?"date":"text"} onFocus={(e) => { e.target.type = "date"; }} onBlur={(e) => { if (e.target.value === "") { e.target.type = "text" }; }} />
         <select defaultValue={location.state?.data?.gender} name='gender' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
           <option selected disabled value={"null"}>Gender</option>
           <option value={"Male"}>Male</option>
@@ -71,14 +103,29 @@ export default function PatientDetail() {
         </div>
         <input defaultValue={formData?.postalCode} name='postalCode' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Postal Code' type={"text"} />
         <div className='flex gap-4'>
-          <input defaultValue={formData?.homePhone} name='homePhone' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Home Phone' type={"number"} />
+          {/* <input defaultValue={formData?.homePhone} name='homePhone' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Home Phone' type={"number"} /> */}
           <input defaultValue={formData?.cellPhone} name='cellPhone' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Cell Phone' type={"number"} />
           <input defaultValue={formData?.workPhone} name='workPhone' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Work Phone' type={"number"} />
         </div>
-        <input defaultValue={formData?.employementStatus} name='employementStatus' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Employment Status' type={"text"} />
-        <input defaultValue={formData?.employee_school} name='employee_school' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Employer/School' type={"text"} />
-        <input defaultValue={formData?.martialStatus} name='martialStatus' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Marital Status' type={"text"} />
-        <input defaultValue={formData?.race} name='race' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Race' type={"text"} />
+        {/* <input defaultValue={formData?.employementStatus} name='employementStatus' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Employment Status' type={"text"} /> */}
+        {/* <input defaultValue={formData?.employee_school} name='employee_school' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Employer/School' type={"text"} /> */}
+        {/* <input defaultValue={formData?.martialStatus} name='martialStatus' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Marital Status' type={"text"} /> */}
+        <select defaultValue={location.state?.data?.martialStatus} name='martialStatus' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
+          <option selected disabled value={"null"}>Race</option>
+          <option value={"Single"}>Single</option>
+          <option value={"Married"}>Married</option>
+          <option value={"Separated"}>Separated</option>
+          <option value={"Widowed"}>Widowed</option>
+        </select>
+        {/* <input defaultValue={formData?.race} name='race' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Race' type={"text"} /> */}
+        <select defaultValue={location.state?.data?.race || null} name='race' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
+          <option selected disabled value={null}>Race</option>
+          <option value={"African"}>African</option>
+          <option value={"Asian"}>Asian</option>
+          <option value={"White"}>White</option>
+          <option value={"Coloured"}>Coloured</option>
+          <option value={"other"}>other</option>
+        </select>
         <button className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Next</button>
       </form>
     </div>

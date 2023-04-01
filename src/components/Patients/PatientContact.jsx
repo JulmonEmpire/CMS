@@ -46,7 +46,7 @@ export default function PatientContact() {
       emergencyFirstName:formRef.current.emergencyFirstName.value,
       emergencylastName:formRef.current.emergencylastName.value,
       emergencyrelationShipToPatient:formRef.current.emergencyrelationShipToPatient.value,
-      emergencyHomePhone:formRef.current.emergencyHomePhone.value,
+      // emergencyHomePhone:formRef.current.emergencyHomePhone.value,
       emergencyWorkPhone:formRef.current.emergencyWorkPhone.value,
       emergencyCellPhone:formRef.current.emergencyCellPhone.value,
     };
@@ -59,7 +59,7 @@ export default function PatientContact() {
       emergencyFirstName:formRef.current.emergencyFirstName.value,
       emergencylastName:formRef.current.emergencylastName.value,
       emergencyrelationShipToPatient:formRef.current.emergencyrelationShipToPatient.value,
-      emergencyHomePhone:formRef.current.emergencyHomePhone.value,
+      // emergencyHomePhone:formRef.current.emergencyHomePhone.value,
       emergencyWorkPhone:formRef.current.emergencyWorkPhone.value,
       emergencyCellPhone:formRef.current.emergencyCellPhone.value,
     }
@@ -79,7 +79,7 @@ export default function PatientContact() {
           <input defaultValue={formData.emergencylastName} name="emergencylastName" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[50%]' placeholder='Last Name' />
         </div>
         <input defaultValue={formData.emergencyrelationShipToPatient} name="emergencyrelationShipToPatient" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Relationship to Patient:' type={"text"} />
-        <input defaultValue={formData.emergencyHomePhone} name="emergencyHomePhone" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Home Phone:' type={"number"} />
+        {/* <input defaultValue={formData.emergencyHomePhone} name="emergencyHomePhone" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Home Phone:' type={"number"} /> */}
         <input defaultValue={formData.emergencyWorkPhone} name="emergencyWorkPhone" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Work Phone:' type={"number"} />
         <input defaultValue={formData.emergencyCellPhone} name="emergencyCellPhone" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Cell Phone:' type={"number"} />
         <div className='flex gap-4 mt-2'>

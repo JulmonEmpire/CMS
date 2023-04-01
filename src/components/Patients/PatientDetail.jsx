@@ -39,7 +39,7 @@ export default function PatientDetail() {
       martialStatus: formRef.current.martialStatus.value,
       race: formRef.current.race.value,
     }
-    navigate("/home/patients/add-patient/medical-aid", { state: { data: data } })
+    navigate("/patients/add-patient/medical-aid", { state: { data: data } })
   }
 
   const [automaticDate, setAutomaticDate] = useState();
@@ -111,7 +111,7 @@ export default function PatientDetail() {
         {/* <input defaultValue={formData?.employee_school} name='employee_school' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Employer/School' type={"text"} /> */}
         {/* <input defaultValue={formData?.martialStatus} name='martialStatus' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Marital Status' type={"text"} /> */}
         <select defaultValue={location.state?.data?.martialStatus} name='martialStatus' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
-          <option selected disabled value={"null"}>Race</option>
+          <option selected disabled value={"null"}>Martial Status</option>
           <option value={"Single"}>Single</option>
           <option value={"Married"}>Married</option>
           <option value={"Separated"}>Separated</option>

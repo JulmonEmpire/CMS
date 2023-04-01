@@ -31,7 +31,7 @@ export default function EditUser() {
     onSuccess: () => {
       queryClient.invalidateQueries(["users"]);
       toast.success("Changes applied successfully");
-      navigate('/home/users');
+      navigate('/users');
     },
     onError: () => {
       toast.error("Error applying changes");

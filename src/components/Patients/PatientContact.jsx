@@ -31,7 +31,7 @@ export default function PatientContact() {
     },
     onSuccess:()=>{
       toast.success("Patient Added");
-      navigate("/home/patients");
+      navigate("/patients");
     },
     onError:(error)=>{
       toast.error("Error adding Patient");
@@ -63,7 +63,7 @@ export default function PatientContact() {
       emergencyWorkPhone:formRef.current.emergencyWorkPhone.value,
       emergencyCellPhone:formRef.current.emergencyCellPhone.value,
     }
-    navigate("/home/patients/add-patient/medical-aid",{state:{data:data}})
+    navigate("/patients/add-patient/medical-aid",{state:{data:data}})
   }
   return (
     <div className='pt-4 px-4 h-[87vh]'>

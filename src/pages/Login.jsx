@@ -35,7 +35,7 @@ export default function Login() {
         return
       }
       toast.success("Login successful!");
-      navigate("/home/dashboard");
+      navigate("/dashboard");
     },
     onError: (error) => {
       toast.error("Wrong credentials");

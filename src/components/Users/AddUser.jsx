@@ -25,7 +25,7 @@ export default function AddUser() {
     },
     onSuccess: () => {
       toast.success("User created successfully");
-      navigate('/home/users');
+      navigate('/users');
     },
     onError: () => {
       toast.error("Error creating user");

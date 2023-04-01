@@ -31,7 +31,7 @@ export default function MedicalAid() {
       relationShipToPatient: formRef.current.relationShipToPatient.value,
     }
     console.log(data)
-    navigate("/home/patients/add-patient/contact", { state: { data: data } })
+    navigate("/patients/add-patient/contact", { state: { data: data } })
   }
 
   const backNavigationHandler = () => {
@@ -46,7 +46,7 @@ export default function MedicalAid() {
       idNo: formRef.current.idNo.value,
       relationShipToPatient: formRef.current.relationShipToPatient.value,
     }
-    navigate("/home/patients/add-patient", { state: { data: data} })
+    navigate("/patients/add-patient", { state: { data: data} })
   }
 
   return (

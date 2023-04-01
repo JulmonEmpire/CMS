@@ -14,26 +14,51 @@ import MedicalAid from "./components/Patients/MedicalAid";
 import PatientContact from "./components/Patients/PatientContact";
 import { ToastContainer } from "react-toastify";
 import EditUser from "./components/Users/EditUser";
+import Hospital from "./pages/Hospitals";
+import Doctor from "./pages/Doctors";
+import Hospitals from "./pages/Hospitals";
+import Doctors from "./pages/Doctors";
+import MedicalAids from "./pages/MedicalAids";
+import MedicalAidList from "./components/MedicalAid/MedicalAidList";
+import AddMedicalAid from "./components/MedicalAid/AddMedicalAid";
+import DoctorList from "./components/Doctor/DoctorList";
+import AddDoctor from "./components/Doctor/AddDoctor";
+import HospitalList from "./components/Hospital/HospitalList";
+import AddHospital from "./components/Hospital/AddHospital";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />}></Route>
-        <Route path="/home" element={<Protected />}>
-          <Route path="dashboard" element={<Layout><Dashboard /></Layout>}></Route>
-          <Route path="patients" element={<Layout><Patients /></Layout>}>
-            <Route index element={<PatientsList />}></Route>
-            <Route end path="add-patient" element={<AddPatient />}>
-              <Route index element={<PatientDetail/>}></Route>
-              <Route path="medical-aid" element={<MedicalAid/>}></Route>
-              <Route path="contact" element={<PatientContact/>}></Route>
+        <Route path="/" element={<Protected />}>
+          <Route path="/" element={<Layout />}>
+            <Route path="dashboard" element={<Dashboard />}></Route>
+            <Route path="patients" element={<Patients />}>
+              <Route index element={<PatientsList />}></Route>
+              <Route end path="add-patient" element={<AddPatient />}>
+                <Route index element={<PatientDetail />}></Route>
+                <Route path="medical-aid" element={<MedicalAid />}></Route>
+                <Route path="contact" element={<PatientContact />}></Route>
+              </Route>
             </Route>
-          </Route>
-          <Route path="users" element={<Layout><Users /></Layout>}>
-            <Route index element={<UsersList />}></Route>
-            <Route end path="add-users" element={<AddUser />}></Route>
-            <Route end path="edit-user" element={<EditUser />}></Route>
+            <Route path="users" element={<Users />}>
+              <Route index element={<UsersList />}></Route>
+              <Route end path="add-users" element={<AddUser />}></Route>
+              <Route end path="edit-user" element={<EditUser />}></Route>
+            </Route>
+            <Route path="medical-aids" element={<MedicalAids />}>
+              <Route index element={<MedicalAidList />}></Route>
+              <Route end path="add" element={<AddMedicalAid />}></Route>
+            </Route>
+            <Route path="hospitals" element={<Hospitals />}>
+              <Route index element={<HospitalList />}></Route>
+              <Route end path="add" element={<AddHospital />}></Route>
+            </Route>
+            <Route path="doctors" element={<Doctors />}>
+              <Route index element={<DoctorList />}></Route>
+              <Route end path="add" element={<AddDoctor />}></Route>
+            </Route>
           </Route>
         </Route>
       </Routes>

@@ -8,7 +8,7 @@ export default function AddHospital() {
         <div className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] w-16 h-14 flex justify-center items-center shadow-md rounded-sm'>
           <CgDetailsMore className='text-white text-2xl' />
         </div>
-        <h1 className='self-end mb-2 font-bold text-xl text-[#595659]'>HOPITAL’S DETAILS</h1>
+        <h1 className='self-end mb-2 font-bold text-xl text-[#595659]'>HOSPITAL’S DETAILS</h1>
       </div>
       <form className='py-8 flex flex-col gap-4 w-[60%] text-[#595659]'>
         <input className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Hospital Name' name='hopitalName' />

@@ -22,7 +22,6 @@ export default function PatientDetail() {
       firstName: formRef.current.firstName.value,
       lastName: formRef.current.lastName.value,
       refferingDoctor: formRef.current.refferingDoctor.value,
-      doctorPracticeNumber: formRef.current.doctorPracticeNumber.value,
       hospital: formRef.current.hospital.value,
       dateOfBirth: formRef.current.dateOfBirth.value,
       idNumber: formRef.current.idNumber.value,
@@ -86,9 +85,16 @@ export default function PatientDetail() {
           <input defaultValue={formData?.firstName} name='firstName' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[50%]' placeholder='First Name' />
           <input defaultValue={formData?.lastName} name='lastName' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[50%]' placeholder='Last Name' />
         </div>
-        <input defaultValue={formData?.refferingDoctor} name='refferingDoctor' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Referring Doctor' />
-        <input defaultValue={formData?.doctorPracticeNumber} name='doctorPracticeNumber' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' type="number" placeholder="Doctor's Practice Number" />
-        <input defaultValue={formData?.hospital} name='hospital' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Hospital' />
+        <select defaultValue={formData?.refferingDoctor} name='refferingDoctor' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
+          <option selected disabled value={"null"}>Referring Doctor</option>
+          <option value={"Male"}>Doctor 1</option>
+          <option value={"Female"}>Doctor 2</option>
+        </select>
+        <select defaultValue={formData?.hospital} name='hospital' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
+          <option selected disabled value={"null"}>Hospital</option>
+          <option value={"Male"}>Hospital 1</option>
+          <option value={"Female"}>Hospital 2</option>
+        </select>
         <input onBlur={(e) => { handleBlur(e) }} defaultValue={formData?.idNumber} name='idNumber' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='ID Number' type={"number"} />
         <input value={automaticDate || formData?.dateOfBirth} name='dateOfBirth' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Date of Birth' type={formData?.dateOfBirth?"date":"text"} onFocus={(e) => { e.target.type = "date"; }} onBlur={(e) => { if (e.target.value === "") { e.target.type = "text" }; }} />
         <select defaultValue={location.state?.data?.gender} name='gender' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>

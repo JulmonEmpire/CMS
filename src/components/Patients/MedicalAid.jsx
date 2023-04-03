@@ -58,10 +58,13 @@ export default function MedicalAid() {
         <h1 className='self-end mb-2 font-bold text-xl text-[#595659]'>MEDICAL AID DETAILS</h1>
       </div>
       <form onSubmit={formSubmitHandler} ref={formRef} className='py-8 flex flex-col gap-4 w-[60%] text-[#595659]'>
-        <input defaultValue={formData?.medicalAidName} name="medicalAidName" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Medical Aid Name' />
+        <select defaultValue={formData?.medicalAidName} name="medicalAidName" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
+          <option selected disabled value={"null"}>Medical Aid Name</option>
+          <option value={"Male"}>Medical Aid 1</option>
+          <option value={"Female"}>Medical Aid 2</option>
+        </select>
         <input defaultValue={formData?.medicalAidNo} name="medicalAidNo" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Medical Aid No' type={"number"} />
         <input defaultValue={formData?.dependentCode} name="dependentCode" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Dependent code' type={"number"} />
-        <input defaultValue={formData?.effectiveDate} name="effectiveDate" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Effective Date' type={"text"} onFocus={(e) => { e.target.type = "date"; }} onBlur={(e) => { if (e.target.value === "") { e.target.type = "text" }; }} />
         <input defaultValue={formData?.mainMember} name="mainMember" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Main Member' />
         <input defaultValue={formData?.birthDate} name="birthDate" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Birth Date' type={"text"} onFocus={(e) => { e.target.type = "date"; }} onBlur={(e) => { if (e.target.value === "") { e.target.type = "text" }; }} />
         <input defaultValue={formData?.idNo} name="idNo" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='ID No' />

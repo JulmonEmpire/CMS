@@ -14,7 +14,7 @@ export default function Doctors() {
           <li className='w-56 px-6 py-2 font-bold flex items-center justify-center gap-[5px]'><FaUserPlus className='text-2xl' />Add Doctors</li>
         </NavLink>
       </ul>
-      <div className="p-4 pt-0">
+      <div className="p-4">
         <Outlet />
       </div>
     </div>

@@ -11,7 +11,6 @@ export default function UserTableRow({ user, index }) {
   const [showContextMenu, setContextMenu] = useState(false);
   const queryClient = useQueryClient();
 
-
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
     return () => {
@@ -71,14 +70,17 @@ export default function UserTableRow({ user, index }) {
     unblockMutation.mutate()
   }
 
+  console.log(user);
+
   return (
     <tr key={user.uid} style={index % 2 !== 0 ? { backgroundColor: "#EEEEEE" } : {}} className="h-12">
-      <td className='p-2'>{user.firstName}</td>
-      <td className='p-2'>{user.lastName}</td>
-      <td className='p-2'>{user.email}</td>
-      <td className='p-2'>{user.location}</td>
-      <td className='p-2'>{user.role}</td>
-      <td className='p-2'>{user.isBlocked ? "Blocked" : "Active"}</td>
+      <td className='p-2 font-[500]'>{index+1}</td>
+      <td className='p-2'>{user?.firstName}</td>
+      <td className='p-2'>{user?.lastName}</td>
+      <td className='p-2'>{user?.email}</td>
+      <td className='p-2'>{user?.location}</td>
+      <td className='p-2'>{user?.role}</td>
+      <td className='p-2'>{user?.isBlocked ? "Blocked" : "Active"}</td>
       <td className='p-2 flex justify-center relative'>
         <div onClick={(e) => { setContextMenu(!showContextMenu); e.stopPropagation(); }} className='relative flex flex-col gap-[5px] w-[40px] h-[40px] hover:bg-[rgba(0,0,0,0.05)] rounded-full justify-center items-center cursor-pointer'>
           <div className='w-[3px] h-[3px] bg-gradient-to-r from-[#6C526F] to-[#AE89A5] rounded-full'></div>

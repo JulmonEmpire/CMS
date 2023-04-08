@@ -6,6 +6,7 @@ import UserTableRow from './UserTableRow';
 
 
 export default function UsersList() {
+  
   const userQuery = useQuery(["users"], async () => {
     let data = []
     const querySnapshot = await getDocs(collection(db, "users"));
@@ -26,6 +27,7 @@ export default function UsersList() {
         <table className="table-auto w-full mt-4">
           <thead className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] h-16'>
             <tr className='text-white text-left'>
+              <th className='p-2'>#</th>
               <th className='p-2'>First Name</th>
               <th className='p-2'>Last Name</th>
               <th className='p-2'>Email</th>

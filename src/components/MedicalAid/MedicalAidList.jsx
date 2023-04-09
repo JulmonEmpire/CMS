@@ -6,21 +6,15 @@ import MedicalAidRow from './MedicalAidRow';
 
 export default function MedicalAidList() {
 
-  const medicalAidQuery = useQuery(["medicalAid"], async () => {
-    let data = []
-    const querySnapshot = await getDocs(collection(db, "medicalAid"));
-    querySnapshot.forEach((doc) => {
-      let medicalAiddata = doc.data();
-      console.log(doc.id);
-      medicalAiddata.id = doc.id;
-      data.push(medicalAiddata);
-    })
-    console.log(data);
-    return data;
-  });
+  const queryClient=useQueryClient();
+  const [medicalAidQuery,setMedicalAidQuery]=useState();
+
+  useEffect(()=>{
+    setMedicalAidQuery(queryClient.getQueryData(['medicalAid']));
+  })
 
   return (
-    <div>
+    <div className='h-[75.5vh]'>
       {medicalAidQuery.isLoading ? <img className='w-[50px] m-auto mt-10' src='/Loading.svg' /> :
         <table className="table-auto w-full mt-4">
           <thead className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] h-16'>

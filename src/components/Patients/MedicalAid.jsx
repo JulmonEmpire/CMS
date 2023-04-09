@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import React, { useEffect, useRef, useState } from 'react'
 import { AiFillMedicineBox } from 'react-icons/ai';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -21,7 +22,7 @@ export default function MedicalAid() {
     e.preventDefault();
     const data = {
       ...location.state.data,
-      medicalAidName: formRef.current.medicalAidName.value,
+      medicalAidName: JSON.parse(formRef.current.medicalAidName.selectedOptions[0].getAttribute('data-option')),
       medicalAidNo: formRef.current.medicalAidNo.value,
       dependentCode: formRef.current.dependentCode.value,
       mainMember: formRef.current.mainMember.value,
@@ -47,6 +48,12 @@ export default function MedicalAid() {
     navigate("/patients/add-patient", { state: { data: data} })
   }
 
+  const queryClient=useQueryClient();
+  const [medicalAid,setMedicalAid]=useState();
+  useEffect(()=>{
+    setMedicalAid(queryClient.getQueryData(['medicalAid']))
+  },[queryClient]);
+
   return (
     <div className='pt-4 px-4 h-[87vh]'>
       <div className='flex gap-4'>
@@ -56,10 +63,13 @@ export default function MedicalAid() {
         <h1 className='self-end mb-2 font-bold text-xl text-[#595659]'>MEDICAL AID DETAILS</h1>
       </div>
       <form onSubmit={formSubmitHandler} ref={formRef} className='py-8 flex flex-col gap-4 w-[60%] text-[#595659]'>
-        <select defaultValue={formData?.medicalAidName} name="medicalAidName" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
+        <select key={formData?.medicalAidName?.id} defaultValue={formData?.medicalAidName?.id} name="medicalAidName" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
           <option selected disabled value={"null"}>Medical Aid Name</option>
-          <option value={"Male"}>Medical Aid 1</option>
-          <option value={"Female"}>Medical Aid 2</option>
+          {medicalAid?.map((ma)=>{
+            return(
+              <option value={ma.id} data-option={JSON.stringify(ma)}>{ma?.name}</option>
+            )
+          })}
         </select>
         <input defaultValue={formData?.medicalAidNo} name="medicalAidNo" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Medical Aid No' type={"number"} />
         <input defaultValue={formData?.dependentCode} name="dependentCode" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Dependent code' type={"number"} />

@@ -1,24 +1,19 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { collection, getDocs } from 'firebase/firestore';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { db } from '../Utils/firebase';
 import DoctorRow from './DoctorRow';
 
 export default function DoctorList() {
+  const queryClient=useQueryClient();
+  const [doctorQuery,setDoctorQuery]=useState();
 
-  const doctorQuery = useQuery(["doctor"], async () => {
-    let data = []
-    const querySnapshot = await getDocs(collection(db, "doctor"));
-    querySnapshot.forEach((doc) => {
-      let medicalAiddata = doc.data();
-      medicalAiddata.id=doc.id;
-      data.push(medicalAiddata);
-    })
-    return data;
-  });
+  useEffect(()=>{
+    setDoctorQuery(queryClient.getQueryData(['doctor']));
+  })
 
   return (
-    <div>
+    <div className='h-[75.5vh]'>
     {doctorQuery.isLoading ? <img className='w-[50px] m-auto mt-10' src='/Loading.svg' /> :
       <table className="table-auto w-full mt-4">
         <thead className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] h-16'>

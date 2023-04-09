@@ -1,28 +1,34 @@
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { useEffect, useRef, useState } from 'react'
 import { CgDetailsMore } from "react-icons/cg"
 import { useLocation, useNavigate } from 'react-router-dom';
+
 
 export default function PatientDetail() {
   const formRef = useRef();
   const navigate = useNavigate();
   const location = useLocation();
   const [formData, setFormData] = useState({});
+  const [scannedNotes, setScannedNotes] = useState([]);
 
   useEffect(() => {
     if (location.state && location.state.data) {
-      setFormData(location.state.data); // Retrieve data when returning to this route
+      setFormData(location.state.data);
     }
   }, [location]);
 
+
+
   const formSubmitHandler = async (e) => {
     e.preventDefault();
+
 
     let data = {
       ...location.state?.data,
       firstName: formRef.current.firstName.value,
       lastName: formRef.current.lastName.value,
-      refferingDoctor: formRef.current.refferingDoctor.value,
-      hospital: formRef.current.hospital.value,
+      refferingDoctor: JSON.parse(formRef.current.refferingDoctor.selectedOptions[0].getAttribute('data-option')),
+      hospital: JSON.parse(formRef.current.hospital.selectedOptions[0].getAttribute('data-option')),
       dateOfBirth: formRef.current.dateOfBirth.value,
       idNumber: formRef.current.idNumber.value,
       gender: formRef.current.gender.value,
@@ -30,13 +36,11 @@ export default function PatientDetail() {
       city: formRef.current.city.value,
       province: formRef.current.province.value,
       postalCode: formRef.current.postalCode.value,
-      // homePhone:formRef.current.homePhone.value,
       cellPhone: formRef.current.cellPhone.value,
       workPhone: formRef.current.workPhone.value,
-      // employementStatus:formRef.current.employementStatus.value,
-      // employee_school:formRef.current.employee_school.value,
       martialStatus: formRef.current.martialStatus.value,
       race: formRef.current.race.value,
+      scannedNotes: scannedNotes
     }
     navigate("/patients/add-patient/medical-aid", { state: { data: data } })
   }
@@ -44,12 +48,8 @@ export default function PatientDetail() {
   const [automaticDate, setAutomaticDate] = useState();
 
   const handleBlur = (e) => {
-    console.log(e.target.value.length === 6)
-    console.log(e.target.value === "")
-    console.log(e.target.value === null)
-    console.log(e.target.value === undefined)
     if (e.target.value === "" || e.target.value === null || e.target.value === undefined || e.target.value.length !== 6) {
-      if(formData?.dateOfBirth){
+      if (formData?.dateOfBirth) {
         formRef.current.dateOfBirth.type = "text";
       }
       setAutomaticDate(null);
@@ -72,6 +72,14 @@ export default function PatientDetail() {
     setAutomaticDate(date);
   }
 
+  const queryClient = useQueryClient();
+  const [doctors, setDoctors] = useState();
+  const [hospitals, sethospitals] = useState();
+  useEffect(() => {
+    setDoctors(queryClient.getQueryData(['doctor']))
+    sethospitals(queryClient.getQueryData(['hospital']))
+  }, [queryClient]);
+
   return (
     <div className='pt-4 px-4 h-full'>
       <div className='flex gap-4'>
@@ -85,18 +93,24 @@ export default function PatientDetail() {
           <input defaultValue={formData?.firstName} name='firstName' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[50%]' placeholder='First Name' />
           <input defaultValue={formData?.lastName} name='lastName' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[50%]' placeholder='Last Name' />
         </div>
-        <select defaultValue={formData?.refferingDoctor} name='refferingDoctor' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
+        <select key={formData?.refferingDoctor?.id} defaultValue={formData?.refferingDoctor?.id} name='refferingDoctor' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
           <option selected disabled value={"null"}>Referring Doctor</option>
-          <option value={"Male"}>Doctor 1</option>
-          <option value={"Female"}>Doctor 2</option>
+          {doctors?.map((doctor) => {
+            return (
+              <option value={doctor.id} data-option={JSON.stringify(doctor)}>{doctor?.firstName}</option>
+            )
+          })}
         </select>
-        <select defaultValue={formData?.hospital} name='hospital' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
+        <select key={formData?.hospital?.id} defaultValue={formData?.hospital?.id} name='hospital' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
           <option selected disabled value={"null"}>Hospital</option>
-          <option value={"Male"}>Hospital 1</option>
-          <option value={"Female"}>Hospital 2</option>
+          {hospitals?.map((hospital) => {
+            return (
+              <option value={hospital.id} data-option={JSON.stringify(hospital)}>{hospital?.name}</option>
+            )
+          })}
         </select>
         <input onBlur={(e) => { handleBlur(e) }} defaultValue={formData?.idNumber} name='idNumber' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='ID Number' type={"number"} />
-        <input value={automaticDate || formData?.dateOfBirth} name='dateOfBirth' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Date of Birth' type={formData?.dateOfBirth?"date":"text"} onFocus={(e) => { e.target.type = "date"; }} onBlur={(e) => { if (e.target.value === "") { e.target.type = "text" }; }} />
+        <input value={automaticDate || formData?.dateOfBirth} name='dateOfBirth' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Date of Birth' type={formData?.dateOfBirth ? "date" : "text"} onFocus={(e) => { e.target.type = "date"; }} onBlur={(e) => { if (e.target.value === "") { e.target.type = "text" }; }} />
         <select defaultValue={location.state?.data?.gender} name='gender' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
           <option selected disabled value={"null"}>Gender</option>
           <option value={"Male"}>Male</option>
@@ -137,3 +151,30 @@ export default function PatientDetail() {
     </div>
   )
 }
+
+  // let urls = await uploadScannedNotes(location.state.data.scannedNotes);
+  // const uploadScannedNotes = async (files) => {
+  //   console.log(files);
+  //   let urls=[]
+  //   for (let i=0;i<files.length;i++){
+  //     let file=files[i];
+  //     console.log(file);
+  //     try {
+  //       const storageRef = ref(storage, `/notes/${file[0].name}`);
+  //       const uploadTask = await uploadBytes(storageRef, file[0]);
+  //       getDownloadURL(ref(storage, `/notes/${file[0].name}`)).then((url) => {
+  //         urls.push(url);
+  //         console.log("File uploaded");
+  //       })
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   return urls
+  // }
+
+
+{/* <div>
+  <label className='cursor-pointer' type='button' htmlFor="scannedCopies">Upload Scanned notes</label>
+  <input multiple onChange={(e) => { setScannedNotes((prev) => [...prev, e.target.files]); }} className='hidden' type='file' id="scannedCopies" />
+</div> */}

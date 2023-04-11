@@ -27,6 +27,10 @@ export default function PatientsList() {
             <td className='p-2'>#</td>
             <th className='p-2'>First Name</th>
             <th className='p-2'>Last Name</th>
+            <th className='p-2'>Gender</th>
+            <th className='p-2'>Reffering Dr</th>
+            <th className='p-2'>Medical Aid</th>
+            <th className='p-2'>Hospital</th>
             <th className='p-2 text-center'>Actions</th>
           </tr>
         </thead>

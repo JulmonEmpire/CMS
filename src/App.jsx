@@ -25,6 +25,7 @@ import DoctorList from "./components/Doctor/DoctorList";
 import AddDoctor from "./components/Doctor/AddDoctor";
 import HospitalList from "./components/Hospital/HospitalList";
 import AddHospital from "./components/Hospital/AddHospital";
+import PatientInformation from "./components/Patients/PatientInformation";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
                 <Route path="contact" element={<PatientContact />}></Route>
               </Route>
             </Route>
+            <Route path="patients-information" element={<PatientInformation></PatientInformation>}></Route>
             <Route path="users" element={<Users />}>
               <Route index element={<UsersList />}></Route>
               <Route end path="add-users" element={<AddUser />}></Route>

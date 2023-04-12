@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 export default function PatientRow({ patient, index }) {
+  const navigate=useNavigate();
   const [showContextMenu, setContextMenu] = useState(false);
   console.log(patient);
   return (
-    <tr onClick={()=> navigate("/")} key={patient?.id} style={index % 2 !== 0 ? { backgroundColor: "#EEEEEE" } : {}} className="h-12">
+    <tr onClick={()=> {navigate("/patients-information");}} key={patient?.id} style={index % 2 !== 0 ? { backgroundColor: "#EEEEEE" } : {}} className="h-12">
       <td className='p-2 font-[500]'>{index+1}</td>
       <td className='p-2'>{patient?.firstName}</td>
       <td className='p-2'>{patient?.lastName}</td>

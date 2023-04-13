@@ -9,8 +9,9 @@ import { ImAidKit } from "react-icons/im"
 import { RiHospitalFill } from "react-icons/ri"
 import { FaUserMd } from "react-icons/fa"
 import { signOut } from "firebase/auth";
-import { auth } from "./firebase"
-
+import { auth, db } from "./firebase"
+import { useQuery } from '@tanstack/react-query';
+import { collection, getDocs } from 'firebase/firestore';
 
 export default function Layout({ children }) {
   const queryClient = useQueryClient();
@@ -31,6 +32,41 @@ export default function Layout({ children }) {
       // An error happened.
     });
   }
+
+  const medicalAidQuery = useQuery(["medicalAid"], async () => {
+    let data = []
+    const querySnapshot = await getDocs(collection(db, "medicalAid"));
+    querySnapshot.forEach((doc) => {
+      let medicalAiddata = doc.data();
+      console.log(doc.id);
+      medicalAiddata.id = doc.id;
+      data.push(medicalAiddata);
+    })
+    console.log(data);
+    return data;
+  });
+
+  const hospitalQuery = useQuery(["hospital"], async () => {
+    let data = []
+    const querySnapshot = await getDocs(collection(db, "hospital"));
+    querySnapshot.forEach((doc) => {
+      let medicalAiddata = doc.data();
+      medicalAiddata.id = doc.id;
+      data.push(medicalAiddata);
+    })
+    return data;
+  });
+
+  const doctorQuery = useQuery(["doctor"], async () => {
+    let data = []
+    const querySnapshot = await getDocs(collection(db, "doctor"));
+    querySnapshot.forEach((doc) => {
+      let medicalAiddata = doc.data();
+      medicalAiddata.id = doc.id;
+      data.push(medicalAiddata);
+    })
+    return data;
+  });
 
   return (
     <div className='w-full min-h-screen flex  bg-[#EEEEEE]'>
@@ -86,7 +122,7 @@ export default function Layout({ children }) {
           </div>
         </div>
         <div className='h-[90.2%] bg-white rounded-xl'>
-          <Outlet />
+          {!doctorQuery.isLoading && !hospitalQuery.isLoading && !medicalAidQuery.isLoading ? <Outlet /> : <img className='w-[40px] m-auto pt-[20px]' src='/Loading.svg' />}
         </div>
       </div>
     </div>

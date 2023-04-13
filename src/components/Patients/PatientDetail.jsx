@@ -80,6 +80,7 @@ export default function PatientDetail() {
     sethospitals(queryClient.getQueryData(['hospital']))
   }, [queryClient]);
 
+
   return (
     <div className='pt-4 px-4 h-full'>
       <div className='flex gap-4'>

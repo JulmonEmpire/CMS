@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useEffect, useRef, useState } from 'react'
 import { MdContactEmergency } from 'react-icons/md';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -12,8 +12,8 @@ export default function PatientContact() {
 
   const formRef = useRef();
   const navigate = useNavigate();
-
   const location=useLocation();
+  const queryClient=useQueryClient();
 
   const [formData, setFormData] = useState({});
 
@@ -33,6 +33,7 @@ export default function PatientContact() {
     },
     onSuccess:()=>{
       toast.success("Patient Added");
+      queryClient.invalidateQueries(['patients']);
       navigate("/patients");
     },
     onError:(error)=>{

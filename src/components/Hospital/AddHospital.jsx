@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addDoc, collection } from 'firebase/firestore';
 import React, { useRef } from 'react'
 import { CgDetailsMore } from 'react-icons/cg'
@@ -10,12 +10,14 @@ export default function AddHospital() {
 
   const formRef = useRef();
   const navigate = useNavigate();
+  const queryClient=useQueryClient();
 
   const hospitalMutation = useMutation({
     mutationFn: async (data) => {
       return await addDoc(collection(db, "hospital"), data);
     },
     onSuccess: () => {
+      queryClient.invalidateQueries(['hospital'])
       toast.success("Hospital added successfully");
       navigate('/hospitals');
     },

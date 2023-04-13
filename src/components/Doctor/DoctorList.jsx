@@ -5,16 +5,23 @@ import { db } from '../Utils/firebase';
 import DoctorRow from './DoctorRow';
 
 export default function DoctorList() {
-  const queryClient=useQueryClient();
-  const [doctorQuery,setDoctorQuery]=useState();
+  const queryClient = useQueryClient();
+  const [doctorQuery, setDoctorQuery] = useState();
 
-  useEffect(()=>{
-    setDoctorQuery(queryClient.getQueryData(['doctor']));
-  })
+  useEffect(() => {
+    const unsubscribe = queryClient.getQueryCache().subscribe(() => {
+      setDoctorQuery(queryClient.getQueryData(['doctor']));
+    });
+
+    return () => {
+      unsubscribe();
+    };
+
+  }, [location.pathname, queryClient])
 
   return (
     <div className='h-[75.5vh]'>
-    {doctorQuery.isLoading ? <img className='w-[50px] m-auto mt-10' src='/Loading.svg' /> :
+      {/* {doctorQuery.isLoading ? <img className='w-[50px] m-auto mt-10' src='/Loading.svg' /> : */}
       <table className="table-auto w-full mt-4">
         <thead className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] h-16'>
           <tr className='text-white text-left'>
@@ -28,14 +35,14 @@ export default function DoctorList() {
           </tr>
         </thead>
         <tbody>
-          {doctorQuery?.data?.map((doctor, index) => {
+          {doctorQuery?.map((doctor, index) => {
             return (
               <DoctorRow key={doctor?.id} doctor={doctor} index={index} />
             )
           })}
         </tbody>
       </table>
-    }
-  </div>
+      {/* } */}
+    </div>
   )
 }

@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import HospitalRow from './HospitalRow';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../Utils/firebase';
@@ -8,14 +8,22 @@ export default function HospitalList() {
     
   const queryClient=useQueryClient();
   const [hospitalQuery,setHospitalQuery]=useState();
+  console.log(queryClient.isFetching(['hospital']));
 
   useEffect(()=>{
-    setHospitalQuery(queryClient.getQueryData(['hospital']));
-  })
+    const unsubscribe = queryClient.getQueryCache().subscribe(() => {
+      setHospitalQuery(queryClient.getQueryData(['hospital']));
+    });
+
+    return () => {
+      unsubscribe();
+    };
+
+  },[location.pathname,queryClient])
 
   return (
     <div className='h-[75.5vh]'>
-    {hospitalQuery.isLoading ? <img className='w-[50px] m-auto mt-10' src='/Loading.svg' /> :
+    {/* {hospitalQuery.isLoading ? <img className='w-[50px] m-auto mt-10' src='/Loading.svg' /> : */}
       <table className="table-auto w-full mt-4">
         <thead className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] h-16'>
           <tr className='text-white text-left'>
@@ -28,14 +36,14 @@ export default function HospitalList() {
           </tr>
         </thead>
         <tbody>
-          {hospitalQuery?.data?.map((hospital, index) => {
+          {hospitalQuery?.map((hospital, index) => {
             return (
               <HospitalRow key={hospital?.id} hospital={hospital} index={index} />
             )
           })}
         </tbody>
       </table>
-    }
+    {/* } */}
   </div>
   )
 }

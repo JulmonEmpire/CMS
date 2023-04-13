@@ -30,6 +30,9 @@ import PatientContactInformation from "./components/PatientInformation/PatientCo
 import MedicalAidInformation from "./components/PatientInformation/MedicalAidInformation";
 import PatientDetailInformation from "./components/PatientInformation/PatientDetailInformation";
 import PatientNotes from "./components/PatientInformation/PatientNotes";
+import EditMedicalAid from "./components/MedicalAid/EditMedicalAid";
+import EditHospital from "./components/Hospital/EditHospital";
+import EditDoctor from "./components/Doctor/EditDoctor";
 
 function App() {
   return (
@@ -59,17 +62,26 @@ function App() {
               <Route end path="add-users" element={<AddUser />}></Route>
               <Route end path="edit-user" element={<EditUser />}></Route>
             </Route>
-            <Route path="medical-aids" element={<MedicalAids />}>
-              <Route index element={<MedicalAidList />}></Route>
-              <Route end path="add" element={<AddMedicalAid />}></Route>
+            <Route path="medical-aids" >
+              <Route element={<MedicalAids />}>
+                <Route index element={<MedicalAidList />}></Route>
+                <Route end path="add" element={<AddMedicalAid />}></Route>
+              </Route>
+              <Route end path="edit" element={<EditMedicalAid />}></Route>
             </Route>
-            <Route path="hospitals" element={<Hospitals />}>
-              <Route index element={<HospitalList />}></Route>
-              <Route end path="add" element={<AddHospital />}></Route>
+            <Route path="hospitals" >
+              <Route element={<Hospitals />}>
+                <Route index element={<HospitalList />}></Route>
+                <Route end path="add" element={<AddHospital />}></Route>
+              </Route>
+              <Route end path="edit" element={<EditHospital />}></Route>
             </Route>
-            <Route path="doctors" element={<Doctors />}>
-              <Route index element={<DoctorList />}></Route>
-              <Route end path="add" element={<AddDoctor />}></Route>
+            <Route path="doctors">
+              <Route element={<Doctors />}>
+                <Route index element={<DoctorList />}></Route>
+                <Route end path="add" element={<AddDoctor />}></Route>
+              </Route>
+              <Route end path="edit" element={<EditDoctor />}></Route>
             </Route>
           </Route>
         </Route>

@@ -38,7 +38,6 @@ export default function Layout({ children }) {
     const querySnapshot = await getDocs(collection(db, "medicalAid"));
     querySnapshot.forEach((doc) => {
       let medicalAiddata = doc.data();
-      console.log(doc.id);
       medicalAiddata.id = doc.id;
       data.push(medicalAiddata);
     })
@@ -54,6 +53,7 @@ export default function Layout({ children }) {
       medicalAiddata.id = doc.id;
       data.push(medicalAiddata);
     })
+    console.log(data);
     return data;
   });
 
@@ -107,7 +107,7 @@ export default function Layout({ children }) {
       </div>
       <div className='bg-[#EEEEEE] flex-1 p-2 max-h-[100vh] space-y-[1%]'>
         <div className='h-[8%] w-full rounded-xl bg-white flex justify-between items-center px-8'>
-          <h1 className='text-[#595659] text-lg font-bold'>{location.pathname.includes("/patients") ? "Patients" : location.pathname.includes("/dashboard") ? "Dashboard" : "Users"}</h1>
+          <h1 className='text-[#595659] text-lg font-bold'>{location.pathname.includes("/patients") ? "Patients" : location.pathname.includes("/dashboard") ? "Dashboard" : location.pathname.includes("/doctors")?"Doctor": location.pathname.includes("/hospitals") ? "Hospital" : location.pathname.includes("/medical-aids")?"Medical Aids": "Users"}</h1>
           <div className='flex gap-8 items-center'>
             <div className='flex gap-2'>
               <div className='w-[45px] h-[45px] bg-[#AE89A5] rounded-full flex justify-center items-center'>

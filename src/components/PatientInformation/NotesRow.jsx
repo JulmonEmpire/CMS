@@ -60,7 +60,8 @@ export default function NotesRow({ note, index, pId }) {
             <li onClick={(e) => { deleteNote() }} className='py-2 px-6 flex-1 flex justify-center items-center hover:bg-[rgba(0,0,0,0.05)] transition-colors select-none cursor-pointer'>Delete</li>
             :
             <li className='py-2 px-6 flex-1 flex justify-center items-center hover:bg-[rgba(0,0,0,0.05)] transition-colors select-none cursor-pointer'><img className='w-[25px] m-auto' src='/Loading.svg'/></li>
-          }</ul>
+          }
+          </ul>
       </td>
     </tr>
   )

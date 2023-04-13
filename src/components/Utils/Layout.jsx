@@ -21,7 +21,7 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     setUsers(queryClient.getQueryData(["user"]))
-  }, [])
+  }, [queryClient])
 
   const logoutHandler = () => {
     signOut(auth).then(() => {

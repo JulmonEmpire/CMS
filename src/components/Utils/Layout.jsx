@@ -20,7 +20,14 @@ export default function Layout({ children }) {
   const [user, setUsers] = useState(null)
 
   useEffect(() => {
-    setUsers(queryClient.getQueryData(["user"]))
+    const unsubscribe = queryClient.getQueryCache().subscribe(() => {
+      setUsers(queryClient.getQueryData(["user"]))
+    });
+
+    return () => {
+      unsubscribe();
+    };
+
   }, [queryClient])
 
   const logoutHandler = () => {

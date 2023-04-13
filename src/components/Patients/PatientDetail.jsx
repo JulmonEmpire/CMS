@@ -152,29 +152,4 @@ export default function PatientDetail() {
   )
 }
 
-  // let urls = await uploadScannedNotes(location.state.data.scannedNotes);
-  // const uploadScannedNotes = async (files) => {
-  //   console.log(files);
-  //   let urls=[]
-  //   for (let i=0;i<files.length;i++){
-  //     let file=files[i];
-  //     console.log(file);
-  //     try {
-  //       const storageRef = ref(storage, `/notes/${file[0].name}`);
-  //       const uploadTask = await uploadBytes(storageRef, file[0]);
-  //       getDownloadURL(ref(storage, `/notes/${file[0].name}`)).then((url) => {
-  //         urls.push(url);
-  //         console.log("File uploaded");
-  //       })
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  //   return urls
-  // }
 
-
-{/* <div>
-  <label className='cursor-pointer' type='button' htmlFor="scannedCopies">Upload Scanned notes</label>
-  <input multiple onChange={(e) => { setScannedNotes((prev) => [...prev, e.target.files]); }} className='hidden' type='file' id="scannedCopies" />
-</div> */}

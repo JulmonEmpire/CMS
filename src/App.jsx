@@ -26,6 +26,10 @@ import AddDoctor from "./components/Doctor/AddDoctor";
 import HospitalList from "./components/Hospital/HospitalList";
 import AddHospital from "./components/Hospital/AddHospital";
 import PatientInformation from "./components/Patients/PatientInformation";
+import PatientContactInformation from "./components/PatientInformation/PatientContactInformation";
+import MedicalAidInformation from "./components/PatientInformation/MedicalAidInformation";
+import PatientDetailInformation from "./components/PatientInformation/PatientDetailInformation";
+import PatientNotes from "./components/PatientInformation/PatientNotes";
 
 function App() {
   return (
@@ -43,7 +47,13 @@ function App() {
                 <Route path="contact" element={<PatientContact />}></Route>
               </Route>
             </Route>
-            <Route path="patients-information" element={<PatientInformation></PatientInformation>}></Route>
+            <Route path="patients-information" element={<PatientInformation></PatientInformation>}>
+              <Route index element={<PatientDetailInformation></PatientDetailInformation>}></Route>
+              <Route path="medical-aid" element={<MedicalAidInformation></MedicalAidInformation>}></Route>
+              <Route path="contact" element={<PatientContactInformation></PatientContactInformation>}></Route>
+              <Route path="notes" element={<PatientNotes></PatientNotes>}></Route>
+
+            </Route>
             <Route path="users" element={<Users />}>
               <Route index element={<UsersList />}></Route>
               <Route end path="add-users" element={<AddUser />}></Route>

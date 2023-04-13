@@ -114,7 +114,7 @@ export default function Layout({ children }) {
                 <p className='text-xl font-bold text-white'>{user?.firstName[0].toUpperCase()}</p>
               </div>
               <div className='flex flex-col justify-center'>
-                <h1 className='text-[16px] font-bold text-[#595659] leading-[18px]'>{user?.firstName + " " + user?.lastName || "Username"}</h1>
+                <h1 className='text-[16px] font-bold text-[#595659] leading-[18px]'>{user?.firstName && user?.lastName ? user?.firstName + " " + user?.lastName : "Username"}</h1>
                 <p className='text-sm text-[#595659] leading-[18px]'>{user?.role || "User Role"}</p>
               </div>
             </div>

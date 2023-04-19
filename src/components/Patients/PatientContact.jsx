@@ -5,8 +5,16 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { doc, setDoc } from "firebase/firestore";
 import { toast } from 'react-toastify';
 import { db } from '../Utils/firebase';
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
-import { storage } from "../Utils/firebase";
+
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+  emergencyFirstName: Yup.string().nullable(true).required('First Name is required'),
+  emergencylastName: Yup.string().required('Last Name is required'),
+  emergencyrelationShipToPatient: Yup.string().required('Relationship to Patient is required'),
+  emergencyWorkPhone: Yup.string().required('Work Phone: is required'),
+  emergencyCellPhone: Yup.string().nullable(false).required('Cell Phone is required'),
+});
 
 export default function PatientContact() {
 
@@ -54,7 +62,16 @@ export default function PatientContact() {
       emergencyWorkPhone:formRef.current.emergencyWorkPhone.value,
       emergencyCellPhone:formRef.current.emergencyCellPhone.value,
     };
-    addPatientMutation.mutate(data);
+
+    try {
+      await validationSchema.validate(data,{ abortEarly: false });
+      // Form is valid
+      addPatientMutation.mutate(data);
+    } catch (errors) {
+      console.error(errors.inner[0]);
+      // toast.error(errors.inner[0].path+" is required");
+      toast.error(errors.inner[0].message+"");
+    }
   }
 
   const backNavigationHandler = () => {
@@ -82,10 +99,10 @@ export default function PatientContact() {
           <input defaultValue={formData.emergencyFirstName} name="emergencyFirstName" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[50%]' placeholder='First Name' />
           <input defaultValue={formData.emergencylastName} name="emergencylastName" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[50%]' placeholder='Last Name' />
         </div>
-        <input defaultValue={formData.emergencyrelationShipToPatient} name="emergencyrelationShipToPatient" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Relationship to Patient:' type={"text"} />
+        <input defaultValue={formData.emergencyrelationShipToPatient} name="emergencyrelationShipToPatient" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Relationship to Patient' type={"text"} />
         {/* <input defaultValue={formData.emergencyHomePhone} name="emergencyHomePhone" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Home Phone:' type={"number"} /> */}
-        <input defaultValue={formData.emergencyWorkPhone} name="emergencyWorkPhone" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Work Phone:' type={"number"} />
-        <input defaultValue={formData.emergencyCellPhone} name="emergencyCellPhone" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Cell Phone:' type={"number"} />
+        <input defaultValue={formData.emergencyWorkPhone} name="emergencyWorkPhone" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Work Phone' type={"number"} />
+        <input defaultValue={formData.emergencyCellPhone} name="emergencyCellPhone" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Cell Phone' type={"number"} />
         <div className='flex gap-4 mt-2'>
           <button onClick={(e) => {backNavigationHandler();e.stopPropagation()}} type="button" className='w-32 h-12 border-2 border-[#AE89A5] text-xl text-[#AE89A5] hover:bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:text-white'>Back</button>
           {addPatientMutation.isLoading?

@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query'
-import React from 'react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import React, { useEffect } from 'react'
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../Utils/firebase';
 import UserTableRow from './UserTableRow';
@@ -20,6 +20,7 @@ export default function UsersList() {
     })
     return data;
   });
+
 
   return (
     <div>

@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom'
 export default function PatientDetailInformation() {
   const location = useLocation();
   const [patient, setPatient] = useState(location.state)
+
   
   return (
     <div className='pt-6 mb-10 px-4 '>
@@ -16,10 +17,10 @@ export default function PatientDetailInformation() {
       </div>
       <div className='mt-4 flex flex-col gap-2'>
         <div>
-          <span className='inline-block text-lg font-[500] w-[170px]'>First Name:</span> <p className='inline text-lg'>{patient.firstName}</p>
+          <span className='inline-block text-lg font-[500] w-[170px]'>Last Name:</span> <p className='inline text-lg'>{`${patient?.title}.${patient?.lastName}`}</p>
         </div>
         <div>
-          <span className='inline-block text-lg font-[500] w-[170px]'>Last Name:</span> <p className='inline text-lg'>{patient.lastName}</p>
+          <span className='inline-block text-lg font-[500] w-[170px]'>First Name:</span> <p className='inline text-lg'>{`${patient?.title}.${patient?.firstName}`}</p>
         </div>
         <div>
           <span className='inline-block text-lg font-[500] w-[170px]'>Reffering Doctor:</span> <p className='inline text-lg'>{`${patient.refferingDoctor.firstName} ${patient.refferingDoctor.lastName}`}</p>
@@ -35,6 +36,9 @@ export default function PatientDetailInformation() {
         </div>
         <div>
           <span className='inline-block text-lg font-[500] w-[170px]'>Gender:</span> <p className='inline text-lg'>{`${patient.gender}`}</p>
+        </div>
+        <div>
+          <span className='inline-block text-lg font-[500] w-[170px]'>Age:</span> <p className='inline text-lg'>{`${patient?.age || ""}`}</p>
         </div>
         <div>
           <span className='inline-block text-lg font-[500] w-[170px]'>Physical Address:</span> <p className='inline text-lg'>{`${patient.physicalAddress}`}</p>

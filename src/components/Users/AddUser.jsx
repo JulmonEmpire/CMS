@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useRef } from 'react'
 import { CgDetailsMore } from 'react-icons/cg';
 import { auth, db } from '../Utils/firebase';
@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 export default function AddUser() {
   const formRef = useRef();
   const navigate = useNavigate();
+  const queryClient=useQueryClient();
 
   const signupMutation = useMutation({
     mutationFn: async (data) => {
@@ -24,6 +25,7 @@ export default function AddUser() {
         })
     },
     onSuccess: () => {
+      queryClient.invalidateQueries(['users']);
       toast.success("User created successfully");
       navigate('/users');
     },

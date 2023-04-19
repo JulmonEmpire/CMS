@@ -18,6 +18,8 @@ export default function PatientsList() {
   });
 
 
+  console.log(patientQuery.data);
+
   return (
     <div className='h-[75.5vh]'>
     {patientQuery.isLoading ? <img className='w-[50px] m-auto mt-10' src='/Loading.svg' /> :
@@ -25,8 +27,9 @@ export default function PatientsList() {
         <thead className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] h-16'>
           <tr className='text-white text-left'>
             <td className='p-2'>#</td>
-            <th className='p-2'>First Name</th>
             <th className='p-2'>Last Name</th>
+            <th className='p-2'>First Name</th>
+            <th className='p-2'>Email</th>
             <th className='p-2'>Gender</th>
             <th className='p-2'>Reffering Dr</th>
             <th className='p-2'>Medical Aid</th>

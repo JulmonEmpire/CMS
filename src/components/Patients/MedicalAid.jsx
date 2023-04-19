@@ -2,6 +2,18 @@ import { useQueryClient } from '@tanstack/react-query';
 import React, { useEffect, useRef, useState } from 'react'
 import { AiFillMedicineBox } from 'react-icons/ai';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+  medicalAidName: Yup.object().nullable(true).required('MedicalAid is required').notOneOf(["null"]),
+  memberShipNumber: Yup.string().required('Membership number is required'),
+  dependentCode: Yup.string().required('Dependent Code is required'),
+  mainMember: Yup.string().required('Main member is required'),
+  idNo: Yup.string().nullable(false).required('ID No is required'),
+  relationShipToPatient: Yup.string().nullable(true).required('Relationship to patient is required').notOneOf(["null"]),
+});
 
 export default function MedicalAid() {
   const formRef = useRef();
@@ -23,25 +35,32 @@ export default function MedicalAid() {
     const data = {
       ...location.state.data,
       medicalAidName: JSON.parse(formRef.current.medicalAidName.selectedOptions[0].getAttribute('data-option')),
-      medicalAidNo: formRef.current.medicalAidNo.value,
+      memberShipNumber: formRef.current.memberShipNumber.value,
       dependentCode: formRef.current.dependentCode.value,
       mainMember: formRef.current.mainMember.value,
-      birthDate: formRef.current.birthDate.value,
       idNo: formRef.current.idNo.value,
       relationShipToPatient: formRef.current.relationShipToPatient.value,
     }
     console.log(data)
-    navigate("/patients/add-patient/contact", { state: { data: data } })
+
+    try {
+      await validationSchema.validate(data,{ abortEarly: false });
+      // Form is valid
+      navigate("/patients/add-patient/contact", { state: { data: data } })
+    } catch (errors) {
+      console.error(errors.inner[0]);
+      // toast.error(errors.inner[0].path+" is required");
+      toast.error(errors.inner[0].message+"");
+    }
   }
 
   const backNavigationHandler = () => {
     let data = {
       ...location.state.data,
       medicalAidName: formRef.current.medicalAidName.value,
-      medicalAidNo: formRef.current.medicalAidNo.value,
+      memberShipNumber: formRef.current.memberShipNumber.value,
       dependentCode: formRef.current.dependentCode.value,
       mainMember: formRef.current.mainMember.value,
-      birthDate: formRef.current.birthDate.value,
       idNo: formRef.current.idNo.value,
       relationShipToPatient: formRef.current.relationShipToPatient.value,
     }
@@ -71,13 +90,12 @@ export default function MedicalAid() {
             )
           })}
         </select>
-        <input defaultValue={formData?.medicalAidNo} name="medicalAidNo" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Medical Aid No' type={"number"} />
+        <input defaultValue={formData?.memberShipNumber} name="memberShipNumber" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Membership Number' type={"number"} />
         <input defaultValue={formData?.dependentCode} name="dependentCode" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Dependent code' type={"number"} />
         <input defaultValue={formData?.mainMember} name="mainMember" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Main Member' />
-        <input defaultValue={formData?.birthDate} name="birthDate" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Birth Date' type={"text"} onFocus={(e) => { e.target.type = "date"; }} onBlur={(e) => { if (e.target.value === "") { e.target.type = "text" }; }} />
         <input defaultValue={formData?.idNo} name="idNo" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='ID No' />
         <select defaultValue={location.state?.data?.relationShipToPatient} name="relationShipToPatient" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
-          <option selected disabled value={null}>Relationship to Patient</option>
+          <option selected disabled value={"null"}>Relationship to Patient</option>
           <option value={"Self"}>Self</option>
           <option value={"Spouse"}>Spouse</option>
           <option value={"Parent/Guardian"}>Parent/Guardian</option>

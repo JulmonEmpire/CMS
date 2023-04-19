@@ -18,7 +18,7 @@ export default function MedicalAidInformation() {
           <span className='inline-block text-lg font-[500] w-[220px]'>Medical Aid:</span> <p className='inline text-lg'>{patient.medicalAidName.name}</p>
         </div>
         <div>
-          <span className='inline-block text-lg font-[500] w-[220px]'>Medical Aid No:</span> <p className='inline text-lg'>{patient.medicalAidNo}</p>
+          <span className='inline-block text-lg font-[500] w-[220px]'>Membership Number:</span> <p className='inline text-lg'>{patient?.memberShipNumber}</p>
         </div>
         <div>
           <span className='inline-block text-lg font-[500] w-[220px]'>Dependent code:</span> <p className='inline text-lg'>{patient.dependentCode}</p>

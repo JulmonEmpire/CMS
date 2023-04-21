@@ -23,7 +23,7 @@ export default function EditPatientMedicalAid() {
   console.log("2", location.state)
 
   const [formData, setFormData] = useState({});
-
+  
   useEffect(() => {
     if (location.state && location.state.data) {
       setFormData(location.state.data);
@@ -46,7 +46,7 @@ export default function EditPatientMedicalAid() {
     try {
       await validationSchema.validate(data, { abortEarly: false });
       // Form is valid
-      navigate("/patients/add-patient/contact", { state: { data: data } })
+      navigate("/patients/edit-contact", { state: { data: data } })
     } catch (errors) {
       console.error(errors.inner[0]);
       // toast.error(errors.inner[0].path+" is required");
@@ -64,7 +64,8 @@ export default function EditPatientMedicalAid() {
       idNo: formRef.current.idNo.value,
       relationShipToPatient: formRef.current.relationShipToPatient.value,
     }
-    navigate("/patients/add-patient", { state: { data: data } })
+
+    navigate("/patients/edit", { state: { data: data } })
   }
 
   const queryClient = useQueryClient();
@@ -79,7 +80,7 @@ export default function EditPatientMedicalAid() {
         <div className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] w-16 h-14 flex justify-center items-center shadow-md rounded-sm'>
           <AiFillMedicineBox className='text-white text-2xl' />
         </div>
-        <h1 className='self-end mb-2 font-bold text-xl text-[#595659]'>MEDICAL AID DETAILS</h1>
+        <h1 className='self-end mb-2 font-bold text-xl text-[#595659]'>EDIT MEDICAL AID DETAILS</h1>
       </div>
       <form onSubmit={formSubmitHandler} ref={formRef} className='py-8 flex flex-col gap-4 w-[60%] text-[#595659]'>
         <select key={formData?.medicalAidName?.id} defaultValue={formData?.medicalAidName?.id} name="medicalAidName" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
@@ -105,6 +106,7 @@ export default function EditPatientMedicalAid() {
         <div className='flex gap-4 mt-2'>
           <button onClick={() => { backNavigationHandler() }} className='w-32 h-12 border-2 border-[#AE89A5] text-xl text-[#AE89A5] hover:bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:text-white'>Back</button>
           <button className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Next</button>
+          <button className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Update</button>
         </div>
       </form>
     </div>

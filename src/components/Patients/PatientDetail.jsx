@@ -137,7 +137,7 @@ export default function PatientDetail() {
             )
           })}
         </select>
-        <select key={formData?.hospital?.id} defaultValue={formData?.hospital?.id} name='placesOfService' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
+        <select key={formData?.placesOfService?.id} defaultValue={formData?.placesOfService?.id} name='placesOfService' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
           <option selected disabled value={"null"}>Places Of Service</option>
           {placesOfService?.map((place) => {
             return (

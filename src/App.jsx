@@ -35,6 +35,7 @@ import EditPlacesOfService from "./components/PlacesOfService/EditPlacesOfServic
 import EditDoctor from "./components/Doctor/EditDoctor";
 import EditPatientDetail from "./components/Patients/EditPatientDetail";
 import EditPatientMedicalAid from "./components/Patients/EditPatientMedicalAid";
+import EditPatientContact from "./components/Patients/EditPatientContact";
 
 function App() {
   return (
@@ -55,7 +56,7 @@ function App() {
               </Route>
               <Route path="edit" element={<EditPatientDetail />}></Route>
               <Route path="edit-medical-aid" element={<EditPatientMedicalAid />}></Route>
-              <Route path="edit-contact" element={<PatientContact />}></Route>
+              <Route path="edit-contact" element={<EditPatientContact />}></Route>
             </Route>
             <Route path="patients-information" element={<PatientInformation></PatientInformation>}>
               <Route index element={<PatientDetailInformation></PatientDetailInformation>}></Route>

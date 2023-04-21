@@ -109,7 +109,7 @@ export default function EditPatientDetail() {
   }, [queryClient]);
 
   return (
-    <div className='pt-4 px-4 h-full'>
+    <div className='pt-4 px-4 w-full h-full max-h-[100%] bg-[white] rounded-xl overflow-auto'>
       <div className='flex gap-4'>
         <div className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] w-16 h-14 flex justify-center items-center shadow-md rounded-sm'>
           <CgDetailsMore className='text-white text-2xl' />
@@ -136,7 +136,7 @@ export default function EditPatientDetail() {
             )
           })}
         </select>
-        <select key={formData?.hospital?.id} defaultValue={formData?.hospital?.id} name='placesOfService' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
+        <select key={formData?.placesOfService?.id} defaultValue={formData?.placesOfService?.id} name='placesOfService' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
           <option selected disabled value={"null"}>Places Of Service</option>
           {placesOfService?.map((place) => {
             return (

@@ -33,6 +33,8 @@ import PatientNotes from "./components/PatientInformation/PatientNotes";
 import EditMedicalAid from "./components/MedicalAid/EditMedicalAid";
 import EditPlacesOfService from "./components/PlacesOfService/EditPlacesOfService";
 import EditDoctor from "./components/Doctor/EditDoctor";
+import EditPatientDetail from "./components/Patients/EditPatientDetail";
+import EditPatientMedicalAid from "./components/Patients/EditPatientMedicalAid";
 
 function App() {
   return (
@@ -42,13 +44,18 @@ function App() {
         <Route path="/" element={<Protected />}>
           <Route path="/" element={<Layout />}>
             <Route path="dashboard" element={<Dashboard />}></Route>
-            <Route path="patients" element={<Patients />}>
-              <Route index element={<PatientsList />}></Route>
-              <Route end path="add-patient" element={<AddPatient />}>
-                <Route index element={<PatientDetail />}></Route>
-                <Route path="medical-aid" element={<MedicalAid />}></Route>
-                <Route path="contact" element={<PatientContact />}></Route>
+            <Route path="patients">
+              <Route element={<Patients />}>
+                <Route index element={<PatientsList />}></Route>
+                <Route path="add-patient" element={<AddPatient />}>
+                  <Route index element={<PatientDetail />}></Route>
+                  <Route path="medical-aid" element={<MedicalAid />}></Route>
+                  <Route path="contact" element={<PatientContact />}></Route>
+                </Route>
               </Route>
+              <Route path="edit" element={<EditPatientDetail />}></Route>
+              <Route path="edit-medical-aid" element={<EditPatientMedicalAid />}></Route>
+              <Route path="edit-contact" element={<PatientContact />}></Route>
             </Route>
             <Route path="patients-information" element={<PatientInformation></PatientInformation>}>
               <Route index element={<PatientDetailInformation></PatientDetailInformation>}></Route>

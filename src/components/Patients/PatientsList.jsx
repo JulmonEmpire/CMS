@@ -33,7 +33,7 @@ export default function PatientsList() {
             <th className='p-2'>Gender</th>
             <th className='p-2'>Reffering Dr</th>
             <th className='p-2'>Medical Aid</th>
-            <th className='p-2'>Hospital</th>
+            <th className='p-2'>Places of service</th>
             <th className='p-2 text-center'>Actions</th>
           </tr>
         </thead>

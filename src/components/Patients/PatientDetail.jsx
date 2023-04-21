@@ -12,7 +12,7 @@ const validationSchema = Yup.object().shape({
   lastName: Yup.string().required('Last name is required'),
   email: Yup.string().email('Invalid email address').required('Email is required'),
   refferingDoctor: Yup.object().nullable(false).required('Referring doctor is required'),
-  hospital: Yup.object().nullable(false).required('Hospital is required'),
+  placesOfService: Yup.object().nullable(false).required('places of service is required'),
   idNumber: Yup.string().required('ID number is required'),
   dateOfBirth: Yup.string().required('Date of birth is required'),
   gender: Yup.string().nullable(false).required('Gender is required').notOneOf(["null"],"Select Gender from given values"),
@@ -31,7 +31,6 @@ export default function PatientDetail() {
   const navigate = useNavigate();
   const location = useLocation();
   const [formData, setFormData] = useState({});
-  const [scannedNotes, setScannedNotes] = useState([]);
 
   useEffect(() => {
     if (location.state && location.state.data) {
@@ -49,7 +48,7 @@ export default function PatientDetail() {
       lastName: formRef.current.lastName.value,
       email: formRef.current.email.value,
       refferingDoctor: JSON.parse(formRef.current.refferingDoctor.selectedOptions[0].getAttribute('data-option')),
-      hospital: JSON.parse(formRef.current.hospital.selectedOptions[0].getAttribute('data-option')),
+      placesOfService: JSON.parse(formRef.current.placesOfService.selectedOptions[0].getAttribute('data-option')),
       dateOfBirth: formRef.current.dateOfBirth.value,
       idNumber: formRef.current.idNumber.value,
       gender: formRef.current.gender.value,
@@ -63,8 +62,6 @@ export default function PatientDetail() {
       martialStatus: formRef.current.martialStatus.value,
       race: formRef.current.race.value,
     }
-
-    console.log(data);
 
     try {
       await validationSchema.validate(data,{ abortEarly: false });
@@ -105,10 +102,10 @@ export default function PatientDetail() {
 
   const queryClient = useQueryClient();
   const [doctors, setDoctors] = useState();
-  const [hospitals, sethospitals] = useState();
+  const [placesOfService, setPlacesOfService] = useState();
   useEffect(() => {
     setDoctors(queryClient.getQueryData(['doctor']))
-    sethospitals(queryClient.getQueryData(['hospital']))
+    setPlacesOfService(queryClient.getQueryData(['placesOfService']))
   }, [queryClient]);
 
 
@@ -140,11 +137,11 @@ export default function PatientDetail() {
             )
           })}
         </select>
-        <select key={formData?.hospital?.id} defaultValue={formData?.hospital?.id} name='hospital' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
-          <option selected disabled value={"null"}>Hospital</option>
-          {hospitals?.map((hospital) => {
+        <select key={formData?.hospital?.id} defaultValue={formData?.hospital?.id} name='placesOfService' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
+          <option selected disabled value={"null"}>Places Of Service</option>
+          {placesOfService?.map((place) => {
             return (
-              <option value={hospital.id} data-option={JSON.stringify(hospital)}>{hospital?.name}</option>
+              <option value={place.id} data-option={JSON.stringify(place)}>{place?.name}</option>
             )
           })}
         </select>
@@ -155,6 +152,7 @@ export default function PatientDetail() {
           <option selected disabled value={"null"}>Gender</option>
           <option value={"Male"}>Male</option>
           <option value={"Female"}>Female</option>
+          <option value={"Other"}>Other</option>
         </select>
         <input defaultValue={formData?.physicalAddress} name='physicalAddress' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Physical Address' type={"text"} />
         <div className='flex gap-4'>
@@ -172,6 +170,7 @@ export default function PatientDetail() {
           <option value={"Married"}>Married</option>
           <option value={"Separated"}>Separated</option>
           <option value={"Widowed"}>Widowed</option>
+          <option value={"Other"}>Other</option>
         </select>
         <select defaultValue={location.state?.data?.race || null} name='race' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
           <option selected disabled value={"null"}>Race</option>
@@ -179,7 +178,7 @@ export default function PatientDetail() {
           <option value={"Asian"}>Asian</option>
           <option value={"White"}>White</option>
           <option value={"Coloured"}>Coloured</option>
-          <option value={"other"}>other</option>
+          <option value={"Other"}>Other</option>
         </select>
         <button className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Next</button>
       </form>

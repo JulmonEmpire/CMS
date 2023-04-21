@@ -14,24 +14,24 @@ import MedicalAid from "./components/Patients/MedicalAid";
 import PatientContact from "./components/Patients/PatientContact";
 import { ToastContainer } from "react-toastify";
 import EditUser from "./components/Users/EditUser";
-import Hospital from "./pages/Hospitals";
+import Hospital from "./pages/PlacesOfService";
 import Doctor from "./pages/Doctors";
-import Hospitals from "./pages/Hospitals";
+import PlacesOfService from "./pages/PlacesOfService";
 import Doctors from "./pages/Doctors";
 import MedicalAids from "./pages/MedicalAids";
 import MedicalAidList from "./components/MedicalAid/MedicalAidList";
 import AddMedicalAid from "./components/MedicalAid/AddMedicalAid";
 import DoctorList from "./components/Doctor/DoctorList";
 import AddDoctor from "./components/Doctor/AddDoctor";
-import HospitalList from "./components/Hospital/HospitalList";
-import AddHospital from "./components/Hospital/AddHospital";
+import PlacesOfServiceList from "./components/PlacesOfService/PlacesOfServiceList";
+import AddPlacesOfService from "./components/PlacesOfService/AddPlacesOfService";
 import PatientInformation from "./components/Patients/PatientInformation";
 import PatientContactInformation from "./components/PatientInformation/PatientContactInformation";
 import MedicalAidInformation from "./components/PatientInformation/MedicalAidInformation";
 import PatientDetailInformation from "./components/PatientInformation/PatientDetailInformation";
 import PatientNotes from "./components/PatientInformation/PatientNotes";
 import EditMedicalAid from "./components/MedicalAid/EditMedicalAid";
-import EditHospital from "./components/Hospital/EditHospital";
+import EditPlacesOfService from "./components/PlacesOfService/EditPlacesOfService";
 import EditDoctor from "./components/Doctor/EditDoctor";
 
 function App() {
@@ -69,12 +69,12 @@ function App() {
               </Route>
               <Route end path="edit" element={<EditMedicalAid />}></Route>
             </Route>
-            <Route path="hospitals" >
-              <Route element={<Hospitals />}>
-                <Route index element={<HospitalList />}></Route>
-                <Route end path="add" element={<AddHospital />}></Route>
+            <Route path="places-of-service" >
+              <Route element={<PlacesOfService />}>
+                <Route index element={<PlacesOfServiceList />}></Route>
+                <Route end path="add" element={<AddPlacesOfService />}></Route>
               </Route>
-              <Route end path="edit" element={<EditHospital />}></Route>
+              <Route end path="edit" element={<EditPlacesOfService />}></Route>
             </Route>
             <Route path="doctors">
               <Route element={<Doctors />}>

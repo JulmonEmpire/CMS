@@ -6,7 +6,7 @@ import { db } from '../Utils/firebase';
 import { toast } from 'react-toastify';
 import { CgDetailsMore } from 'react-icons/cg';
 
-export default function EditHospital() {
+export default function EditPlacesOfService() {
   const location = useLocation();
   const [initialValues, setInitialValues] = useState(location.state)
   const formRef = useRef();
@@ -16,9 +16,9 @@ export default function EditHospital() {
   const editMutation = useMutation({
     mutationFn: async (data) => {
       const batch = writeBatch(db);
-      const hospitalRef = doc(db, "hospital", data.id);
+      const hospitalRef = doc(db, "placesOfService", data.id);
       const patientsRef = collection(db, "patients");
-      const hospitalQuery = query(patientsRef, where("hospital.id", "==", data.id));
+      const hospitalQuery = query(patientsRef, where("placesOfService.id", "==", data.id));
 
       batch.update(hospitalRef, data);
 
@@ -27,22 +27,22 @@ export default function EditHospital() {
         const docRef = doc.ref;
         const updatedPatient = {
           ...doc.data(),
-          hospital: data
+          placesOfService: data
         };
         batch.update(docRef, updatedPatient);
       });
 
       const res = await batch.commit();
-      queryClient.invalidateQueries(['hospital']);
+      queryClient.invalidateQueries(['placesOfService']);
       return res;
     },
     onSuccess: () => {
-      toast.success("Hospital added successfully");
-      // queryClient.invalidateQueries(['hospital']);
-      navigate('/hospitals');
+      toast.success("Places of service updated successfully");
+      // queryClient.invalidateQueries(['placesOfService']);
+      navigate('/places-of-service');
     },
     onError: () => {
-      toast.error("Error adding hospital");
+      toast.error("Error updating places of service");
     }
   });
 

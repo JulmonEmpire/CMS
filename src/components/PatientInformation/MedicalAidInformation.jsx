@@ -24,9 +24,6 @@ export default function MedicalAidInformation() {
           <span className='inline-block text-lg font-[500] w-[220px]'>Dependent code:</span> <p className='inline text-lg'>{patient.dependentCode}</p>
         </div>
         <div>
-          <span className='inline-block text-lg font-[500] w-[220px]'>Birth Date:</span> <p className='inline text-lg'>{patient.birthDate}</p>
-        </div>
-        <div>
           <span className='inline-block text-lg font-[500] w-[220px]'>ID No:</span> <p className='inline text-lg'>{patient.idNo}</p>
         </div>
         <div>

@@ -45,7 +45,7 @@ export default function PatientRow({ patient, index }) {
       <td className='p-2'>{patient?.gender}</td>
       <td className='p-2'>{patient?.refferingDoctor?.firstName}</td>
       <td className='p-2'>{patient?.medicalAidName?.name}</td>
-      <td className='p-2'>{patient?.hospital?.name}</td>
+      <td className='p-2'>{patient?.placesOfService?.name}</td>
       <td className='p-2 flex justify-center relative'>
         <div onClick={(e) => { setContextMenu(!showContextMenu); e.stopPropagation(); }} className='relative flex flex-col gap-[5px] w-[40px] h-[40px] hover:bg-[rgba(0,0,0,0.05)] rounded-full justify-center items-center cursor-pointer'>
           <div className='w-[3px] h-[3px] bg-gradient-to-r from-[#6C526F] to-[#AE89A5] rounded-full'></div>

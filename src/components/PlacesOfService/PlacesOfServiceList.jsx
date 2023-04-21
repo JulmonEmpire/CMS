@@ -1,18 +1,17 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react'
-import HospitalRow from './HospitalRow';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../Utils/firebase';
+import PlacesOfServiceRow from './PlacesOfServiceRow';
 
-export default function HospitalList() {
+export default function PlacesOfServiceList() {
     
   const queryClient=useQueryClient();
-  const [hospitalQuery,setHospitalQuery]=useState();
-  console.log(queryClient.isFetching(['hospital']));
+  const [placesOfserviceQuery,setPlacesOfserviceQuery]=useState();
 
   useEffect(()=>{
     const unsubscribe = queryClient.getQueryCache().subscribe(() => {
-      setHospitalQuery(queryClient.getQueryData(['hospital']));
+      setPlacesOfserviceQuery(queryClient.getQueryData(['placesOfService']));
     });
 
     return () => {
@@ -21,9 +20,11 @@ export default function HospitalList() {
 
   },[location.pathname,queryClient])
 
+  console.log(placesOfserviceQuery);
+
   return (
     <div className='h-[75.5vh]'>
-    {/* {hospitalQuery.isLoading ? <img className='w-[50px] m-auto mt-10' src='/Loading.svg' /> : */}
+    {/* {placesOfserviceQuery.isLoading ? <img className='w-[50px] m-auto mt-10' src='/Loading.svg' /> : */}
       <table className="table-auto w-full mt-4">
         <thead className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] h-16'>
           <tr className='text-white text-left'>
@@ -36,9 +37,9 @@ export default function HospitalList() {
           </tr>
         </thead>
         <tbody>
-          {hospitalQuery?.map((hospital, index) => {
+          {placesOfserviceQuery?.map((place, index) => {
             return (
-              <HospitalRow key={hospital?.id} hospital={hospital} index={index} />
+              <PlacesOfServiceRow key={place?.id} place={place} index={index} />
             )
           })}
         </tbody>

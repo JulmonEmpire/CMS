@@ -92,7 +92,7 @@ export default function PatientContact() {
         <div className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] w-16 h-14 flex justify-center items-center shadow-md rounded-sm'>
           <MdContactEmergency className='text-white text-2xl' />
         </div>
-        <h1 className='self-end mb-2 font-bold text-xl text-[#595659]'>EMERGENCY / NEXT OF KIN CONTACT INFORMATION</h1>
+        <h1 className='self-end mb-2 font-bold text-xl text-[#595659]'>Next of Kin</h1>
       </div>
       <form onSubmit={formSubmitHandler} ref={formRef} className='py-8 flex flex-col gap-4 w-[60%] text-[#595659]'>
         <div className='flex gap-4'>

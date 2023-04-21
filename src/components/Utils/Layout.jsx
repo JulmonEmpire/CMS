@@ -52,13 +52,13 @@ export default function Layout({ children }) {
     return data;
   });
 
-  const hospitalQuery = useQuery(["hospital"], async () => {
+  const placesOfServiceQuery = useQuery(["placesOfService"], async () => {
     let data = []
-    const querySnapshot = await getDocs(collection(db, "hospital"));
+    const querySnapshot = await getDocs(collection(db, "placesOfService"));
     querySnapshot.forEach((doc) => {
-      let medicalAiddata = doc.data();
-      medicalAiddata.id = doc.id;
-      data.push(medicalAiddata);
+      let placesOfServicedata = doc.data();
+      placesOfServicedata.id = doc.id;
+      data.push(placesOfServicedata);
     })
     console.log(data);
     return data;
@@ -83,27 +83,27 @@ export default function Layout({ children }) {
           <ul className='text-lg space-y-6'>
             <NavLink to={"/dashboard"} className={({ isActive }) => isActive ? 'bg-gradient-to-r from-[#6C526F] to-[#AE89A5] text-[#fff] flex items-center space-x-4 h-14 p-4 rounded-xl transition-all duration-500' : 'flex items-center space-x-4 h-14 p-4 rounded-xl text-[#595659] hover:text-[#6C526F] transition-all duration-500 hover:bg-[rgba(0,0,0,0.1)]'}>
               <MdDashboard className='text-2xl' />
-              <li> Dashboard</li>
+              <li>Dashboard</li>
             </NavLink>
             <NavLink to={"/patients"} className={({ isActive }) => isActive || location.pathname.includes("/patients") ? 'bg-gradient-to-r from-[#6C526F] to-[#AE89A5] text-[#fff] flex items-center space-x-4 h-14 p-4 rounded-xl transition-all duration-500' : 'flex items-center space-x-4 h-14 p-4 rounded-xl text-[#595659] hover:text-[#6C526F] transition-all duration-500 hover:bg-[rgba(0,0,0,0.1)]'}>
               <FaUserInjured className='text-2xl' />
-              <li> Patients</li>
+              <li>Patients</li>
             </NavLink>
             <NavLink to={"/users"} className={({ isActive }) => isActive || location.pathname.includes("/users") ? 'bg-gradient-to-r from-[#6C526F] to-[#AE89A5] text-[#fff] flex items-center space-x-4 h-14 p-4 rounded-xl transition-all duration-500' : 'flex items-center space-x-4 h-14 p-4 rounded-xl text-[#595659] hover:text-[#6C526F] transition-all duration-500 hover:bg-[rgba(0,0,0,0.1)]'}>
               <ImUser className='text-2xl' />
-              <li> Users</li>
+              <li>Users</li>
             </NavLink>
             <NavLink to={"/medical-aids"} className={({ isActive }) => isActive ? 'bg-gradient-to-r from-[#6C526F] to-[#AE89A5] text-[#fff] flex items-center space-x-4 h-14 p-4 rounded-xl transition-all duration-500' : 'flex items-center space-x-4 h-14 p-4 rounded-xl text-[#595659] hover:text-[#6C526F] transition-all duration-500 hover:bg-[rgba(0,0,0,0.1)]'}>
               <ImAidKit className='text-2xl' />
-              <li> Medical Aids</li>
+              <li>Medical Aids</li>
             </NavLink>
             <NavLink to={"/doctors"} className={({ isActive }) => isActive ? 'bg-gradient-to-r from-[#6C526F] to-[#AE89A5] text-[#fff] flex items-center space-x-4 h-14 p-4 rounded-xl transition-all duration-500' : 'flex items-center space-x-4 h-14 p-4 rounded-xl text-[#595659] hover:text-[#6C526F] transition-all duration-500 hover:bg-[rgba(0,0,0,0.1)]'}>
               <FaUserMd className='text-2xl' />
-              <li> Doctor</li>
+              <li>Doctor</li>
             </NavLink>
-            <NavLink to={"/hospitals"} className={({ isActive }) => isActive ? 'bg-gradient-to-r from-[#6C526F] to-[#AE89A5] text-[#fff] flex items-center space-x-4 h-14 p-4 rounded-xl transition-all duration-500' : 'flex items-center space-x-4 h-14 p-4 rounded-xl text-[#595659] hover:text-[#6C526F] transition-all duration-500 hover:bg-[rgba(0,0,0,0.1)]'}>
+            <NavLink to={"/places-of-service"} className={({ isActive }) => isActive ? 'bg-gradient-to-r from-[#6C526F] to-[#AE89A5] text-[#fff] flex items-center space-x-4 h-14 p-4 rounded-xl transition-all duration-500' : 'flex items-center space-x-4 h-14 p-4 rounded-xl text-[#595659] hover:text-[#6C526F] transition-all duration-500 hover:bg-[rgba(0,0,0,0.1)]'}>
               <RiHospitalFill className='text-2xl' />
-              <li> Hospital</li>
+              <li>Places of service</li>
             </NavLink>
           </ul>
           {/* <NavLink to={'/'} onClick={()=> {localStorage.clear();useQuery.removeQueries();}} className="flex items-center space-x-4 h-14 p-4 rounded-xl hover:bg-[#AF91E920] transition-colors">
@@ -114,7 +114,7 @@ export default function Layout({ children }) {
       </div>
       <div className='bg-[#EEEEEE] flex-1 p-2 max-h-[100vh] space-y-[1%]'>
         <div className='h-[8%] w-full rounded-xl bg-white flex justify-between items-center px-8'>
-          <h1 className='text-[#595659] text-lg font-bold'>{location.pathname.includes("/patients") ? "Patients" : location.pathname.includes("/dashboard") ? "Dashboard" : location.pathname.includes("/doctors") ? "Doctor" : location.pathname.includes("/hospitals") ? "Hospital" : location.pathname.includes("/medical-aids") ? "Medical Aids" : "Users"}</h1>
+          <h1 className='text-[#595659] text-lg font-bold'>{location.pathname.includes("/patients") ? "Patients" : location.pathname.includes("/dashboard") ? "Dashboard" : location.pathname.includes("/doctors") ? "Doctor" : location.pathname.includes("/places-of-service") ? "Places of service" : location.pathname.includes("/medical-aids") ? "Medical Aids" : "Users"}</h1>
           <div className='flex gap-8 items-center'>
             <div className='flex gap-2'>
               <div className='w-[45px] h-[45px] bg-[#AE89A5] rounded-full flex justify-center items-center'>
@@ -129,7 +129,7 @@ export default function Layout({ children }) {
           </div>
         </div>
         <div className='h-[90.2%] bg-white rounded-xl'>
-          {!doctorQuery.isLoading && !hospitalQuery.isLoading && !medicalAidQuery.isLoading ? <Outlet /> : <img className='w-[40px] m-auto pt-[20px]' src='/Loading.svg' />}
+          {!doctorQuery.isLoading && !placesOfServiceQuery.isLoading && !medicalAidQuery.isLoading ? <Outlet /> : <img className='w-[40px] m-auto pt-[20px]' src='/Loading.svg' />}
         </div>
       </div>
     </div>

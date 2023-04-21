@@ -26,7 +26,7 @@ export default function PatientDetailInformation() {
           <span className='inline-block text-lg font-[500] w-[170px]'>Reffering Doctor:</span> <p className='inline text-lg'>{`${patient.refferingDoctor.firstName} ${patient.refferingDoctor.lastName}`}</p>
         </div>
         <div>
-          <span className='inline-block text-lg font-[500] w-[170px]'>Hospital:</span> <p className='inline text-lg'>{`${patient.hospital.name}`}</p>
+          <span className='inline-block text-lg font-[500] w-[170px]'>Places Of Service:</span> <p className='inline text-lg'>{`${patient.placesOfService.name}`}</p>
         </div>
         <div>
           <span className='inline-block text-lg font-[500] w-[170px]'>ID Number:</span> <p className='inline text-lg'>{`${patient.idNumber}`}</p>

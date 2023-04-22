@@ -6,6 +6,15 @@ import { db } from '../Utils/firebase';
 import { toast } from 'react-toastify';
 import { CgDetailsMore } from 'react-icons/cg';
 
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required('Medical Name is required'),
+  email: Yup.string().email('Invalid email address').required('Email is required'),
+  contactNumber: Yup.string().required('Contact Number is required'),
+  address: Yup.string().required('Address is required'),
+});
+
 export default function EditMedicalAid() {
   const location = useLocation();
   const [initialValues, setInitialValues] = useState(location.state)
@@ -66,7 +75,13 @@ export default function EditMedicalAid() {
       toast.info("Nothing has been changed");
       return;
     }
-    editMutation.mutate(data);
+    try {
+      await validationSchema.validate(data, { abortEarly: false });
+      editMutation.mutate(data);
+    } catch (errors) {
+      console.error(errors.inner[0]);
+      toast.error(errors.inner[0].message + "");
+    }
   }
 
   return (

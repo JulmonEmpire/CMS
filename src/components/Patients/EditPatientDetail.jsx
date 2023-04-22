@@ -61,7 +61,7 @@ export default function EditPatientDetail() {
       martialStatus: formRef.current.martialStatus.value,
       race: formRef.current.race.value,
     }
-
+    return
     try {
       await validationSchema.validate(data, { abortEarly: false });
       // Form is valid
@@ -108,6 +108,40 @@ export default function EditPatientDetail() {
     setPlacesOfService(queryClient.getQueryData(['placesOfService']))
   }, [queryClient]);
 
+  const updatePatientHandler=async()=>{
+
+    let data = {
+      ...location.state?.data,
+      title: formRef.current.title.value,
+      firstName: formRef.current.firstName.value,
+      lastName: formRef.current.lastName.value,
+      email: formRef.current.email.value,
+      refferingDoctor: JSON.parse(formRef.current.refferingDoctor.selectedOptions[0].getAttribute('data-option')),
+      placesOfService: JSON.parse(formRef.current.placesOfService.selectedOptions[0].getAttribute('data-option')),
+      dateOfBirth: formRef.current.dateOfBirth.value,
+      idNumber: formRef.current.idNumber.value,
+      gender: formRef.current.gender.value,
+      age: formRef.current.age.value,
+      physicalAddress: formRef.current.physicalAddress.value,
+      city: formRef.current.city.value,
+      province: formRef.current.province.value,
+      postalCode: formRef.current.postalCode.value,
+      cellPhone: formRef.current.cellPhone.value,
+      workPhone: formRef.current.workPhone.value,
+      martialStatus: formRef.current.martialStatus.value,
+      race: formRef.current.race.value,
+    }
+
+    try {
+      await validationSchema.validate(data, { abortEarly: false });
+      // Form is valid
+      console.log(updating);
+    } catch (errors) {
+      console.error(errors.inner[0]);
+      toast.error(errors.inner[0].message + "");
+    }
+  }
+
   return (
     <div className='pt-4 px-4 w-full h-full max-h-[100%] bg-[white] rounded-xl overflow-auto'>
       <div className='flex gap-4'>
@@ -121,6 +155,7 @@ export default function EditPatientDetail() {
           <option selected disabled value={"null"}>Title</option>
           <option value={"Mr"}>Mr</option>
           <option value={"Mrs"}>Mrs</option>
+          <option value={"Miss"}>Miss</option>
           <option value={"Ms"}>Ms</option>
         </select>
         <div className='flex gap-4'>
@@ -181,7 +216,7 @@ export default function EditPatientDetail() {
         </select>
         <div className='flex gap-2'>
           <button className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Next</button>
-          <button className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Update</button>
+          <button onClick={updatePatientHandler} type='button' className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Update</button>
         </div>
       </form>
     </div>

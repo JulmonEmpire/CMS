@@ -6,6 +6,15 @@ import { useNavigate } from 'react-router-dom';
 import { db } from '../Utils/firebase';
 import { toast } from 'react-toastify';
 
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required('Medical Name is required'),
+  email: Yup.string().email('Invalid email address').required('Email is required'),
+  address: Yup.string().required('Address is required'),
+  contactNumber: Yup.string().required('Contact Number is required'),
+});
+
 export default function AddPlacesOfService() {
 
   const formRef = useRef();
@@ -34,7 +43,14 @@ export default function AddPlacesOfService() {
       address: formRef.current.address.value,
       contactNumber: formRef.current.contactNumber.value,
     }
-    placesOfServiceMutation.mutate(data);
+
+    try {
+      await validationSchema.validate(data, { abortEarly: false });
+      placesOfServiceMutation.mutate(data);
+    } catch (errors) {
+      console.error(errors.inner[0]);
+      toast.error(errors.inner[0].message + "");
+    }
   }
 
   return (

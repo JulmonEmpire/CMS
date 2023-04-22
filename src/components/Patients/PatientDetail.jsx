@@ -122,6 +122,7 @@ export default function PatientDetail() {
           <option selected disabled value={"null"}>Title</option>
           <option value={"Mr"}>Mr</option>
           <option value={"Mrs"}>Mrs</option>
+          <option value={"Miss"}>Miss</option>
           <option value={"Ms"}>Ms</option>
         </select>
         <div className='flex gap-4'>

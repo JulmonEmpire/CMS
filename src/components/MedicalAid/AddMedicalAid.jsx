@@ -6,11 +6,20 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { db } from '../Utils/firebase';
 
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required('Medical Name is required'),
+  email: Yup.string().email('Invalid email address').required('Email is required'),
+  contactNumber: Yup.string().required('Contact Number is required'),
+  address: Yup.string().required('Address is required'),
+});
+
 export default function AddMedicalAid() {
 
   const formRef = useRef();
   const navigate = useNavigate();
-  const queryClient=useQueryClient();
+  const queryClient = useQueryClient();
 
   const signupMutation = useMutation({
     mutationFn: async (data) => {
@@ -34,7 +43,13 @@ export default function AddMedicalAid() {
       contactNumber: formRef.current.contactNumber.value,
       address: formRef.current.address.value,
     }
-    signupMutation.mutate(data);
+    try {
+      await validationSchema.validate(data, { abortEarly: false });
+      signupMutation.mutate(data);
+    } catch (errors) {
+      console.error(errors.inner[0]);
+      toast.error(errors.inner[0].message + "");
+    }
   }
 
   return (

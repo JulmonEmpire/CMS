@@ -20,7 +20,6 @@ export default function MedicalAid() {
   const navigate = useNavigate();
 
   const location = useLocation();
-  console.log("2", location.state)
 
   const [formData, setFormData] = useState({});
 

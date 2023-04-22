@@ -6,6 +6,18 @@ import { useNavigate } from 'react-router-dom';
 import { db } from '../Utils/firebase';
 import { toast } from 'react-toastify';
 
+
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+  firstName: Yup.string().required('First Name is required'),
+  lastName: Yup.string().required('Last Name is required'),
+  email: Yup.string().email('Invalid email address').required('Email is required'),
+  practiceNumber: Yup.string().required('Practice Number is required'),
+  address: Yup.string().required('Address is required'),
+  contactNumber: Yup.string().required('Contact Number is required'),
+});
+
 export default function AddDoctor() {
   
   const formRef = useRef();
@@ -36,7 +48,13 @@ export default function AddDoctor() {
       address: formRef.current.address.value,
       contactNumber: formRef.current.contactNumber.value,
     }
-    doctorMutation.mutate(data);
+    try {
+      await validationSchema.validate(data, { abortEarly: false });
+      doctorMutation.mutate(data);
+    } catch (errors) {
+      console.error(errors.inner[0]);
+      toast.error(errors.inner[0].message + "");
+    }
   }
 
   return (

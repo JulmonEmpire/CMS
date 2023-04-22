@@ -6,12 +6,23 @@ import { db } from '../Utils/firebase';
 import { toast } from 'react-toastify';
 import { CgDetailsMore } from 'react-icons/cg';
 
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+  firstName: Yup.string().required('First Name is required'),
+  lastName: Yup.string().required('Last Name is required'),
+  email: Yup.string().email('Invalid email address').required('Email is required'),
+  practiceNumber: Yup.string().required('Practice Number is required'),
+  address: Yup.string().required('Address is required'),
+  contactNumber: Yup.string().required('Contact Number is required'),
+});
+
 export default function EditDoctor() {
   const location = useLocation();
-  const [initialValues, setInitialValues] = useState(location.state)
+  const [initialValues, setInitialValues] = useState(location.state);
   const formRef = useRef();
   const navigate = useNavigate();
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
 
   const editMutation = useMutation({
@@ -67,7 +78,13 @@ export default function EditDoctor() {
       return;
     }
 
-    editMutation.mutate(data);
+    try {
+      await validationSchema.validate(data, { abortEarly: false });
+      editMutation.mutate(data);
+    } catch (errors) {
+      console.error(errors.inner[0]);
+      toast.error(errors.inner[0].message + "");
+    }
   }
 
 

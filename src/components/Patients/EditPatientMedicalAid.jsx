@@ -1,10 +1,12 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { doc, updateDoc } from 'firebase/firestore';
 import React, { useEffect, useRef, useState } from 'react'
 import { AiFillMedicineBox } from 'react-icons/ai';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import * as Yup from 'yup';
+import { db } from '../Utils/firebase';
 
 const validationSchema = Yup.object().shape({
   medicalAidName: Yup.object().nullable(true).required('MedicalAid is required').notOneOf(["null"]),
@@ -23,7 +25,7 @@ export default function EditPatientMedicalAid() {
   console.log("2", location.state)
 
   const [formData, setFormData] = useState({});
-  
+
   useEffect(() => {
     if (location.state && location.state.data) {
       setFormData(location.state.data);
@@ -74,6 +76,43 @@ export default function EditPatientMedicalAid() {
     setMedicalAid(queryClient.getQueryData(['medicalAid']))
   }, [queryClient]);
 
+  const updateMutation=useMutation({
+    mutationFn:async(data)=>{
+      const patientRef = doc(db, "patients", location.state.data.id);
+      const result=updateDoc(patientRef,data)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["patients"]);
+      toast.success("Patient updated successfully");
+      navigate('/patients');
+    },
+    onError: () => {
+      console.log(error);
+      toast.error("Error applying changes");
+    }
+  })
+
+  const updatePatientHandler = async () => {
+    const data = {
+      ...location.state.data,
+      medicalAidName: JSON.parse(formRef.current.medicalAidName.selectedOptions[0].getAttribute('data-option')),
+      memberShipNumber: formRef.current.memberShipNumber.value,
+      dependentCode: formRef.current.dependentCode.value,
+      mainMember: formRef.current.mainMember.value,
+      idNo: formRef.current.idNo.value,
+      relationShipToPatient: formRef.current.relationShipToPatient.value,
+    }
+
+    try {
+      await validationSchema.validate(data, { abortEarly: false });
+      // Form is valid
+      updateMutation.mutate(data);
+    } catch (errors) {
+      console.error(errors);
+      toast.error(errors.inner[0].message + "");
+    }
+  }
+
   return (
     <div className='pt-4 px-4 h-[87vh]'>
       <div className='flex gap-4'>
@@ -106,7 +145,11 @@ export default function EditPatientMedicalAid() {
         <div className='flex gap-4 mt-2'>
           <button onClick={() => { backNavigationHandler() }} className='w-32 h-12 border-2 border-[#AE89A5] text-xl text-[#AE89A5] hover:bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:text-white'>Back</button>
           <button className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Next</button>
-          <button className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Update</button>
+          {updateMutation.isLoading ?
+            <button type='button' className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'><img className='m-auto w-[30px]' src='/WhiteLoading.svg' /></button>
+            :
+            <button onClick={updatePatientHandler} type='button' className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Update</button>
+          }
         </div>
       </form>
     </div>

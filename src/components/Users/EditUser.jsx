@@ -49,7 +49,6 @@ export default function EditUser() {
     }
 
     const isFormEdited = Object.keys(initialValues).some((fieldName, index) => {
-      console.log(data[fieldName], initialValues[fieldName])
       return data[fieldName] !== initialValues[fieldName]
     });
 

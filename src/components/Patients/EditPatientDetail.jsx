@@ -1,10 +1,12 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { doc, updateDoc } from 'firebase/firestore';
 import React, { useEffect, useRef, useState } from 'react'
 import { CgDetailsMore } from "react-icons/cg"
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import * as Yup from 'yup';
+import { db } from '../Utils/firebase';
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().nullable(false).required('Title is required').notOneOf(["null"], "Select title from given values"),
@@ -61,10 +63,8 @@ export default function EditPatientDetail() {
       martialStatus: formRef.current.martialStatus.value,
       race: formRef.current.race.value,
     }
-    return
     try {
       await validationSchema.validate(data, { abortEarly: false });
-      // Form is valid
       navigate("/patients/edit-medical-aid", { state: { data: data } })
     } catch (errors) {
       console.error(errors.inner[0]);
@@ -108,8 +108,24 @@ export default function EditPatientDetail() {
     setPlacesOfService(queryClient.getQueryData(['placesOfService']))
   }, [queryClient]);
 
-  const updatePatientHandler=async()=>{
+  const updateMutation=useMutation({
+    mutationFn:async(data)=>{
+      console.log(location.state.data.id)
+      const patientRef = doc(db, "patients", location.state.data.id);
+      const result=updateDoc(patientRef,data)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["patients"]);
+      toast.success("Patient updated successfully");
+      navigate('/patients');
+    },
+    onError: () => {
+      console.log(error);
+      toast.error("Error applying changes");
+    }
+  })
 
+  const updatePatientHandler=async()=>{
     let data = {
       ...location.state?.data,
       title: formRef.current.title.value,
@@ -135,9 +151,9 @@ export default function EditPatientDetail() {
     try {
       await validationSchema.validate(data, { abortEarly: false });
       // Form is valid
-      console.log(updating);
+      updateMutation.mutate(data);
     } catch (errors) {
-      console.error(errors.inner[0]);
+      console.error(errors);
       toast.error(errors.inner[0].message + "");
     }
   }
@@ -216,7 +232,11 @@ export default function EditPatientDetail() {
         </select>
         <div className='flex gap-2'>
           <button className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Next</button>
+          {updateMutation.isLoading?
+          <button type='button' className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'><img className='m-auto w-[30px]' src='/WhiteLoading.svg'/></button>
+          :
           <button onClick={updatePatientHandler} type='button' className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Update</button>
+          }
         </div>
       </form>
     </div>

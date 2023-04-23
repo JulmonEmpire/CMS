@@ -33,6 +33,7 @@ export default function MedicalAidList() {
             <th className='p-2'>Email</th>
             <th className='p-2'>Contact</th>
             <th className='p-2'>Address</th>
+            <th className='p-2'>Option</th>
             <th className='p-2 text-center'>Actions</th>
           </tr>
         </thead>
@@ -41,7 +42,8 @@ export default function MedicalAidList() {
             return (
               <MedicalAidRow key={medicalAid?.id} medicalAid={medicalAid} index={index} />
             )
-          })}
+          })
+          }
         </tbody>
       </table>
       {/* } */}

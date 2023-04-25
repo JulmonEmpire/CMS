@@ -52,7 +52,9 @@ export default function PatientContact() {
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();
-
+    let time=new Date();
+    time=time.getTime()
+    
     const data={
       ...location.state.data,
       emergencyFirstName:formRef.current.emergencyFirstName.value,
@@ -61,6 +63,7 @@ export default function PatientContact() {
       // emergencyHomePhone:formRef.current.emergencyHomePhone.value,
       emergencyWorkPhone:formRef.current.emergencyWorkPhone.value,
       emergencyCellPhone:formRef.current.emergencyCellPhone.value,
+      createdAt:time
     };
 
     try {

@@ -38,12 +38,15 @@ export default function AddMedicalAid() {
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();
+    let time=new Date();
+    time=time.getTime()
     let data = {
       name: formRef.current.name.value,
       email: formRef.current.email.value,
       contactNumber: formRef.current.contactNumber.value,
       address: formRef.current.address.value,
       option: formRef.current.option.value,
+      createdAt:time
     }
     try {
       await validationSchema.validate(data, { abortEarly: false });

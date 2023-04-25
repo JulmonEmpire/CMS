@@ -20,8 +20,6 @@ export default function MedicalAidList() {
 
   }, [location.pathname, queryClient])
 
-  console.log(medicalAidQuery);
-
   return (
     <div className='h-[75.5vh]'>
       {/* {medicalAidQuery.isLoading ? <img className='w-[50px] m-auto mt-10' src='/Loading.svg' /> : */}

@@ -37,11 +37,14 @@ export default function AddPlacesOfService() {
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();
+    let time=new Date();
+    time=time.getTime()
     let data = {
       name: formRef.current.name.value,
       email: formRef.current.email.value,
       address: formRef.current.address.value,
       contactNumber: formRef.current.contactNumber.value,
+      createdAt:time
     }
 
     try {

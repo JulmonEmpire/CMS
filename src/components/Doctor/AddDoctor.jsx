@@ -40,6 +40,10 @@ export default function AddDoctor() {
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();
+
+    let time=new Date();
+    time=time.getTime()
+    
     let data = {
       firstName: formRef.current.firstName.value,
       lastName: formRef.current.lastName.value,
@@ -47,7 +51,10 @@ export default function AddDoctor() {
       practiceNumber: formRef.current.practiceNumber.value,
       address: formRef.current.address.value,
       contactNumber: formRef.current.contactNumber.value,
+      createdAt:time
     }
+    // console.log(data);
+    // return
     try {
       await validationSchema.validate(data, { abortEarly: false });
       doctorMutation.mutate(data);

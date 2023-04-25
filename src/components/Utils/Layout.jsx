@@ -75,6 +75,17 @@ export default function Layout({ children }) {
     return data;
   });
 
+  const patientQuery = useQuery(["patients"], async () => {
+    let data = []
+    const querySnapshot = await getDocs(collection(db, "patients"));
+    querySnapshot.forEach((doc) => {
+      let medicalAiddata = doc.data();
+      medicalAiddata.id = doc.id;
+      data.push(medicalAiddata);
+    })
+    return data;
+  });
+
   return (
     <div className='w-full min-h-screen flex  bg-[#EEEEEE]'>
       <div className='w-60 p-2 pl-2 pt-2 bg-[white] rounded-xl m-2'>
@@ -129,7 +140,7 @@ export default function Layout({ children }) {
           </div>
         </div>
         <div className='h-[90.2%] bg-white rounded-xl'>
-          {!doctorQuery.isLoading && !placesOfServiceQuery.isLoading && !medicalAidQuery.isLoading ? <Outlet /> : <img className='w-[40px] m-auto pt-[20px]' src='/Loading.svg' />}
+          {!patientQuery.isLoading && !doctorQuery.isLoading && !placesOfServiceQuery.isLoading && !medicalAidQuery.isLoading ? <Outlet /> : <img className='w-[40px] m-auto pt-[20px]' src='/Loading.svg' />}
         </div>
       </div>
     </div>

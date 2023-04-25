@@ -7,26 +7,29 @@ import { BiSearchAlt } from 'react-icons/bi';
 import { ImCross } from 'react-icons/im';
 
 export default function PatientsList() {
+  const queryClient = useQueryClient();
   const [patientData, setPatientData] = useState();
+  const [staticPatientData, setStaticPatientData] = useState()
 
-  const patientQuery = useQuery(["patients"], async () => {
-    let data = []
-    const querySnapshot = await getDocs(collection(db, "patients"));
-    querySnapshot.forEach((doc) => {
-      let medicalAiddata = doc.data();
-      medicalAiddata.id = doc.id;
-      data.push(medicalAiddata);
-    })
-    setPatientData(data);
-    return data;
-  });
+  useEffect(() => {
+    const unsubscribe = queryClient.getQueryCache().subscribe(() => {
+      console.log(queryClient.getQueryData(['patients']));
+      setPatientData(queryClient.getQueryData(['patients']));
+      setStaticPatientData(queryClient.getQueryData(['patients']));
+    });
+
+    return () => {
+      unsubscribe();
+    };
+
+  }, [location.pathname, queryClient])
 
   const searchRef = useRef();
 
   function searchObjects(text) {
-    searchRef.current = patientQuery.data;
+    searchRef.current = staticPatientData;
     if (text === "") {
-      setPatientData(patientQuery.data);
+      setPatientData(staticPatientData);
       return
     }
     const filteredData = searchRef.current.filter((item) => {
@@ -41,7 +44,6 @@ export default function PatientsList() {
     setPatientData(filteredData);
   }
 
-  const queryClient = useQueryClient();
 
   const [doctors, setDoctors] = useState();
   const [placesOfService, setPlacesOfService] = useState();
@@ -53,10 +55,10 @@ export default function PatientsList() {
     setMedicalAid(queryClient.getQueryData(['medicalAid']))
   }, [queryClient]);
 
-  function filterPatients(id,type) {
-    searchRef.current = patientQuery.data;
+  function filterPatients(id, type) {
+    searchRef.current = staticPatientData;
     if (id === "null") {
-      setPatientData(patientQuery.data);
+      setPatientData(staticPatientData);
       return
     }
     const filteredData = searchRef.current.filter(obj => {
@@ -82,7 +84,7 @@ export default function PatientsList() {
       <div className='flex gap-2'>
         <input onChange={(e) => { searchObjects(e.target.value) }} style={{ maxWidth: "30%", width: "50%" }} className='h-[40px] border-[2px] border-[#E5E5E5] relative !text-[16px] text-[black] font-[400] outline-none p-2' placeholder='Search...'></input>
         <div className='flex gap-2'>
-          <select onChange={(e)=>{filterPatients(e.target.value,"doctors")}} name='refferingDoctor' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm'>
+          <select onChange={(e) => { filterPatients(e.target.value, "doctors") }} name='refferingDoctor' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm'>
             <option selected value={"null"}>Referring Doctor</option>
             {doctors?.map((doctor) => {
               return (
@@ -90,7 +92,7 @@ export default function PatientsList() {
               )
             })}
           </select>
-          <select onChange={(e)=>{filterPatients(e.target.value,"placesOfService")}} name='placesOfService' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm '>
+          <select onChange={(e) => { filterPatients(e.target.value, "placesOfService") }} name='placesOfService' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm '>
             <option selected value={"null"}>Places Of Service</option>
             {placesOfService?.map((place) => {
               return (
@@ -98,7 +100,7 @@ export default function PatientsList() {
               )
             })}
           </select>
-          <select onChange={(e)=>{filterPatients(e.target.value,"medicalAid")}} name='medicalAid' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm'>
+          <select onChange={(e) => { filterPatients(e.target.value, "medicalAid") }} name='medicalAid' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm'>
             <option selected value={"null"}>Medical Aid</option>
             {medicalAid?.map((aid) => {
               return (
@@ -109,30 +111,28 @@ export default function PatientsList() {
         </div>
       </div>
 
-      {patientQuery.isLoading ? <img className='w-[50px] m-auto mt-10' src='/Loading.svg' /> :
-        <table className="table-auto w-full mt-4">
-          <thead className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] h-16'>
-            <tr className='text-white text-left relative'>
-              <td className='p-2'>#</td>
-              <th className='p-2'>Last Name</th>
-              <th className='p-2'>First Name</th>
-              <th className='p-2'>Email</th>
-              <th className='p-2'>Gender</th>
-              <th className='p-2'>Reffering Dr</th>
-              <th className='p-2'>Medical Aid</th>
-              <th className='p-2'>Places of service</th>
-              <th className='p-2 text-center'>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {patientData?.map((patient, index) => {
-              return (
-                <PatientRow key={patient?.id} patient={patient} index={index} />
-              )
-            })}
-          </tbody>
-        </table>
-      }
+      <table className="table-auto w-full mt-4">
+        <thead className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] h-16'>
+          <tr className='text-white text-left relative'>
+            <td className='p-2'>#</td>
+            <th className='p-2'>Last Name</th>
+            <th className='p-2'>First Name</th>
+            <th className='p-2'>Email</th>
+            <th className='p-2'>Gender</th>
+            <th className='p-2'>Reffering Dr</th>
+            <th className='p-2'>Medical Aid</th>
+            <th className='p-2'>Places of service</th>
+            <th className='p-2 text-center'>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {patientData?.map((patient, index) => {
+            return (
+              <PatientRow key={patient?.id} patient={patient} index={index} />
+            )
+          })}
+        </tbody>
+      </table>
     </div>
   )
 }

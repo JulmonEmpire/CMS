@@ -36,6 +36,8 @@ export default function AddUser() {
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();
+    let time=new Date();
+    time=time.getTime()
     let data = {
       firstName: formRef.current.firstName.value,
       lastName: formRef.current.lastName.value,
@@ -45,6 +47,7 @@ export default function AddUser() {
       role: formRef.current.role.value,
       isBlocked:false,
       firstPasswordChange:false,
+      createdAt:time
     }
 
     console.log(data);

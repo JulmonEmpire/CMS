@@ -29,6 +29,9 @@ export default function MedicalAidInformation() {
         <div>
           <span className='inline-block text-lg font-[500] w-[220px]'>Relationship to Patient:</span> <p className='inline text-lg'>{patient.relationShipToPatient}</p>
         </div>
+        <div>
+          <span className='inline-block text-lg font-[500] w-[220px]'>Plan/Option:</span> <p className='inline text-lg'>{patient.option}</p>
+        </div>
       </div>
     </div>
   )

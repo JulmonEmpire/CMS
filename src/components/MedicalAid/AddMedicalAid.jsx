@@ -13,7 +13,6 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email address').required('Email is required'),
   contactNumber: Yup.string().required('Contact Number is required'),
   address: Yup.string().required('Address is required'),
-  option: Yup.string().required('Option is required'),
 });
 
 export default function AddMedicalAid() {
@@ -45,7 +44,6 @@ export default function AddMedicalAid() {
       email: formRef.current.email.value,
       contactNumber: formRef.current.contactNumber.value,
       address: formRef.current.address.value,
-      option: formRef.current.option.value,
       createdAt:time
     }
     try {
@@ -70,7 +68,6 @@ export default function AddMedicalAid() {
         <input className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Email' name='email' />
         <input className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Contact Number' name='contactNumber' type='number' />
         <input className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Address' name='address' />
-        <input className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Option' name='option' />
         {signupMutation.isLoading ?
           <button type='button' className='w-32 h-12 mt-4 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'><img className='w-[30px] m-auto' src='/WhiteLoading.svg' /></button>
           :

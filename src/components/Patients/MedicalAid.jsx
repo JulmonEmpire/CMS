@@ -13,6 +13,7 @@ const validationSchema = Yup.object().shape({
   mainMember: Yup.string().required('Main member is required'),
   idNo: Yup.string().nullable(false).required('ID No is required'),
   relationShipToPatient: Yup.string().nullable(true).required('Relationship to patient is required').notOneOf(["null"]),
+  option: Yup.string().required('Plan/Option to patient is required'),
 });
 
 export default function MedicalAid() {
@@ -39,16 +40,17 @@ export default function MedicalAid() {
       mainMember: formRef.current.mainMember.value,
       idNo: formRef.current.idNo.value,
       relationShipToPatient: formRef.current.relationShipToPatient.value,
+      option: formRef.current.option.value,
     }
 
     try {
-      await validationSchema.validate(data,{ abortEarly: false });
+      await validationSchema.validate(data, { abortEarly: false });
       // Form is valid
       navigate("/patients/add-patient/contact", { state: { data: data } })
     } catch (errors) {
       console.error(errors.inner[0]);
       // toast.error(errors.inner[0].path+" is required");
-      toast.error(errors.inner[0].message+"");
+      toast.error(errors.inner[0].message + "");
     }
   }
 
@@ -61,15 +63,16 @@ export default function MedicalAid() {
       mainMember: formRef.current.mainMember.value,
       idNo: formRef.current.idNo.value,
       relationShipToPatient: formRef.current.relationShipToPatient.value,
+      option: formRef.current.option.value,
     }
-    navigate("/patients/add-patient", { state: { data: data} })
+    navigate("/patients/add-patient", { state: { data: data } })
   }
 
-  const queryClient=useQueryClient();
-  const [medicalAid,setMedicalAid]=useState();
-  useEffect(()=>{
+  const queryClient = useQueryClient();
+  const [medicalAid, setMedicalAid] = useState();
+  useEffect(() => {
     setMedicalAid(queryClient.getQueryData(['medicalAid']))
-  },[queryClient]);
+  }, [queryClient]);
 
   return (
     <div className='pt-4 px-4 h-[87vh]'>
@@ -82,8 +85,8 @@ export default function MedicalAid() {
       <form onSubmit={formSubmitHandler} ref={formRef} className='py-8 flex flex-col gap-4 w-[60%] text-[#595659]'>
         <select key={formData?.medicalAidName?.id} defaultValue={formData?.medicalAidName?.id} name="medicalAidName" className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
           <option selected disabled value={"null"}>Medical Aid Name</option>
-          {medicalAid?.map((ma)=>{
-            return(
+          {medicalAid?.map((ma) => {
+            return (
               <option value={ma.id} data-option={JSON.stringify(ma)}>{ma?.name}</option>
             )
           })}
@@ -100,6 +103,7 @@ export default function MedicalAid() {
           <option value={"Child"}>Child</option>
           <option value={"Other"}>Other</option>
         </select>
+        <input defaultValue={formData?.option} className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Plan/Option' name='option' />
         <div className='flex gap-4 mt-2'>
           <button onClick={() => { backNavigationHandler() }} className='w-32 h-12 border-2 border-[#AE89A5] text-xl text-[#AE89A5] hover:bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:text-white'>Back</button>
           <button className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Next</button>

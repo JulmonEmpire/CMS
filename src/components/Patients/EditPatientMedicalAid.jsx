@@ -15,6 +15,7 @@ const validationSchema = Yup.object().shape({
   mainMember: Yup.string().required('Main member is required'),
   idNo: Yup.string().nullable(false).required('ID No is required'),
   relationShipToPatient: Yup.string().nullable(true).required('Relationship to patient is required').notOneOf(["null"]),
+  option: Yup.string().required('Plan/Option to patient is required'),
 });
 
 export default function EditPatientMedicalAid() {
@@ -41,6 +42,7 @@ export default function EditPatientMedicalAid() {
       mainMember: formRef.current.mainMember.value,
       idNo: formRef.current.idNo.value,
       relationShipToPatient: formRef.current.relationShipToPatient.value,
+      option: formRef.current.option.value,
     }
 
     try {
@@ -63,6 +65,7 @@ export default function EditPatientMedicalAid() {
       mainMember: formRef.current.mainMember.value,
       idNo: formRef.current.idNo.value,
       relationShipToPatient: formRef.current.relationShipToPatient.value,
+      option: formRef.current.option.value,
     }
 
     navigate("/patients/edit", { state: { data: data } })
@@ -140,6 +143,7 @@ export default function EditPatientMedicalAid() {
           <option value={"Child"}>Child</option>
           <option value={"Other"}>Other</option>
         </select>
+        <input defaultValue={formData?.option} className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Plan/Option' name='option' />
         <div className='flex gap-4 mt-2'>
           <button onClick={() => { backNavigationHandler() }} className='w-32 h-12 border-2 border-[#AE89A5] text-xl text-[#AE89A5] hover:bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:text-white'>Back</button>
           <button className='w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Next</button>

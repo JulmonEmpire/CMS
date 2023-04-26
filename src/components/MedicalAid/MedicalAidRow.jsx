@@ -44,7 +44,6 @@ export default function MedicalAidRow({ medicalAid, index }) {
       <td className='p-2'>{medicalAid?.email}</td>
       <td className='p-2'>{medicalAid?.contactNumber}</td>
       <td className='p-2'>{medicalAid?.address}</td>
-      <td className='p-2'>{medicalAid?.option}</td>
       <td className='p-2 flex justify-center relative'>
         <div onClick={(e) => { setContextMenu(!showContextMenu); e.stopPropagation(); }} className='relative flex flex-col gap-[5px] w-[40px] h-[40px] hover:bg-[rgba(0,0,0,0.05)] rounded-full justify-center items-center cursor-pointer'>
           <div className='w-[3px] h-[3px] bg-gradient-to-r from-[#6C526F] to-[#AE89A5] rounded-full'></div>

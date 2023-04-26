@@ -40,7 +40,6 @@ export default function MedicalAid() {
       idNo: formRef.current.idNo.value,
       relationShipToPatient: formRef.current.relationShipToPatient.value,
     }
-    console.log(data)
 
     try {
       await validationSchema.validate(data,{ abortEarly: false });

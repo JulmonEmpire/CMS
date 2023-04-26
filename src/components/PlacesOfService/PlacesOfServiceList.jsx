@@ -20,8 +20,6 @@ export default function PlacesOfServiceList() {
 
   },[location.pathname,queryClient])
 
-  console.log(placesOfserviceQuery);
-
   return (
     <div className='h-[75.5vh]'>
     {/* {placesOfserviceQuery.isLoading ? <img className='w-[50px] m-auto mt-10' src='/Loading.svg' /> : */}

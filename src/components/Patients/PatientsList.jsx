@@ -13,7 +13,6 @@ export default function PatientsList() {
 
   useEffect(() => {
     const unsubscribe = queryClient.getQueryCache().subscribe(() => {
-      console.log(queryClient.getQueryData(['patients']));
       setPatientData(queryClient.getQueryData(['patients']));
       setStaticPatientData(queryClient.getQueryData(['patients']));
     });

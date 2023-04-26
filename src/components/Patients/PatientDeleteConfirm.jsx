@@ -13,7 +13,6 @@ export default function PatientDeleteConfirm({ hidePatientDeleteHandler, id }) {
   async function deletePatient() {
     setLoading(true);
     const user = auth.currentUser;
-    console.log(user);
 
     const credential = EmailAuthProvider.credential(
       user.email,

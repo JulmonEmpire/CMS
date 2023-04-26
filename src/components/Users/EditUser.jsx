@@ -52,8 +52,6 @@ export default function EditUser() {
       return data[fieldName] !== initialValues[fieldName]
     });
 
-    console.log(isFormEdited);
-
     if (!isFormEdited) {
       toast.info("Nothing has been changed");
       return;

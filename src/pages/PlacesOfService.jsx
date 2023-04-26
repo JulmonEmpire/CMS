@@ -4,7 +4,6 @@ import { MdManageAccounts } from 'react-icons/md'
 import { NavLink, Outlet } from 'react-router-dom'
 
 export default function PlacesOfService() {
-  console.log(location.pathname);
   return (
     <div className='w-[100%] !max-h-[100%] bg-[white] rounded-xl overflow-auto'>
       {location.pathname !== "/doctors/edit" &&

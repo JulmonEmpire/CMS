@@ -53,8 +53,6 @@ export default function AddDoctor() {
       contactNumber: formRef.current.contactNumber.value,
       createdAt:time
     }
-    // console.log(data);
-    // return
     try {
       await validationSchema.validate(data, { abortEarly: false });
       doctorMutation.mutate(data);

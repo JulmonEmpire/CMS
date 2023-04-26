@@ -48,7 +48,6 @@ export default function Layout({ children }) {
       medicalAiddata.id = doc.id;
       data.push(medicalAiddata);
     })
-    console.log(data);
     return data;
   });
 
@@ -60,7 +59,6 @@ export default function Layout({ children }) {
       placesOfServicedata.id = doc.id;
       data.push(placesOfServicedata);
     })
-    console.log(data);
     return data;
   });
 

@@ -110,7 +110,6 @@ export default function EditPatientDetail() {
 
   const updateMutation=useMutation({
     mutationFn:async(data)=>{
-      console.log(location.state.data.id)
       const patientRef = doc(db, "patients", location.state.data.id);
       const result=updateDoc(patientRef,data)
     },

@@ -10,7 +10,6 @@ export default function UsersList() {
   const userQuery = useQuery(["users"], async () => {
     let data = []
     const querySnapshot = await getDocs(collection(db, "users"));
-    console.log(userQuery)
 
     querySnapshot.forEach((doc) => {
       let usersdata = doc.data()

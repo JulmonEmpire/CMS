@@ -18,7 +18,6 @@ export default function PatientNotes() {
   const [notes, setNotes] = useState(location?.state?.notes);
   const [loading, setLoading] = useState(false);
 
-  console.log(location.state);
 
   useEffect(() => {
     setPatient(location.state)
@@ -38,7 +37,6 @@ export default function PatientNotes() {
       const uploadTask = await uploadBytes(storageRef, file[0]);
       const url = await getDownloadURL(storageRef);
 
-      console.log(location.state);
       const patientRef = doc(db, "patients", location.state.id);
       const patientDoc = await getDoc(patientRef);
 

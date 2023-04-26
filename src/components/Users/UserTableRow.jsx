@@ -70,8 +70,6 @@ export default function UserTableRow({ user, index }) {
     unblockMutation.mutate()
   }
 
-  console.log(user);
-
   return (
     <tr key={user.uid} style={index % 2 !== 0 ? { backgroundColor: "#EEEEEE" } : {}} className="h-12">
       <td className='p-2 font-[500]'>{index+1}</td>

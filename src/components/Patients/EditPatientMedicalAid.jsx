@@ -22,7 +22,6 @@ export default function EditPatientMedicalAid() {
   const navigate = useNavigate();
 
   const location = useLocation();
-  console.log("2", location.state)
 
   const [formData, setFormData] = useState({});
 
@@ -43,7 +42,6 @@ export default function EditPatientMedicalAid() {
       idNo: formRef.current.idNo.value,
       relationShipToPatient: formRef.current.relationShipToPatient.value,
     }
-    console.log(data)
 
     try {
       await validationSchema.validate(data, { abortEarly: false });

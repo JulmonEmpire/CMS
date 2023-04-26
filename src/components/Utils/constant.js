@@ -9,7 +9,7 @@ export function last30Days() {
   const last30Days = Array.from({ length: 30 }, (_, i) => {
     const date = new Date(now);
     date.setDate(now.getDate() - 29 + i);
-    return date.toISOString().slice(0, 10);
+    return date.toISOString().slice(5, 10);
   });
   return last30Days;
 }
@@ -36,7 +36,7 @@ export function last24Hours() {
   return last24Hours;
 }
 
-export function countLast24Hours(data) {
+export function countLast24Hours(data, selectorType, type) {
   const counts = Array.from({ length: 24 }, (_, i) => {
     const hourStart = new Date();
     hourStart.setHours(hourStart.getHours() - 23 + i);
@@ -46,7 +46,6 @@ export function countLast24Hours(data) {
     hourEnd.setHours(hourEnd.getHours() + 1);
     hourEnd.setMinutes(0);
     hourEnd.setSeconds(0);
-    console.log({hourStart,hourEnd})
     return data.filter(obj => {
       const createdAt = new Date(obj.createdAt);
       return createdAt >= hourStart && createdAt < hourEnd;
@@ -55,7 +54,7 @@ export function countLast24Hours(data) {
   return counts;
 }
 
-export function countLast7Days(data) {
+export function countLast7Days(data, selectorType, type) {
   const counts = Array.from({ length: 7 }, (_, i) => {
     const startOfDay = new Date();
     startOfDay.setDate(startOfDay.getDate() - 6 + i);
@@ -63,7 +62,6 @@ export function countLast7Days(data) {
     const endOfDay = new Date(startOfDay);
     endOfDay.setDate(endOfDay.getDate() + 1);
     endOfDay.setHours(0, 0, 0, 0);
-    console.log({startOfDay,endOfDay})
     return data.filter(obj => {
       const createdAt = new Date(obj.createdAt);
       return createdAt >= startOfDay && createdAt < endOfDay;
@@ -72,7 +70,7 @@ export function countLast7Days(data) {
   return counts;
 }
 
-export function countLast30Days(data) {
+export function countLast30Days(data, selectorType, type) {
   const counts = Array.from({ length: 30 }, (_, i) => {
     const startOfDay = new Date();
     startOfDay.setDate(startOfDay.getDate() - 29 + i);
@@ -86,4 +84,253 @@ export function countLast30Days(data) {
     }).length;
   });
   return counts;
+}
+
+export function countLast24HoursGender(data, selectorType, type) {
+  const maleCounts = Array.from({ length: 24 }, (_, i) => {
+    const hourStart = new Date();
+    hourStart.setHours(hourStart.getHours() - 23 + i);
+    hourStart.setMinutes(0);
+    hourStart.setSeconds(0);
+    const hourEnd = new Date(hourStart);
+    hourEnd.setHours(hourEnd.getHours() + 1);
+    hourEnd.setMinutes(0);
+    hourEnd.setSeconds(0);
+    return data.filter(obj => {
+      const createdAt = new Date(obj.createdAt);
+      return obj.gender === "Male" && createdAt >= hourStart && createdAt < hourEnd;
+    }).length;
+  });
+
+  const femaleCounts = Array.from({ length: 24 }, (_, i) => {
+    const hourStart = new Date();
+    hourStart.setHours(hourStart.getHours() - 23 + i);
+    hourStart.setMinutes(0);
+    hourStart.setSeconds(0);
+    const hourEnd = new Date(hourStart);
+    hourEnd.setHours(hourEnd.getHours() + 1);
+    hourEnd.setMinutes(0);
+    hourEnd.setSeconds(0);
+    return data.filter(obj => {
+      const createdAt = new Date(obj.createdAt);
+      return obj.gender === "Female" && createdAt >= hourStart && createdAt < hourEnd;
+    }).length;
+  });
+
+  if (type === "Male") {
+    return maleCounts
+  } else if (type === "Female") {
+    return femaleCounts
+  }
+}
+
+export function countLast7DaysGender(data, selectorType, type) {
+  const maleCounts = Array.from({ length: 7 }, (_, i) => {
+    const startOfDay = new Date();
+    startOfDay.setDate(startOfDay.getDate() - 6 + i);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(startOfDay);
+    endOfDay.setDate(endOfDay.getDate() + 1);
+    endOfDay.setHours(0, 0, 0, 0);
+    return data.filter(obj => {
+      const createdAt = new Date(obj.createdAt);
+      return createdAt >= startOfDay && createdAt < endOfDay && obj.gender === "Male";
+    }).length;
+  });
+
+  const femaleCounts = Array.from({ length: 7 }, (_, i) => {
+    const startOfDay = new Date();
+    startOfDay.setDate(startOfDay.getDate() - 6 + i);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(startOfDay);
+    endOfDay.setDate(endOfDay.getDate() + 1);
+    endOfDay.setHours(0, 0, 0, 0);
+    return data.filter(obj => {
+      const createdAt = new Date(obj.createdAt);
+      return createdAt >= startOfDay && createdAt < endOfDay && obj.gender === "Female";
+    }).length;
+  });
+
+  if (type === "Male") {
+    return maleCounts
+  } else if (type === "Female") {
+    return femaleCounts
+  }
+}
+
+export function countLast30DaysGender(data, selectorType, type) {
+  const maleCounts = Array.from({ length: 30 }, (_, i) => {
+    const startOfDay = new Date();
+    startOfDay.setDate(startOfDay.getDate() - 29 + i);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(startOfDay);
+    endOfDay.setDate(endOfDay.getDate() + 1);
+    endOfDay.setHours(0, 0, 0, 0);
+    return data.filter(obj => {
+      const createdAt = new Date(obj.createdAt);
+      const gender = obj.gender;
+      return createdAt >= startOfDay && createdAt < endOfDay && gender === "Male";
+    }).length;
+  });
+
+  const femaleCounts = Array.from({ length: 30 }, (_, i) => {
+    const startOfDay = new Date();
+    startOfDay.setDate(startOfDay.getDate() - 29 + i);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(startOfDay);
+    endOfDay.setDate(endOfDay.getDate() + 1);
+    endOfDay.setHours(0, 0, 0, 0);
+    return data.filter(obj => {
+      const createdAt = new Date(obj.createdAt);
+      const gender = obj.gender;
+      return createdAt >= startOfDay && createdAt < endOfDay && gender === "Female";
+    }).length;
+  });
+
+  if (type === "Male") {
+    return maleCounts
+  } else if (type === "Female") {
+    return femaleCounts
+  }
+}
+
+
+export function countLast24HoursAge(data, selectorType, type) {
+  const childCounts = Array.from({ length: 24 }, (_, i) => 0);
+  const adultCounts = Array.from({ length: 24 }, (_, i) => 0);
+  const elderlyCounts = Array.from({ length: 24 }, (_, i) => 0);
+
+  const hourStart = new Date();
+  hourStart.setHours(hourStart.getHours() - 23);
+  hourStart.setMinutes(0);
+  hourStart.setSeconds(0);
+
+  for (let i = 0; i < 24; i++) {
+    const hourEnd = new Date(hourStart);
+    hourEnd.setHours(hourEnd.getHours() + 1);
+
+    data.forEach(obj => {
+      const createdAt = new Date(obj.createdAt);
+      if (createdAt >= hourStart && createdAt < hourEnd) {
+        if (obj.age < 18) {
+          childCounts[i]++;
+        } else if (obj.age >= 18 && obj.age <= 60) {
+          adultCounts[i]++;
+        } else {
+          elderlyCounts[i]++;
+        }
+      }
+    });
+
+    hourStart.setHours(hourStart.getHours() + 1);
+  }
+
+  console.log({ childCounts, adultCounts, elderlyCounts });
+
+  if (type === "Child") {
+    return childCounts
+  } else if (type === "Adult") {
+    return adultCounts
+  } else if(type === "Elderly"){
+    return elderlyCounts
+  }
+}
+
+
+export function countLast7DaysAge(data, selectorType, type) {
+  const childCounts = Array.from({ length: 7 }, (_, i) => {
+    const startOfDay = new Date();
+    startOfDay.setDate(startOfDay.getDate() - 6 + i);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(startOfDay);
+    endOfDay.setDate(endOfDay.getDate() + 1);
+    endOfDay.setHours(0, 0, 0, 0);
+    return data.filter(obj => {
+      const createdAt = new Date(obj.createdAt);
+      return createdAt >= startOfDay && createdAt < endOfDay && obj.age < 18;
+    }).length;
+  });
+
+  const adultCounts = Array.from({ length: 7 }, (_, i) => {
+    const startOfDay = new Date();
+    startOfDay.setDate(startOfDay.getDate() - 6 + i);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(startOfDay);
+    endOfDay.setDate(endOfDay.getDate() + 1);
+    endOfDay.setHours(0, 0, 0, 0);
+    return data.filter(obj => {
+      const createdAt = new Date(obj.createdAt);
+      return createdAt >= startOfDay && createdAt < endOfDay && obj.age >= 18 && obj.age <= 60;
+    }).length;
+  });
+
+  const elderlyCounts = Array.from({ length: 7 }, (_, i) => {
+    const startOfDay = new Date();
+    startOfDay.setDate(startOfDay.getDate() - 6 + i);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(startOfDay);
+    endOfDay.setDate(endOfDay.getDate() + 1);
+    endOfDay.setHours(0, 0, 0, 0);
+    return data.filter(obj => {
+      const createdAt = new Date(obj.createdAt);
+      return createdAt >= startOfDay && createdAt < endOfDay && obj.age > 60;
+    }).length;
+  });
+
+  if (type === "Child") {
+    return childCounts;
+  } else if (type === "Adult") {
+    return adultCounts;
+  } else if (type === "Elderly") {
+    return elderlyCounts;
+  }
+}
+
+export function countLast30DaysAge(data, selectorType, type) {
+  const childCounts = Array.from({ length: 30 }, (_, i) => {
+    const startOfDay = new Date();
+    startOfDay.setDate(startOfDay.getDate() - 29 + i);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(startOfDay);
+    endOfDay.setDate(endOfDay.getDate() + 1);
+    endOfDay.setHours(0, 0, 0, 0);
+    return data.filter(obj => {
+      const createdAt = new Date(obj.createdAt);
+      return obj.age < 18 && createdAt >= startOfDay && createdAt < endOfDay;
+    }).length;
+  });
+
+  const adultCounts = Array.from({ length: 30 }, (_, i) => {
+    const startOfDay = new Date();
+    startOfDay.setDate(startOfDay.getDate() - 29 + i);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(startOfDay);
+    endOfDay.setDate(endOfDay.getDate() + 1);
+    endOfDay.setHours(0, 0, 0, 0);
+    return data.filter(obj => {
+      const createdAt = new Date(obj.createdAt);
+      return obj.age >= 18 && obj.age <= 60 && createdAt >= startOfDay && createdAt < endOfDay;
+    }).length;
+  });
+
+  const elderlyCounts = Array.from({ length: 30 }, (_, i) => {
+    const startOfDay = new Date();
+    startOfDay.setDate(startOfDay.getDate() - 29 + i);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(startOfDay);
+    endOfDay.setDate(endOfDay.getDate() + 1);
+    endOfDay.setHours(0, 0, 0, 0);
+    return data.filter(obj => {
+      const createdAt = new Date(obj.createdAt);
+      return obj.age > 60 && createdAt >= startOfDay && createdAt < endOfDay;
+    }).length;
+  });
+
+  if (type === "Child") {
+    return childCounts;
+  } else if (type === "Adult") {
+    return adultCounts;
+  } else if (type === "Elderly") {
+    return elderlyCounts;
+  }
 }

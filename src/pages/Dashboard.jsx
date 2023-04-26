@@ -13,6 +13,9 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { countLast24Hours, countLast30Days, countLast7Days, last24Hours, last30Days, last7Days } from '../components/Utils/constant';
+import SimpleBar from '../components/Dashboard/SimpleBar';
+import GenderBar from '../components/Dashboard/GenderBar';
+import AgeBar from '../components/Dashboard/AgeBar';
 
 ChartJS.register(
   CategoryScale,
@@ -23,7 +26,7 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+const options = {
   maintainAspectRatio: false,
   responsive: true,
   plugins: {
@@ -45,8 +48,6 @@ export const options = {
   }
 };
 
-
-
 export default function Dashboard() {
   const queryClient = useQueryClient();
 
@@ -58,6 +59,9 @@ export default function Dashboard() {
   const [medicalAidStats, setMedicalAidStats] = useState();
   const [placesOfServiceStats, setPlacesOfServiceStats] = useState();
   const [patientStats, setPatientsStats] = useState();
+
+  const [date, setDate] = useState(24);
+  const [patientType, setPatientType] = useState("All");
 
   function filterByTimeframe24() {
     const now = Date.now();
@@ -113,6 +117,7 @@ export default function Dashboard() {
   }, [queryClient]);
 
   const onChangeHandler = (e) => {
+    setDate(+e.target.value);
     if (+e.target.value === 24) {
       filterByTimeframe24()
     } else if (+e.target.value === 7) {
@@ -123,33 +128,29 @@ export default function Dashboard() {
   }
 
 
-  const data = {
+  let data = {
     // labels: last24Hours(),
-    labels: last30Days(),
+    labels: date === 24 ? last24Hours() : date === 7 ? last7Days() : last30Days(),
     datasets: [
       {
-        label: 'Dataset 1',
-        data: countLast30Days(patient || []),
+        label: 'Patients',
+        data: date === 24 ? countLast24Hours(patient || []) : date === 7 ? countLast7Days(patient || []) : countLast30Days(patient || []),
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
-      {
-        label: 'Dataset 2',
-        // data: [5, 4, 3, 1, 2, 3, 4, 5, 2, 1, 5, 4, , 5, 4, 3, 2, 1, 5, 4, 3, 2, 3, 2, 1,],
-        data: countLast30Days(patient || []),
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      },
-      {
-        label: 'Dataset 3',
-        // data: [5, 4, 3, 1, 2, 3, 4, 5, 2, 1, 5, 4, , 5, 4, 3, 2, 1, 5, 4, 3, 2, 3, 2, 1,],
-        data: countLast30Days(patient || []),
-        backgroundColor: 'rgba(255, 255, 0, 0.5)',
-      },
-    ],
+    ]
   };
+
+  const [chartData, setChartData] = useState(data)
+
+  function patientOnChangeHandler(e) {
+    setPatientType(e.target.value);
+  }
+
+  console.log(chartData, data);
 
   return (
     <div className='p-4 flex flex-col'>
-      <div className='flex justify-between mb-4  items-center'>
+      <div className='flex justify-between mb-4 items-center'>
         <h1>Overview</h1>
         <select onChange={onChangeHandler} className='w-[10vw] border-[rgba(0,0,0,0.1)] border-2 p-2'>
           <option selected value={24}>24 Hours</option>
@@ -158,7 +159,6 @@ export default function Dashboard() {
         </select>
       </div>
       <div className='flex gap-4 justify-between'>
-        {/* <StatsCard title={"Patients"} count={3} stats={4}/> */}
         <StatsCard title={"Patients"} count={patient?.length || 0} stats={patientStats?.length} />
         <StatsCard title={"Doctor"} count={doctor?.length || 0} stats={doctorStats?.length} />
         <StatsCard title={"Medical Aid"} count={medicalAid?.length || 0} stats={medicalAidStats?.length} />
@@ -167,13 +167,21 @@ export default function Dashboard() {
       <div className='max-h-[370px] h-full'>
         <div className='flex justify-between items-center'>
           <h1 className='py-2'>Patients Overview</h1>
-          <select onChange={onChangeHandler} className='w-[10vw] border-[rgba(0,0,0,0.1)] border-2 p-2'>
-            <option selected value={24}>Gender</option>
-            <option value={7}>Age Group</option>
+          <select onChange={(e)=>patientOnChangeHandler(e)} className='w-[10vw] border-[rgba(0,0,0,0.1)] border-2 p-2'>
+            <option selected value={"All"}>All</option>
+            <option value={"Gender"}>Gender</option>
+            <option value={"Age"}>Age Group</option>
           </select>
         </div>
         <div className='w-full max-h-[310px]'>
-          <Bar style={{ height: "350px" }} options={options} data={data} />
+          {patientType === "All" ? 
+          <SimpleBar patient={patient} date={date}/>
+          :patientType === "Gender" ? 
+          
+          <GenderBar patient={patient} date={date}/>
+          :patientType === "Age" && 
+          <AgeBar patient={patient} date={date}/>
+          }
         </div>
       </div>
     </div>

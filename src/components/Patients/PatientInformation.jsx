@@ -15,7 +15,7 @@ export default function PatientInformation() {
           <li className='px-4 py-2 font-bold flex items-center justify-center gap-[5px]'>Medical Aid Information</li>
         </NavLink>
         <NavLink end to={"/patients-information/contact"} state={location.state} className={({ isActive }) => isActive || location.pathname.includes("/patients/add-patient") ? "border-b-[3px] border-[#AE89A5] text-[#AE89A5]" : "text-[#595659] border-b-[3px] border-[rgba(0,0,0,0.0)] transition-all duration-500"}>
-          <li className='px-4 py-2 font-bold flex items-center justify-center gap-[5px]'>Contact Information</li>
+          <li className='px-4 py-2 font-bold flex items-center justify-center gap-[5px]'>Next of kin</li>
         </NavLink>
         <NavLink end to={"/patients-information/notes"} state={location.state} className={({ isActive }) => isActive || location.pathname.includes("/patients/add-patient") ? "border-b-[3px] border-[#AE89A5] text-[#AE89A5]" : "text-[#595659] border-b-[3px] border-[rgba(0,0,0,0.0)] transition-all duration-500"}>
           <li className='px-4 py-2 font-bold flex items-center justify-center gap-[5px]'>Patient Notes</li>

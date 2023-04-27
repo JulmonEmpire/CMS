@@ -11,7 +11,7 @@ export default function PatientContactInformation() {
       <div className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] w-16 h-14 flex justify-center items-center shadow-md rounded-sm'>
         <FaUserInjured className='text-white text-2xl' />
       </div>
-      <h1 className='self-end mb-2 font-bold text-xl text-[#595659]'>CONTACT INFORMATION</h1>
+      <h1 className='self-end mb-2 font-bold text-xl text-[#595659]'>NEXT OF KIN</h1>
     </div>
     <div className='mt-4 flex flex-col gap-2'>
       <div>

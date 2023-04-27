@@ -36,6 +36,7 @@ import EditDoctor from "./components/Doctor/EditDoctor";
 import EditPatientDetail from "./components/Patients/EditPatientDetail";
 import EditPatientMedicalAid from "./components/Patients/EditPatientMedicalAid";
 import EditPatientContact from "./components/Patients/EditPatientContact";
+import DatesOfConsultaion from "./components/PatientInformation/DatesOfConsultaion";
 
 function App() {
   return (
@@ -63,7 +64,7 @@ function App() {
               <Route path="medical-aid" element={<MedicalAidInformation></MedicalAidInformation>}></Route>
               <Route path="contact" element={<PatientContactInformation></PatientContactInformation>}></Route>
               <Route path="notes" element={<PatientNotes></PatientNotes>}></Route>
-
+              <Route path="date-of-consultation" element={<DatesOfConsultaion></DatesOfConsultaion>}></Route>
             </Route>
             <Route path="users" element={<Users />}>
               <Route index element={<UsersList />}></Route>

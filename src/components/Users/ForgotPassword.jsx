@@ -32,7 +32,7 @@ export default function ForgotPassword({ hideForgotPasswordModal }) {
         </div>
         <form onSubmit={formHandler} ref={formRef} className='px-2 flex flex-col gap-4 pt-4 justify-center h-[70%]'>
           <input required className='p-2 text-[#595659]' type={'text'} name='email' placeholder='Type Email'></input>
-          <button disabled={loading?true:false} className='w-28 h-10 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-lg text-white transition-colors duration-300' type='submit'>{loading?<img className='w-[30px] m-auto' src='/WhiteLoading.svg'/>:"Submit"}</button>
+          <button disabled={loading?true:false} className='w-28 h-10 self-center rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-lg text-white transition-colors duration-300' type='submit'>{loading?<img className='w-[30px] m-auto' src='/WhiteLoading.svg'/>:"Submit"}</button>
         </form>
       </div>
     </div>

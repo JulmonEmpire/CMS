@@ -44,7 +44,7 @@ export default function PatientRow({ patient, index }) {
         <td className='p-2 font-[500]'>{index + 1}</td>
         <td className='p-2'>{`${patient?.title}.${patient?.lastName}`}</td>
         <td className='p-2'>{`${patient?.title}.${patient?.firstName}`}</td>
-        <td className='p-2'>{patient?.email}</td>
+        <td className='p-2'>{patient?.email || "-"}</td>
         <td className='p-2'>{patient?.gender}</td>
         <td className='p-2'>{patient?.refferingDoctor?.firstName}</td>
         <td className='p-2'>{patient?.medicalAidName?.name}</td>

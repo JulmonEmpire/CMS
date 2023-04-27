@@ -23,6 +23,9 @@ export default function PatientDetailInformation() {
           <span className='inline-block text-lg font-[500] w-[170px]'>First Name:</span> <p className='inline text-lg'>{`${patient?.title}.${patient?.firstName}`}</p>
         </div>
         <div>
+          <span className='inline-block text-lg font-[500] w-[170px]'>Email:</span> <p className='inline text-lg'>{`${patient.email || "-"}`}</p>
+        </div>
+        <div>
           <span className='inline-block text-lg font-[500] w-[170px]'>Reffering Doctor:</span> <p className='inline text-lg'>{`${patient.refferingDoctor.firstName} ${patient.refferingDoctor.lastName}`}</p>
         </div>
         <div>
@@ -56,7 +59,7 @@ export default function PatientDetailInformation() {
           <span className='inline-block text-lg font-[500] w-[170px]'>Cell Phone:</span> <p className='inline text-lg'>{`${patient.cellPhone}`}</p>
         </div>
         <div>
-          <span className='inline-block text-lg font-[500] w-[170px]'>Work Phone:</span> <p className='inline text-lg'>{`${patient.workPhone}`}</p>
+          <span className='inline-block text-lg font-[500] w-[170px]'>Work Phone:</span> <p className='inline text-lg'>{`${patient.workPhone || "-"}`}</p>
         </div>
         <div>
           <span className='inline-block text-lg font-[500] w-[170px]'>Martial Status:</span> <p className='inline text-lg'>{`${patient.martialStatus}`}</p>

@@ -63,7 +63,24 @@ export default function PatientNotes() {
 
   return (
     <div className='pt-6 mb-4 px-4 flex flex-col h-full'>
-      <div className='mt-4 flex flex-col gap-2 min-h-[70.1vh]'>
+      <div className='flex justify-between items-center'>
+        <div className='flex gap-4'>
+          <div className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] w-16 h-14 flex justify-center items-center shadow-md rounded-sm'>
+            <FaUserInjured className='text-white text-2xl' />
+          </div>
+          <h1 className='self-end mb-2 font-bold text-xl text-[#595659]'>PATIENT NOTE'S</h1>
+        </div>
+        {!loading ?
+          <div>
+            <label className='cursor-pointer flex justify-center items-center w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white' type='button' htmlFor="scannedCopies">Add Notes</label>
+            <input multiple accept="image/*, application/pdf, .doc, .docx" onChange={(e) => { uploadScannedNotes(e.target.files); e.target.value = null }} className='hidden' type='file' id="scannedCopies" />
+          </div> :
+          <div>
+            <label className='cursor-pointer flex justify-center items-center w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white' type='button' htmlFor="scannedCopies"><img className='w-[30px] m-auto' src='/WhiteLoading.svg' /></label>
+          </div>
+        }
+      </div>
+      <div className='mt-4 flex flex-col gap-2 min-h-[63.1vh]'>
         {notes !== undefined && notes.length > 0 ?
           <div className='flex-1 overflow-auto max-h-[61vh]'>
             <table className='className="table-auto w-full mt-4"'>
@@ -88,15 +105,6 @@ export default function PatientNotes() {
           :
           <div className='flex-1 overflow-auto max-h-[61vh]'>
             <p>No notes found</p>
-          </div>
-        }
-        {!loading ?
-          <div>
-            <label className='cursor-pointer flex justify-center items-center w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white' type='button' htmlFor="scannedCopies">Add Notes</label>
-            <input multiple accept="image/*, application/pdf, .doc, .docx" onChange={(e) => { uploadScannedNotes(e.target.files); e.target.value = null }} className='hidden' type='file' id="scannedCopies" />
-          </div> :
-          <div>
-            <label className='cursor-pointer flex justify-center items-center w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white' type='button' htmlFor="scannedCopies"><img className='w-[30px] m-auto' src='/WhiteLoading.svg' /></label>
           </div>
         }
       </div>

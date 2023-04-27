@@ -40,12 +40,15 @@ export default function DatesOfConsultaion() {
         <div className='py-4 space-y-2'>
           {location?.state?.datesOfConsultaion === undefined || location?.state?.datesOfConsultaion?.length === 0 ? <p>No record found</p> : location?.state?.datesOfConsultaion?.map((date, index) => {
             const d = new Date(date);
-            const onlyDateStr = d.toDateString();
+            const dateObj = new Date(date);
+            const formattedDate = dateObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+
 
             return (
               <div className='flex gap-2 '>
                 <p className='text-lg font-[500]'>{`${index + 1}.`}</p>
-                <p className='text-lg'>{`${onlyDateStr}`}</p>
+                {/* <p className='text-lg'>{`${d.toString().slice(0, 24)}`}</p> */}
+                <p className='text-lg'>{`${d.toString().slice(0, 15)} ${formattedDate}`}</p>
               </div>
             )
           })}

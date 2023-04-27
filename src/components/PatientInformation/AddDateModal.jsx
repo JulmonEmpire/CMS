@@ -54,7 +54,7 @@ export default function AddDateModal({hideAddModal}) {
           <ImCross onClick={hideAddModal} className='mr-4 text-2xl cursor-pointer' />
         </div>
         <form onSubmit={formHandler} ref={formRef} className='px-2 flex flex-col gap-4 pt-4 justify-center h-[70%]'>
-          <input required className='p-2 text-[#595659] border-[rgba(0,0,0,0.1)] border-2' type={'date'} name='date' placeholder='Type Date'></input>
+          <input required className='p-2 text-[#595659] border-[rgba(0,0,0,0.1)] border-2' type={'datetime-local'} name='date' placeholder='Type Date'></input>
           <button disabled={mutation.isLoading ? true : false} className='w-28 h-10 self-center rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-lg text-white transition-colors duration-300' type='submit'>{mutation.isLoading ? <img className='w-[30px] m-auto' src='/WhiteLoading.svg' /> : "Submit"}</button>
         </form>
       </div>

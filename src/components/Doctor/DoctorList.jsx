@@ -26,8 +26,8 @@ export default function DoctorList() {
         <thead className='bg-gradient-to-r from-[#6C526F] to-[#AE89A5] h-16'>
           <tr className='text-white text-left'>
             <th className='p-2'>#</th>
-            <th className='p-2'>First Name</th>
             <th className='p-2'>Last Name</th>
+            <th className='p-2'>First Name</th>
             <th className='p-2'>Email</th>
             <th className='p-2'>Practice Number</th>
             <th className='p-2 '>Contact Number</th>

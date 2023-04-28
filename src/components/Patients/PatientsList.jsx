@@ -87,7 +87,7 @@ export default function PatientsList() {
             <option selected value={"null"}>Referring Doctor</option>
             {doctors?.map((doctor) => {
               return (
-                <option value={doctor.id} data-option={JSON.stringify(doctor)}>{doctor?.firstName}</option>
+                <option value={doctor.id} data-option={JSON.stringify(doctor)}>{doctor?.lastName}</option>
               )
             })}
           </select>

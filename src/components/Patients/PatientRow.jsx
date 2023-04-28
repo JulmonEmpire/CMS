@@ -43,7 +43,7 @@ export default function PatientRow({ patient, index }) {
       <tr className="h-12 hover:!bg-[rgba(0,0,0,0.030)] cursor-pointer" onClick={() => { navigate("/patients-information", { state: { ...patient } }); }} key={patient?.id} style={index % 2 !== 0 ? { backgroundColor: "#EEEEEE" } : { backgroundColor: "#ffffff" }}>
         <td className='p-2 font-[500]'>{index + 1}</td>
         <td className='p-2'>{`${patient?.title}.${patient?.lastName}`}</td>
-        <td className='p-2'>{`${patient?.title}.${patient?.firstName}`}</td>
+        <td className='p-2'>{`${patient?.firstName}`}</td>
         <td className='p-2'>{patient?.email || "-"}</td>
         <td className='p-2'>{patient?.gender}</td>
         <td className='p-2'>{patient?.refferingDoctor?.firstName}</td>

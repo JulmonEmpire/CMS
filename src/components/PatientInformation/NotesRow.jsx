@@ -26,12 +26,12 @@ export default function NotesRow({ note, index, pId }) {
 
       if (patientDoc.exists()) {
         const patientData = patientDoc.data();
-        const id=patientDoc.id
+        const id = patientDoc.id
         const updatedNotes = patientData.notes.filter(n => n.url !== note.url);
 
         await updateDoc(patientRef, { notes: updatedNotes });
         queryClient.invalidateQueries(['patients']);
-        navigate('.', { state: { ...patientData, notes: updatedNotes,id:id } });
+        navigate('.', { state: { ...patientData, notes: updatedNotes, id: id } });
         console.log("Note deleted successfully");
       } else {
         console.log("Patient not found");
@@ -42,10 +42,14 @@ export default function NotesRow({ note, index, pId }) {
     setLoading(false);
   };
 
+  const d = new Date(note?.dateOfConsultation);
+  const dateObj = new Date(note?.dateOfConsultation);
+  const formattedDate = dateObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
   return (
     <tr key={note?.id} style={index % 2 !== 0 ? { backgroundColor: "#EEEEEE" } : {}} className="h-12 w-full">
       <td className='p-2 font-[500]'>{index + 1}</td>
       <td className='p-2 font-[500]'>{note.name}</td>
+      <td className='p-2 font-[500]'>{`${d.toString().slice(0, 15)} ${formattedDate}`}</td>
       <td className='p-2 font-[500]'>{note.type}</td>
       <td className='p-2'><a href={note.url}>{<GrDownload />}</a></td>
       <td className='p-2 flex justify-center relative'>
@@ -59,9 +63,9 @@ export default function NotesRow({ note, index, pId }) {
             ?
             <li onClick={(e) => { deleteNote() }} className='py-2 px-6 flex-1 flex justify-center items-center hover:bg-[rgba(0,0,0,0.05)] transition-colors select-none cursor-pointer'>Delete</li>
             :
-            <li className='py-2 px-6 flex-1 flex justify-center items-center hover:bg-[rgba(0,0,0,0.05)] transition-colors select-none cursor-pointer'><img className='w-[25px] m-auto' src='/Loading.svg'/></li>
+            <li className='py-2 px-6 flex-1 flex justify-center items-center hover:bg-[rgba(0,0,0,0.05)] transition-colors select-none cursor-pointer'><img className='w-[25px] m-auto' src='/Loading.svg' /></li>
           }
-          </ul>
+        </ul>
       </td>
     </tr>
   )

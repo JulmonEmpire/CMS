@@ -17,7 +17,7 @@ export default function StatsCard({ count, title, stats }) {
   }, [title,stats])
 
   return (
-    <div style={{ boxShadow: "1px 1px 6px rgba(0,0,0,0.15)" }} className='w-[250px] h-[200px] bg-[white] rounded-lg p-2 relative'>
+    <div style={{ boxShadow: "1px 1px 6px rgba(0,0,0,0.15)" }} className='flex-1 min-w-[200px] h-[200px] bg-[white] rounded-lg p-2 relative'>
       <h3 className='text-xl font-[500]'>{title}</h3>
       <div className='flex absolute top-[50%] translate-y-[-50%]'>
         <p className='text-8xl font-[500]'>{count}</p>

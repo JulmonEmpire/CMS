@@ -39,8 +39,8 @@ export default function DatesOfConsultaion() {
 
         <div className='py-4 space-y-2'>
           {location?.state?.datesOfConsultaion === undefined || location?.state?.datesOfConsultaion?.length === 0 ? <p>No record found</p> : location?.state?.datesOfConsultaion?.map((date, index) => {
-            const d = new Date(date);
-            const dateObj = new Date(date);
+            const d = new Date(date?.date);
+            const dateObj = new Date(date?.date);
             const formattedDate = dateObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 
 

@@ -146,7 +146,6 @@ export default function Dashboard() {
     setPatientType(e.target.value);
   }
 
-  console.log(chartData, data);
 
   return (
     <div className='p-4 flex flex-col'>
@@ -158,11 +157,12 @@ export default function Dashboard() {
           <option value={30}>30 Days</option>
         </select>
       </div>
-      <div className='flex gap-4 justify-between'>
+      <div className='flex gap-4'>
         <StatsCard title={"Patients"} count={patient?.length || 0} stats={patientStats?.length} />
         <StatsCard title={"Doctor"} count={doctor?.length || 0} stats={doctorStats?.length} />
         <StatsCard title={"Medical Aid"} count={medicalAid?.length || 0} stats={medicalAidStats?.length} />
         <StatsCard title={"Places of Service"} count={placesOfService?.length || 0} stats={placesOfServiceStats?.length} />
+        <StatsCard title={"Consultations"} count={placesOfService?.length || 0} stats={placesOfServiceStats?.length} />
       </div>
       <div className='max-h-[370px] h-full'>
         <div className='flex justify-between items-center'>

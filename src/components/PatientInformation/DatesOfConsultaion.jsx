@@ -45,7 +45,7 @@ export default function DatesOfConsultaion() {
             const formattedDate = dateObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 
             return (
-              <div onClick={()=> navigate("/patients-information/notes",{state:{...location.state,showAddButton:true,dateId:date.id}})} className='flex gap-4 cursor-pointer hover:opacity-70'>
+              <div onClick={()=> navigate("/patients-information/notes",{state:{...location.state,showAddButton:true,dateId:date.id,date:date.date}})} className='flex gap-4 cursor-pointer hover:opacity-70'>
                 <p className='text-lg font-[500]'>{`${index + 1}.`}</p>
                 {/* <p className='text-lg'>{`${d.toString().slice(0, 24)}`}</p> */}
                 <p className='text-lg'>{`${d.toString().slice(0, 15)} ${formattedDate}`}</p>

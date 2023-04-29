@@ -55,10 +55,11 @@ export default function PatientNotes() {
       if (patientDoc.exists()) {
         const patientData = patientDoc.data();
 
-        let updatedNotes = [{ id: id, url, name: name, type: type }];
+        let updatedNotes = [{ id: id, url, name: name, type: type, dateOfConsultation: location?.state?.date, dateOfConsultationId: location.state.dateId }];
         if (patientData?.notes !== undefined && patientData?.notes?.length > 0) {
-          updatedNotes = [...patientData?.notes, { id: id, url, name: name, type: type }];
+          updatedNotes = [...patientData?.notes, { id: id, url, name: name, type: type, dateOfConsultation: location?.state?.date, dateOfConsultationId: location.state.dateId }];
         }
+        console.log(updatedNotes)
         await updateDoc(patientRef, { notes: updatedNotes });
         queryClient.invalidateQueries(['patients']);
         toast.success("Notes uploaded");

@@ -3,10 +3,11 @@ import React, { useState } from 'react'
 import { FaUserInjured } from 'react-icons/fa'
 import { toast } from 'react-toastify';
 import AddDateModal from './AddDateModal';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function DatesOfConsultaion() {
   const location = useLocation();
+  const navigate=useNavigate();
 
   const [showDateModal, setShowDateModal] = useState(false);
 
@@ -43,9 +44,8 @@ export default function DatesOfConsultaion() {
             const dateObj = new Date(date?.date);
             const formattedDate = dateObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 
-
             return (
-              <div className='flex gap-2 '>
+              <div onClick={()=> navigate("/patients-information/notes",{state:{...location.state,showAddButton:true,dateId:date.id}})} className='flex gap-4 cursor-pointer hover:opacity-70'>
                 <p className='text-lg font-[500]'>{`${index + 1}.`}</p>
                 {/* <p className='text-lg'>{`${d.toString().slice(0, 24)}`}</p> */}
                 <p className='text-lg'>{`${d.toString().slice(0, 15)} ${formattedDate}`}</p>

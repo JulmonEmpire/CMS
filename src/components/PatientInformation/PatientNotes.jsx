@@ -20,8 +20,19 @@ export default function PatientNotes() {
 
 
   useEffect(() => {
-    setPatient(location.state)
-    setNotes(location.state?.notes);
+    if (location?.state?.showAddButton && location?.state?.showAddButton === true) {
+      let notesArray = []
+      location.state?.notes.forEach((note) => {
+        if (note.dateOfConsultationId === location.state.dateId) {
+          notesArray.push(note);
+        }
+      })
+      setPatient(location.state)
+      setNotes(notesArray);
+    } else {
+      setPatient(location.state)
+      setNotes(location.state?.notes);
+    }
   }, [location])
 
   const queryClient = useQueryClient();
@@ -29,8 +40,37 @@ export default function PatientNotes() {
   // let urls =  uploadScannedNotes(location.state.data.scannedNotes);
   const uploadScannedNotes = async (file) => {
     setLoading(true);
+    setLoading(true);
+    let id = uid();
+    let name = file[0].name.split(".")[0]
+    let type = file[0].name.split(".")[1]
+    try {
+      const storageRef = ref(storage, `/notes/${file[0].name}`);
+      const uploadTask = await uploadBytes(storageRef, file[0]);
+      const url = await getDownloadURL(storageRef);
 
+      const patientRef = doc(db, "patients", location.state.id);
+      const patientDoc = await getDoc(patientRef);
 
+      if (patientDoc.exists()) {
+        const patientData = patientDoc.data();
+
+        let updatedNotes = [{ id: id, url, name: name, type: type }];
+        if (patientData?.notes !== undefined && patientData?.notes?.length > 0) {
+          updatedNotes = [...patientData?.notes, { id: id, url, name: name, type: type }];
+        }
+        await updateDoc(patientRef, { notes: updatedNotes });
+        queryClient.invalidateQueries(['patients']);
+        toast.success("Notes uploaded");
+        navigate('.', { state: { ...location.state, notes: updatedNotes } });
+      } else {
+        console.log("Patient not found");
+        toast.error("Error uploaded notes");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
   };
 
   return (
@@ -42,15 +82,15 @@ export default function PatientNotes() {
           </div>
           <h1 className='self-end mb-2 font-bold text-xl text-[#595659]'>PATIENT NOTE'S</h1>
         </div>
-        {/* {!loading ?
+        {(location?.state?.showAddButton && location?.state?.showAddButton === true) && (!loading ?
           <div>
             <label className='cursor-pointer flex justify-center items-center w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white' type='button' htmlFor="scannedCopies">Add Notes</label>
             <input multiple accept="image/*, application/pdf, .doc, .docx" onChange={(e) => { uploadScannedNotes(e.target.files); e.target.value = null }} className='hidden' type='file' id="scannedCopies" />
           </div> :
           <div>
             <label className='cursor-pointer flex justify-center items-center w-32 h-12 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white' type='button' htmlFor="scannedCopies"><img className='w-[30px] m-auto' src='/WhiteLoading.svg' /></label>
-          </div>
-        } */}
+          </div>)
+        }
       </div>
       <div className='mt-4 flex flex-col gap-2 min-h-[63.1vh]'>
         {notes !== undefined && notes.length > 0 ?

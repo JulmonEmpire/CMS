@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import {BsArrowDownShort} from "react-icons/bs"
 
-export default function StatsCard({ count, title, stats }) {
+export default function StatsCard({ count, title, stats, date }) {
   const [sales, setSales] = useState()
 
   useEffect(() => {
-    console.log(count,stats);
     if (stats === 0 && count !== 0) {
       setSales(100);
     } else if(stats === 0 && count === 0){
       setSales(0);
     } else {
-      console.log(((count-stats) / stats) * 100);
       setSales(((count-stats) / stats) * 100);
     }
-  }, [title,stats])
+  }, [title,stats,date])
 
   return (
     <div style={{ boxShadow: "1px 1px 6px rgba(0,0,0,0.15)" }} className='flex-1 min-w-[200px] h-[200px] bg-[white] rounded-lg p-2 relative'>

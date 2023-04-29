@@ -59,6 +59,8 @@ export default function Dashboard() {
   const [medicalAidStats, setMedicalAidStats] = useState();
   const [placesOfServiceStats, setPlacesOfServiceStats] = useState();
   const [patientStats, setPatientsStats] = useState();
+  const [datesOfConsultaion, setDatesOfConsultaion] = useState();
+  const [datesOfConsultaionStats, setDatesOfConsultaionStats] = useState();
 
   const [date, setDate] = useState(24);
   const [patientType, setPatientType] = useState("All");
@@ -72,6 +74,26 @@ export default function Dashboard() {
     setDoctorStats(queryClient.getQueryData(['doctor']).filter((obj) => obj.createdAt >= twoDayAgo && obj.createdAt <= oneDayAgo))
     setPatientsStats(queryClient.getQueryData(['patients']).filter((obj) => obj.createdAt >= twoDayAgo && obj.createdAt <= oneDayAgo))
     setPlacesOfServiceStats(queryClient.getQueryData(['placesOfService']).filter((obj) => obj.createdAt >= twoDayAgo && obj.createdAt <= oneDayAgo));
+
+    let count = 0;
+    queryClient.getQueryData(['patients']).forEach((patient) => {
+      patient?.datesOfConsultaion?.forEach((date) => {
+        if (date?.createdAt >= oneDayAgo) {
+          count++;
+        }
+      });
+    });
+    setDatesOfConsultaion(count);
+
+    let countStats = 0;
+    queryClient.getQueryData(['patients']).forEach((patient) => {
+      patient?.datesOfConsultaion?.forEach((date) => {
+        if (date?.createdAt >= twoDayAgo) {
+          count++;
+        }
+      });
+    });
+    setDatesOfConsultaionStats(countStats);
 
     setMedicalAid(queryClient.getQueryData(['medicalAid']).filter((obj) => obj.createdAt >= oneDayAgo))
     setDoctor(queryClient.getQueryData(['doctor']).filter((obj) => obj.createdAt >= oneDayAgo))
@@ -90,6 +112,27 @@ export default function Dashboard() {
     setPatientsStats(queryClient.getQueryData(['patients']).filter((obj) => obj.createdAt >= twoWeekAgo && obj.createdAt <= oneWeekAgo))
     setPlacesOfServiceStats(queryClient.getQueryData(['placesOfService']).filter((obj) => obj.createdAt >= twoWeekAgo && obj.createdAt <= oneWeekAgo));
 
+
+    let count = 0;
+    queryClient.getQueryData(['patients']).forEach((patient) => {
+      patient?.datesOfConsultaion?.forEach((date) => {
+        if (date?.createdAt >= oneWeekAgo) {
+          count++;
+        }
+      });
+    });
+    setDatesOfConsultaion(count);
+
+    let countStats = 0;
+    queryClient.getQueryData(['patients']).forEach((patient) => {
+      patient?.datesOfConsultaion?.forEach((date) => {
+        if (date?.createdAt >= twoWeekAgo) {
+          count++;
+        }
+      });
+    });
+    setDatesOfConsultaionStats(countStats);
+
     setMedicalAid(queryClient.getQueryData(['medicalAid']).filter((obj) => obj.createdAt >= oneWeekAgo))
     setDoctor(queryClient.getQueryData(['doctor']).filter((obj) => obj.createdAt >= oneWeekAgo))
     setPatients(queryClient.getQueryData(['patients']).filter((obj) => obj.createdAt >= oneWeekAgo))
@@ -105,6 +148,27 @@ export default function Dashboard() {
     setDoctorStats(queryClient.getQueryData(['doctor']).filter((obj) => obj.createdAt >= twoMonthAgo && obj.createdAt <= oneMonthAgo))
     setPatientsStats(queryClient.getQueryData(['patients']).filter((obj) => obj.createdAt >= twoMonthAgo && obj.createdAt <= oneMonthAgo))
     setPlacesOfServiceStats(queryClient.getQueryData(['placesOfService']).filter((obj) => obj.createdAt >= twoMonthAgo && obj.createdAt <= oneMonthAgo));
+
+    let count = 0;
+    queryClient.getQueryData(['patients']).forEach((patient) => {
+      patient?.datesOfConsultaion?.forEach((date) => {
+        if (date?.createdAt >= oneMonthAgo) {
+          count++;
+        }
+      });
+    });
+    setDatesOfConsultaion(count);
+
+    let countStats = 0;
+    queryClient.getQueryData(['patients']).forEach((patient) => {
+      patient?.datesOfConsultaion?.forEach((date) => {
+        if (date?.createdAt >= twoMonthAgo) {
+          count++;
+        }
+      });
+    });
+    setDatesOfConsultaionStats(countStats);
+
 
     setMedicalAid(queryClient.getQueryData(['medicalAid']).filter((obj) => obj.createdAt >= oneMonthAgo))
     setDoctor(queryClient.getQueryData(['doctor']).filter((obj) => obj.createdAt >= oneMonthAgo))
@@ -158,29 +222,29 @@ export default function Dashboard() {
         </select>
       </div>
       <div className='flex gap-4'>
-        <StatsCard title={"Patients"} count={patient?.length || 0} stats={patientStats?.length} />
-        <StatsCard title={"Doctor"} count={doctor?.length || 0} stats={doctorStats?.length} />
-        <StatsCard title={"Medical Aid"} count={medicalAid?.length || 0} stats={medicalAidStats?.length} />
-        <StatsCard title={"Places of Service"} count={placesOfService?.length || 0} stats={placesOfServiceStats?.length} />
-        <StatsCard title={"Consultations"} count={placesOfService?.length || 0} stats={placesOfServiceStats?.length} />
+        <StatsCard date={date} title={"Patients"} count={patient?.length || 0} stats={patientStats?.length} />
+        <StatsCard date={date} title={"Doctor"} count={doctor?.length || 0} stats={doctorStats?.length} />
+        <StatsCard date={date} title={"Medical Aid"} count={medicalAid?.length || 0} stats={medicalAidStats?.length} />
+        <StatsCard date={date} title={"Places of Service"} count={placesOfService?.length || 0} stats={placesOfServiceStats?.length} />
+        <StatsCard date={date} title={"Consultations"} count={datesOfConsultaion || 0} stats={datesOfConsultaionStats} />
       </div>
       <div className='max-h-[370px] h-full'>
         <div className='flex justify-between items-center'>
           <h1 className='py-2'>Patients Overview</h1>
-          <select onChange={(e)=>patientOnChangeHandler(e)} className='w-[10vw] border-[rgba(0,0,0,0.1)] border-2 p-2'>
+          <select onChange={(e) => patientOnChangeHandler(e)} className='w-[10vw] border-[rgba(0,0,0,0.1)] border-2 p-2'>
             <option selected value={"All"}>All</option>
             <option value={"Gender"}>Gender</option>
             <option value={"Age"}>Age Group</option>
           </select>
         </div>
         <div className='w-full max-h-[310px]'>
-          {patientType === "All" ? 
-          <SimpleBar patient={patient} date={date}/>
-          :patientType === "Gender" ? 
-          
-          <GenderBar patient={patient} date={date}/>
-          :patientType === "Age" && 
-          <AgeBar patient={patient} date={date}/>
+          {patientType === "All" ?
+            <SimpleBar patient={patient} date={date} />
+            : patientType === "Gender" ?
+
+              <GenderBar patient={patient} date={date} />
+              : patientType === "Age" &&
+              <AgeBar patient={patient} date={date} />
           }
         </div>
       </div>

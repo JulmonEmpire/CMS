@@ -51,14 +51,6 @@ export default function AddDateModal({ hideAddModal }) {
           await updateDoc(patientRef, { notes: updatedNotes });
           queryClient.invalidateQueries(['patients']);
           return { id: id, url, name: name, type: type, dateOfConsultation: data.date, dateOfConsultationId: data.id }
-          // if (index === notes.length - 1) {
-          // queryClient.invalidateQueries(["patients"])
-          // toast.success("Date added successfully");
-          // hideAddModal();
-          // setLoading(false);
-          // navigate('.', { state: { ...location.state, datesOfConsultaion: datesOfConsultaion, notes: updatedNotes } });
-          //   return [datesOfConsultaion, updatedNotes]
-          // }
         }
       }));
       return [datesOfConsultaion, notesArray]
@@ -69,7 +61,11 @@ export default function AddDateModal({ hideAddModal }) {
       toast.success("Date added successfully");
       hideAddModal();
       setLoading(false);
-      navigate('.', { state: { ...location.state, datesOfConsultaion: res[0], notes: [...location?.state?.notes,...res[1]] } });
+      if(location?.state?.notes !== undefined){
+        navigate('.', { state: { ...location.state, datesOfConsultaion: res[0], notes: [...location?.state?.notes,...res[1]] } });
+      }else{
+        navigate('.', { state: { ...location.state, datesOfConsultaion: res[0], notes: [...res[1]] } });
+      }
     },
     onError: (error) => {
       console.log(error)

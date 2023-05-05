@@ -9,6 +9,7 @@ import { CgDetailsMore } from 'react-icons/cg';
 import * as Yup from 'yup';
 
 const validationSchema = Yup.object().shape({
+  title: Yup.string().required('Title is required'),
   firstName: Yup.string().required('First Name is required'),
   lastName: Yup.string().required('Last Name is required'),
   email: Yup.string().email('Invalid email address').required('Email is required'),
@@ -61,6 +62,7 @@ export default function EditDoctor() {
     e.preventDefault();
     let data = {
       id: initialValues.id,
+      title: formRef.current.title.value,
       firstName: formRef.current.firstName.value,
       lastName: formRef.current.lastName.value,
       email: formRef.current.email.value,
@@ -101,9 +103,9 @@ export default function EditDoctor() {
           <option selected disabled value={"null"}>Title</option>
           <option value={"Prof"}>Prof</option>
           <option value={"Dr"}>Dr</option>
-          <option value={"Miss"}>Mr</option>
+          <option value={"Mr"}>Mr</option>
           <option value={"Ms"}>Ms</option>
-          <option value={"Miss"}>Mrs</option>
+          <option value={"Mrs"}>Mrs</option>
         </select>
         <div className='flex gap-4'>
           <input defaultValue={initialValues?.firstName} className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[50%]' placeholder='First Name' name='firstName' />

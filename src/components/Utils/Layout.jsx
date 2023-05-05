@@ -87,7 +87,7 @@ export default function Layout({ children }) {
   return (
     <div className='w-full min-h-screen flex  bg-[#EEEEEE]'>
       <div className='w-60 p-2 pl-2 pt-2 bg-[white] rounded-xl m-2'>
-        <h1 className='font-bold text-2xl text-center'><img src='/Logo.png' /></h1>
+        <h1 className='font-bold text-2xl text-center'><img className='w-[224px] h-[142px]' src='/Logo.png' /></h1>
         <div className='mt-8 flex flex-col justify-between h-[75%]'>
           <ul className='text-lg space-y-6'>
             <NavLink to={"/dashboard"} className={({ isActive }) => isActive ? 'bg-gradient-to-r from-[#6C526F] to-[#AE89A5] text-[#fff] flex items-center space-x-4 h-14 p-4 rounded-xl transition-all duration-500' : 'flex items-center space-x-4 h-14 p-4 rounded-xl text-[#595659] hover:text-[#6C526F] transition-all duration-500 hover:bg-[rgba(0,0,0,0.1)]'}>

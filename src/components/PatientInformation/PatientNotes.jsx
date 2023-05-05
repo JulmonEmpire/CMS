@@ -102,6 +102,7 @@ export default function PatientNotes() {
                   <td className='p-2'>#</td>
                   <th className='p-2'>Name</th>
                   <th className='p-2'>Date of consultation</th>
+                  <th className='p-2'>Therapy Type</th>
                   <th className='p-2'>Type</th>
                   <th className='p-2'>File</th>
                   <th className='p-2 text-center w-32'>Actions</th>

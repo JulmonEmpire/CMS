@@ -44,9 +44,9 @@ export default function AddDateModal({ hideAddModal }) {
         if (patientDoc.exists()) {
           const patientData = patientDoc.data();
 
-          var updatedNotes = [{ id: id, url, name: name, type: type, dateOfConsultation: data.date, dateOfConsultationId: data.id }];
+          var updatedNotes = [{ id: id, url, name: name, type: type, therapyType: data.therapyType, dateOfConsultation: data.date, dateOfConsultationId: data.id }];
           if (patientData?.notes !== undefined && patientData?.notes?.length > 0) {
-            updatedNotes = [...patientData?.notes, { id: id, url, name: name, type: type, dateOfConsultation: data.date, dateOfConsultationId: data.id }];
+            updatedNotes = [...patientData?.notes, { id: id, url, name: name, type: type, dateOfConsultation: data.date, therapyType: data.therapyType, dateOfConsultationId: data.id }];
           }
           await updateDoc(patientRef, { notes: updatedNotes });
           queryClient.invalidateQueries(['patients']);
@@ -61,9 +61,9 @@ export default function AddDateModal({ hideAddModal }) {
       toast.success("Date added successfully");
       hideAddModal();
       setLoading(false);
-      if(location?.state?.notes !== undefined){
-        navigate('.', { state: { ...location.state, datesOfConsultaion: res[0], notes: [...location?.state?.notes,...res[1]] } });
-      }else{
+      if (location?.state?.notes !== undefined) {
+        navigate('.', { state: { ...location.state, datesOfConsultaion: res[0], notes: [...location?.state?.notes, ...res[1]] } });
+      } else {
         navigate('.', { state: { ...location.state, datesOfConsultaion: res[0], notes: [...res[1]] } });
       }
     },
@@ -83,6 +83,7 @@ export default function AddDateModal({ hideAddModal }) {
     let data = {
       id: uid(),
       date: d,
+      therapyType: formRef.current.therapyType.value,
       createdAt: nowTime
     }
     mutation.mutate(data);
@@ -96,12 +97,21 @@ export default function AddDateModal({ hideAddModal }) {
           <ImCross onClick={hideAddModal} className='mr-4 text-2xl cursor-pointer' />
         </div>
         <form onSubmit={formHandler} ref={formRef} className='px-2 flex flex-col gap-4 pt-4 justify-center h-[80%]'>
-          <div className='w-full h-full overflow-auto'>
+          <div className='flex flex-col gap-[5px] w-full h-full overflow-auto'>
             <input required className='w-[100%] p-2 text-[#595659] border-[rgba(0,0,0,0.1)] border-2' type={'datetime-local'} name='date' placeholder='Type Date'></input>
+            <select name='therapyType' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
+              <option selected disabled value={"null"}>Type of Therapy</option>
+              <option value={"Individual Therapy"}>Individual Therapy</option>
+              <option value={"Couple Therapy"}>Couple Therapy</option>
+              <option value={"Child Therapy"}>Child Therapy</option>
+              <option value={"Family Therapy"}>Family Therapy</option>
+              <option value={"Group Therapy"}>Group Therapy</option>
+            </select>
             <div>
-              <label className='cursor-pointer h-12 ml-2 flex items-center rounded-sm' type='button' htmlFor="scannedCopies">Add Notes</label>
+              <label className='cursor-pointer h-8 ml-2 flex items-center rounded-sm' type='button' htmlFor="scannedCopies">Add Notes</label>
               <input multiple accept="image/*, application/pdf, .doc, .docx" onChange={(e) => { setNotes((prev) => [...prev, e.target.files[0]]); }} className='hidden' type='file' id="scannedCopies" />
             </div>
+
 
             {notes?.map((file, index) => {
               return (

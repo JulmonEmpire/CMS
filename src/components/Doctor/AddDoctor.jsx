@@ -77,9 +77,9 @@ export default function AddDoctor() {
           <option selected disabled value={"null"}>Title</option>
           <option value={"Prof"}>Prof</option>
           <option value={"Dr"}>Dr</option>
-          <option value={"Miss"}>Mr</option>
+          <option value={"Mr"}>Mr</option>
           <option value={"Ms"}>Ms</option>
-          <option value={"Miss"}>Mrs</option>
+          <option value={"Mrs"}>Mrs</option>
         </select>
         <div className='flex gap-4'>
           <input className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[50%]' placeholder='First Name' name='firstName' />

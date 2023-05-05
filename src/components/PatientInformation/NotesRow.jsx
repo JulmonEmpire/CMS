@@ -45,11 +45,13 @@ export default function NotesRow({ note, index, pId }) {
   const d = new Date(note?.dateOfConsultation);
   const dateObj = new Date(note?.dateOfConsultation);
   const formattedDate = dateObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  console.log(note)
   return (
     <tr key={note?.id} style={index % 2 !== 0 ? { backgroundColor: "#EEEEEE" } : {}} className="h-12 w-full">
       <td className='p-2 font-[500]'>{index + 1}</td>
       <td className='p-2 font-[500]'>{note.name}</td>
       <td className='p-2 font-[500]'>{`${d.toString().slice(0, 15)} ${formattedDate}`}</td>
+      <td className='p-2 font-[500]'>{note?.therapyType}</td>
       <td className='p-2 font-[500]'>{note.type}</td>
       <td className='p-2'><a href={note.url}>{<GrDownload />}</a></td>
       <td className='p-2 flex justify-center relative'>

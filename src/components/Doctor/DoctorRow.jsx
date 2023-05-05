@@ -41,7 +41,6 @@ export default function DoctorRow({ doctor, index }) {
     <tr key={doctor?.id} style={index % 2 !== 0 ? { backgroundColor: "#EEEEEE" } : {}} className="h-12">
       <td className='p-2 font-[500]'>{index + 1}</td>
       <td className='p-2'>{`${doctor?.title || ""} ${doctor?.lastName}`}</td>
-      <td className='p-2'>{doctor?.lastName}</td>
       <td className='p-2'>{doctor?.firstName}</td>
       <td className='p-2'>{doctor?.email}</td>
       <td className='p-2'>{doctor?.practiceNumber}</td>

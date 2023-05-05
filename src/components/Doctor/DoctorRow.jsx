@@ -9,7 +9,7 @@ export default function DoctorRow({ doctor, index }) {
   const navigate = useNavigate()
   const [showContextMenu, setContextMenu] = useState(false);
   const queryClient = useQueryClient();
-  const [loading,setLoading]=useState();
+  const [loading, setLoading] = useState();
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
@@ -40,6 +40,7 @@ export default function DoctorRow({ doctor, index }) {
   return (
     <tr key={doctor?.id} style={index % 2 !== 0 ? { backgroundColor: "#EEEEEE" } : {}} className="h-12">
       <td className='p-2 font-[500]'>{index + 1}</td>
+      <td className='p-2'>{`${doctor?.title || ""} ${doctor?.lastName}`}</td>
       <td className='p-2'>{doctor?.lastName}</td>
       <td className='p-2'>{doctor?.firstName}</td>
       <td className='p-2'>{doctor?.email}</td>
@@ -55,9 +56,9 @@ export default function DoctorRow({ doctor, index }) {
           <li onClick={(e) => { navigate("/doctors/edit", { state: doctor }) }} className='py-2 px-6 flex-1 flex justify-center select-none items-center hover:bg-[rgba(0,0,0,0.05)] transition-colors'>Edit</li>
           {!loading
             ?
-            <li onClick={(e) => { deleteDoctor();e.stopPropagation() }} className='py-2 px-6 flex-1 flex justify-center items-center hover:bg-[rgba(0,0,0,0.05)] transition-colors select-none cursor-pointer'>Delete</li>
+            <li onClick={(e) => { deleteDoctor(); e.stopPropagation() }} className='py-2 px-6 flex-1 flex justify-center items-center hover:bg-[rgba(0,0,0,0.05)] transition-colors select-none cursor-pointer'>Delete</li>
             :
-            <li className='py-2 px-6 flex-1 flex justify-center items-center hover:bg-[rgba(0,0,0,0.05)] transition-colors select-none cursor-pointer'><img className='w-[25px] m-auto' src='/Loading.svg'/></li>
+            <li className='py-2 px-6 flex-1 flex justify-center items-center hover:bg-[rgba(0,0,0,0.05)] transition-colors select-none cursor-pointer'><img className='w-[25px] m-auto' src='/Loading.svg' /></li>
           }
         </ul>
       </td>

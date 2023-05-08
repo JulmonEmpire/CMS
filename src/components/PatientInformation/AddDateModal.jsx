@@ -112,7 +112,6 @@ export default function AddDateModal({ hideAddModal }) {
               <input multiple accept="image/*, application/pdf, .doc, .docx" onChange={(e) => { setNotes((prev) => [...prev, e.target.files[0]]); }} className='hidden' type='file' id="scannedCopies" />
             </div>
 
-
             {notes?.map((file, index) => {
               return (
                 <div className='flex gap-[6px]'>

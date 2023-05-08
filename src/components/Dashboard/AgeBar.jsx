@@ -49,17 +49,17 @@ export default function AgeBar({ date, patient }) {
     labels: date === 24 ? last24Hours() : date === 7 ? last7Days() : last30Days(),
     datasets: [
       {
-        label: 'Child',
+        label: 'Children',
         data: date === 24 ? countLast24HoursAge(patient || [], "Age", "Child") : date === 7 ? countLast7DaysAge(patient || [], "Age", "Child") : countLast30DaysAge(patient || [], "Age", "Child"),
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
       {
-        label: 'Adult',
+        label: 'Adolescents',
         data: date === 24 ? countLast24HoursAge(patient || [], "Age", "Adult") : date === 7 ? countLast7DaysAge(patient || [], "Age", "Adult") : countLast30DaysAge(patient || [], "Age", "Adult"),
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
       {
-        label: 'Elderly',
+        label: 'Adults',
         data: date === 24 ? countLast24HoursAge(patient || [], "Age", "Elderly") : date === 7 ? countLast7DaysAge(patient || [], "Age", "Elderly") : countLast30DaysAge(patient || [], "Age", "Elderly"),
         backgroundColor: 'rgba(255, 255, 0, 0.5)',
       },

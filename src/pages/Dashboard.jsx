@@ -16,6 +16,7 @@ import { countLast24Hours, countLast30Days, countLast7Days, last24Hours, last30D
 import SimpleBar from '../components/Dashboard/SimpleBar';
 import GenderBar from '../components/Dashboard/GenderBar';
 import AgeBar from '../components/Dashboard/AgeBar';
+import TherapyBar from '../components/Dashboard/TherapyBar';
 
 ChartJS.register(
   CategoryScale,
@@ -65,11 +66,14 @@ export default function Dashboard() {
   const [date, setDate] = useState(24);
   const [patientType, setPatientType] = useState("All");
 
+  const [allPatients,setAllPatients]=useState()
+
   function filterByTimeframe24() {
     const now = Date.now();
     const oneDayAgo = now - (24 * 60 * 60 * 1000);
     const twoDayAgo = now - (48 * 60 * 60 * 1000);
 
+    setAllPatients(queryClient.getQueryData(['patients']));
     setMedicalAidStats(queryClient.getQueryData(['medicalAid']).filter((obj) => obj.createdAt >= twoDayAgo && obj.createdAt <= oneDayAgo))
     setDoctorStats(queryClient.getQueryData(['doctor']).filter((obj) => obj.createdAt >= twoDayAgo && obj.createdAt <= oneDayAgo))
     setPatientsStats(queryClient.getQueryData(['patients']).filter((obj) => obj.createdAt >= twoDayAgo && obj.createdAt <= oneDayAgo))
@@ -210,7 +214,6 @@ export default function Dashboard() {
     setPatientType(e.target.value);
   }
 
-
   return (
     <div className='p-4 flex flex-col'>
       <div className='flex justify-between mb-4 items-center'>
@@ -235,16 +238,18 @@ export default function Dashboard() {
             <option selected value={"All"}>All</option>
             <option value={"Gender"}>Gender</option>
             <option value={"Age"}>Age Group</option>
+            <option value={"Therapy"}>Therapy Type</option>
           </select>
         </div>
         <div className='w-full max-h-[310px]'>
           {patientType === "All" ?
             <SimpleBar patient={patient} date={date} />
             : patientType === "Gender" ?
-
               <GenderBar patient={patient} date={date} />
-              : patientType === "Age" &&
-              <AgeBar patient={patient} date={date} />
+                : patientType === "Age" ?
+                <AgeBar patient={patient} date={date} />
+                : patientType === "Therapy" &&
+                <TherapyBar patient={allPatients} date={date} />
           }
         </div>
       </div>

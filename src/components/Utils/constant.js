@@ -231,7 +231,7 @@ export function countLast24HoursAge(data, selectorType, type) {
     return childCounts
   } else if (type === "Adult") {
     return adultCounts
-  } else if(type === "Elderly"){
+  } else if (type === "Elderly") {
     return elderlyCounts
   }
 }
@@ -332,5 +332,171 @@ export function countLast30DaysAge(data, selectorType, type) {
     return adultCounts;
   } else if (type === "Elderly") {
     return elderlyCounts;
+  }
+}
+
+export function therapyType24hours(data, selectorType, type) {
+  const individual = Array.from({ length: 24 }, (_, i) => 0);
+  const couple = Array.from({ length: 24 }, (_, i) => 0);
+  const child = Array.from({ length: 24 }, (_, i) => 0);
+  const family = Array.from({ length: 24 }, (_, i) => 0);
+  const group = Array.from({ length: 24 }, (_, i) => 0);
+
+  const hourStart = new Date();
+  hourStart.setHours(hourStart.getHours() - 23);
+  hourStart.setMinutes(0);
+  hourStart.setSeconds(0);
+  let st=hourStart.getTime();
+
+  for (let i = 0; i < 24; i++) {
+    let hourEnd = new Date(hourStart);
+    hourEnd.setHours(hourEnd.getHours() + 1);
+    hourEnd=hourEnd.getTime();
+
+
+    data?.forEach(patient => {
+      patient?.notes?.forEach(note => {
+        let createdAt = new Date(note?.dateOfConsultation);
+        createdAt=createdAt.getTime()
+
+        if (createdAt >= st && createdAt < hourEnd) {
+          if (note.therapyType === "Individual Therapy") {
+            individual[i]++;
+          } else if (note.therapyType === "Couple Therapy") {
+            couple[i]++;
+          } else if (note.therapyType === "Child Therapy") {
+            child[i]++;
+          } else if (note.therapyType === "Family Therapy") {
+            family[i]++;
+          } else if (note.therapyType === "Group Therapy") {
+            group[i]++;
+          }
+        }
+      });
+    });
+
+    hourStart.setHours(hourStart.getHours() + 1);
+  }
+
+  if (type === "Individual") {
+    return individual;
+  } else if (type === "Couple") {
+    return couple;
+  } else if (type === "Child") {
+    return child;
+  } else if (type === "Family") {
+    return family;
+  } else if (type === "Group") {
+    return group;
+  }
+}
+
+export function therapyTypeLast30Days(data, selectorType, type) {
+  const individual = Array.from({ length: 30 }, (_, i) => 0);
+  const couple = Array.from({ length: 30 }, (_, i) => 0);
+  const child = Array.from({ length: 30 }, (_, i) => 0);
+  const family = Array.from({ length: 30 }, (_, i) => 0);
+  const group = Array.from({ length: 30 }, (_, i) => 0);
+
+  const currentDate = new Date();
+  let startDate = new Date(currentDate);
+  startDate.setDate(startDate.getDate() - 29); // Subtract 29 days to get the start date (30 days ago)
+  let st=startDate.getTime();
+  
+  for (let i = 0; i < 30; i++) {
+    let endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + 1); // Add 1 day to get the end date (next day)
+
+    endDate=endDate.getTime()
+
+    data?.forEach(patient => {
+      patient?.notes?.forEach(note => {
+        let createdAt = new Date(note?.dateOfConsultation);
+        createdAt=createdAt.getTime()
+        console.log(createdAt >= st && createdAt < endDate)
+        if (createdAt >= st && createdAt < endDate) {
+          if (note.therapyType === "Individual Therapy") {
+            individual[i]++;
+          } else if (note.therapyType === "Couple Therapy") {
+            couple[i]++;
+          } else if (note.therapyType === "Child Therapy") {
+            child[i]++;
+          } else if (note.therapyType === "Family Therapy") {
+            family[i]++;
+          } else if (note.therapyType === "Group Therapy") {
+            group[i]++;
+          }
+        }
+      });
+    });
+
+    startDate.setDate(startDate.getDate() + 1); // Move to the next day
+  }
+
+  if (type === "Individual") {
+    return individual;
+  } else if (type === "Couple") {
+    return couple;
+  } else if (type === "Child") {
+    return child;
+  } else if (type === "Family") {
+    return family;
+  } else if (type === "Group") {
+    return group;
+  }
+}
+
+export function therapyTypeLast7Days(data, selectorType, type) {
+  const individual = Array.from({ length: 7 }, (_, i) => 0);
+  const couple = Array.from({ length: 7 }, (_, i) => 0);
+  const child = Array.from({ length: 7 }, (_, i) => 0);
+  const family = Array.from({ length: 7 }, (_, i) => 0);
+  const group = Array.from({ length: 7 }, (_, i) => 0);
+
+  const currentDate = new Date();
+  const startDate = new Date(currentDate);
+  startDate.setDate(startDate.getDate() - 6); // Subtract 6 days to get the start date (7 days ago)
+  startDate.setHours(0, 0, 0, 0); // Set the start date time to the beginning of the day
+  let st=startDate.getTime();
+
+
+  for (let i = 0; i < 7; i++) {
+    let endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + 1); // Add 1 day to get the end date (next day)
+    endDate=endDate.getTime()
+
+    data?.forEach(patient => {
+      patient?.notes?.forEach(note => {
+        let createdAt = new Date(note?.dateOfConsultation);
+        createdAt=createdAt.getTime()
+        if (createdAt >= st && createdAt < endDate) {
+          if (note.therapyType === "Individual Therapy") {
+            individual[i]++;
+          } else if (note.therapyType === "Couple Therapy") {
+            couple[i]++;
+          } else if (note.therapyType === "Child Therapy") {
+            child[i]++;
+          } else if (note.therapyType === "Family Therapy") {
+            family[i]++;
+          } else if (note.therapyType === "Group Therapy") {
+            group[i]++;
+          }
+        }
+      });
+    });
+
+    startDate.setDate(startDate.getDate() + 1); // Move to the next day
+  }
+
+  if (type === "Individual") {
+    return individual;
+  } else if (type === "Couple") {
+    return couple;
+  } else if (type === "Child") {
+    return child;
+  } else if (type === "Family") {
+    return family;
+  } else if (type === "Group") {
+    return group;
   }
 }

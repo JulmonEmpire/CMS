@@ -37,8 +37,19 @@ import EditPatientDetail from "./components/Patients/EditPatientDetail";
 import EditPatientMedicalAid from "./components/Patients/EditPatientMedicalAid";
 import EditPatientContact from "./components/Patients/EditPatientContact";
 import DatesOfConsultaion from "./components/PatientInformation/DatesOfConsultaion";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 function App() {
+
+  const queryClient = useQueryClient();
+  const [user, setUser] = useState()
+
+  useEffect(() => {
+    setUser(queryClient.getQueryData(['user']));
+  }, [])
+
+
   return (
     <BrowserRouter>
       <Routes>
@@ -66,11 +77,13 @@ function App() {
               <Route path="notes" element={<PatientNotes></PatientNotes>}></Route>
               <Route path="date-of-consultation" element={<DatesOfConsultaion></DatesOfConsultaion>}></Route>
             </Route>
-            <Route path="users" element={<Users />}>
-              <Route index element={<UsersList />}></Route>
-              <Route end path="add-users" element={<AddUser />}></Route>
-              <Route end path="edit-user" element={<EditUser />}></Route>
-            </Route>
+            {user?.role === "Super User" &&
+              <Route path="users" element={<Users />}>
+                <Route index element={<UsersList />}></Route>
+                <Route end path="add-users" element={<AddUser />}></Route>
+                <Route end path="edit-user" element={<EditUser />}></Route>
+              </Route>
+            }
             <Route path="medical-aids" >
               <Route element={<MedicalAids />}>
                 <Route index element={<MedicalAidList />}></Route>

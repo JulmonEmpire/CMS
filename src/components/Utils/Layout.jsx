@@ -98,10 +98,12 @@ export default function Layout({ children }) {
               <FaUserInjured className='text-2xl' />
               <li>Patients</li>
             </NavLink>
-            <NavLink to={"/users"} className={({ isActive }) => isActive || location.pathname.includes("/users") ? 'bg-gradient-to-r from-[#6C526F] to-[#AE89A5] text-[#fff] flex items-center space-x-4 h-14 p-4 rounded-xl transition-all duration-500' : 'flex items-center space-x-4 h-14 p-4 rounded-xl text-[#595659] hover:text-[#6C526F] transition-all duration-500 hover:bg-[rgba(0,0,0,0.1)]'}>
-              <ImUser className='text-2xl' />
-              <li>Users</li>
-            </NavLink>
+            {user?.role === "Super User" &&
+              <NavLink to={"/users"} className={({ isActive }) => isActive || location.pathname.includes("/users") ? 'bg-gradient-to-r from-[#6C526F] to-[#AE89A5] text-[#fff] flex items-center space-x-4 h-14 p-4 rounded-xl transition-all duration-500' : 'flex items-center space-x-4 h-14 p-4 rounded-xl text-[#595659] hover:text-[#6C526F] transition-all duration-500 hover:bg-[rgba(0,0,0,0.1)]'}>
+                <ImUser className='text-2xl' />
+                <li>Users</li>
+              </NavLink>
+            }
             <NavLink to={"/medical-aids"} className={({ isActive }) => isActive ? 'bg-gradient-to-r from-[#6C526F] to-[#AE89A5] text-[#fff] flex items-center space-x-4 h-14 p-4 rounded-xl transition-all duration-500' : 'flex items-center space-x-4 h-14 p-4 rounded-xl text-[#595659] hover:text-[#6C526F] transition-all duration-500 hover:bg-[rgba(0,0,0,0.1)]'}>
               <ImAidKit className='text-2xl' />
               <li>Medical Aids</li>

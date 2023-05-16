@@ -11,6 +11,11 @@ export default function PlacesOfServiceRow({ place, index }) {
   const queryClient = useQueryClient();
   const [loading,setLoading]=useState();
 
+  const [user, setUser] = useState()
+
+  useEffect(() => {
+    setUser(queryClient.getQueryData(['user']));
+  }, [])
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
@@ -55,12 +60,12 @@ export default function PlacesOfServiceRow({ place, index }) {
         </div>
         <ul style={showContextMenu === true ? { transform: "scale(1)", opacity: "1" } : { transform: "scale(0)", opacity: "0" }} className='transition-all absolute z-10 right-[10%] top-[50px] bg-[white] shadow-md flex flex-col divide-y-2'>
           <li onClick={(e) => { navigate("/places-of-service/edit", { state: place }) }} className='py-2 px-6 flex-1 flex justify-center select-none items-center hover:bg-[rgba(0,0,0,0.05)] transition-colors'>Edit</li>
-          {!loading
+          {user?.role === "Super User" && (!loading
             ?
             <li onClick={(e) => { deleteplace();e.stopPropagation() }} className='py-2 px-6 flex-1 flex justify-center items-center hover:bg-[rgba(0,0,0,0.05)] transition-colors select-none cursor-pointer'>Delete</li>
             :
             <li className='py-2 px-6 flex-1 flex justify-center items-center hover:bg-[rgba(0,0,0,0.05)] transition-colors select-none cursor-pointer'><img className='w-[25px] m-auto' src='/Loading.svg'/></li>
-          }
+          )}
         </ul>
       </td>
     </tr>

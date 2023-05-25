@@ -49,6 +49,7 @@ function App() {
     setUser(queryClient.getQueryData(['user']));
   }, [])
 
+  console.log(user);
 
   return (
     <BrowserRouter>

@@ -43,8 +43,6 @@ export default function PlacesOfServiceRow({ place, index }) {
     setLoading(false);
   }
 
-  console.log(place)
-
   return (
     <tr key={place?.id} style={index % 2 !== 0 ? { backgroundColor: "#EEEEEE" } : {}} className="h-12">
       <td className='p-2 font-[500]'>{index + 1}</td>

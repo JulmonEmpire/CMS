@@ -78,13 +78,13 @@ function App() {
               <Route path="notes" element={<PatientNotes></PatientNotes>}></Route>
               <Route path="date-of-consultation" element={<DatesOfConsultaion></DatesOfConsultaion>}></Route>
             </Route>
-            {user?.role === "Super User" &&
+            {/* {user?.role === "Super User" && */}
               <Route path="users" element={<Users />}>
                 <Route index element={<UsersList />}></Route>
                 <Route end path="add-users" element={<AddUser />}></Route>
                 <Route end path="edit-user" element={<EditUser />}></Route>
               </Route>
-            }
+            {/* } */}
             <Route path="medical-aids" >
               <Route element={<MedicalAids />}>
                 <Route index element={<MedicalAidList />}></Route>

@@ -5,8 +5,10 @@ import { db } from '../Utils/firebase';
 import { toast } from 'react-toastify';
 import { useQueryClient } from '@tanstack/react-query';
 import PatientDeleteConfirm from './PatientDeleteConfirm';
+import {IoMdAlert} from "react-icons/io"
 
 export default function PatientRow({ patient, index }) {
+  console.log(patient);
   const navigate = useNavigate();
   const [showContextMenu, setContextMenu] = useState(false);
   const queryClient = useQueryClient()
@@ -48,7 +50,7 @@ export default function PatientRow({ patient, index }) {
         <PatientDeleteConfirm id={patient.id} hidePatientDeleteHandler={hidePatientDeleteHandler}></PatientDeleteConfirm>
       }
       <tr className="h-12 hover:!bg-[rgba(0,0,0,0.030)] cursor-pointer" onClick={() => { navigate("/patients-information", { state: { ...patient } }); }} key={patient?.id} style={index % 2 !== 0 ? { backgroundColor: "#EEEEEE" } : { backgroundColor: "#ffffff" }}>
-        <td className='p-2 font-[500]'>{index + 1}</td>
+        <td className='p-2 font-[500]'>{patient?.alert?<IoMdAlert title='The last date of consultation was added 6 years ago. Please take necessary action' className='w-[20px] text-[red] h-[20px] rounded-full'></IoMdAlert>:index + 1}</td>
         <td className='p-2'>{`${patient?.title} ${patient?.lastName}`}</td>
         <td className='p-2'>{`${patient?.firstName}`}</td>
         <td className='p-2'>{patient?.email || "-"}</td>

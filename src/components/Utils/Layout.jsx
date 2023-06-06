@@ -12,6 +12,7 @@ import { signOut } from "firebase/auth";
 import { auth, db } from "./firebase"
 import { useQuery } from '@tanstack/react-query';
 import { collection, getDocs } from 'firebase/firestore';
+import { connectStorageEmulator } from 'firebase/storage'
 
 export default function Layout({ children }) {
   const queryClient = useQueryClient();
@@ -73,15 +74,47 @@ export default function Layout({ children }) {
     return data;
   });
 
+  // const patientQuery = useQuery(["patients"], async () => {
+  //   let data = []
+  //   const querySnapshot = await getDocs(collection(db, "patients"));
+  //   querySnapshot.forEach((doc) => {
+  //     let medicalAiddata = doc.data();
+  //     medicalAiddata.id = doc.id;
+  //     data.push(medicalAiddata);
+  //   })
+  //   return data;
+  // });
+
   const patientQuery = useQuery(["patients"], async () => {
-    let data = []
     const querySnapshot = await getDocs(collection(db, "patients"));
+    const data = [];
+    let alertData = []
     querySnapshot.forEach((doc) => {
-      let medicalAiddata = doc.data();
+      const medicalAiddata = doc.data();
       medicalAiddata.id = doc.id;
+
+      if (Array.isArray(medicalAiddata.datesOfConsultaion) && medicalAiddata.datesOfConsultaion.length > 0) {
+        const latestConsultation = medicalAiddata.datesOfConsultaion[medicalAiddata.datesOfConsultaion.length - 1];
+        const sixYearsAgo = new Date();
+        sixYearsAgo.setFullYear(sixYearsAgo.getFullYear() - 6);
+
+        const oneDayAgo = new Date();
+        oneDayAgo.setDate(oneDayAgo.getDate() - 1);
+
+
+
+        if (new Date(latestConsultation.date) <= oneDayAgo) {
+          medicalAiddata.alert = true;
+          medicalAiddata.datesOfConsultaion.unshift(medicalAiddata.datesOfConsultaion.pop());
+          alertData.push(medicalAiddata);
+          return
+        }
+      }
+
       data.push(medicalAiddata);
-    })
-    return data;
+    });
+
+    return [...alertData,...data];
   });
 
   return (

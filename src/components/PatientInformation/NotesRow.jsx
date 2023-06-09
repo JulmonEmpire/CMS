@@ -32,12 +32,9 @@ export default function NotesRow({ note, index, pId }) {
         await updateDoc(patientRef, { notes: updatedNotes });
         queryClient.invalidateQueries(['patients']);
         navigate('.', { state: { ...patientData, notes: updatedNotes, id: id } });
-        console.log("Note deleted successfully");
       } else {
-        console.log("Patient not found");
       }
     } catch (err) {
-      console.log(err);
     }
     setLoading(false);
   };
@@ -45,7 +42,6 @@ export default function NotesRow({ note, index, pId }) {
   const d = new Date(note?.dateOfConsultation);
   const dateObj = new Date(note?.dateOfConsultation);
   const formattedDate = dateObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-  console.log(note)
   return (
     <tr key={note?.id} style={index % 2 !== 0 ? { backgroundColor: "#EEEEEE" } : {}} className="h-12 w-full">
       <td className='p-2 font-[500]'>{index + 1}</td>

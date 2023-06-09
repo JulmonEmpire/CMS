@@ -68,7 +68,6 @@ export default function AddDateModal({ hideAddModal }) {
       }
     },
     onError: (error) => {
-      console.log(error)
       toast.error("Error adding date");
     }
   })

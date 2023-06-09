@@ -45,7 +45,6 @@ export default function EditPatientContact() {
     },
     onError: (error) => {
       toast.error("Error adding Patient");
-      console.log(error)
     }
   })
 
@@ -95,7 +94,6 @@ export default function EditPatientContact() {
       navigate('/patients');
     },
     onError: () => {
-      console.log(error);
       toast.error("Error applying changes");
     }
   })

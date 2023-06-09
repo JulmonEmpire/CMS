@@ -29,7 +29,6 @@ export default function PatientDeleteConfirm({ hidePatientDeleteHandler, id }) {
         hidePatientDeleteHandler();
       })
       .catch((error) => {
-        console.log(error.code)
         if (error.code === "auth/wrong-password") {
           toast.error("Wrong password");
           setLoading(false);

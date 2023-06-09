@@ -9,7 +9,7 @@ export default function Protected() {
   const user = localStorage.getItem("user")
 
   useEffect(() => {
-    if (user === null) {
+    if (user === null || user === undefined) {
       navigate('/');
     }
     queryClient.setQueryData(["user"], JSON.parse(user))

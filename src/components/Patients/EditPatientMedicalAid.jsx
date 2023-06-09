@@ -88,7 +88,6 @@ export default function EditPatientMedicalAid() {
       navigate('/patients');
     },
     onError: () => {
-      console.log(error);
       toast.error("Error applying changes");
     }
   })

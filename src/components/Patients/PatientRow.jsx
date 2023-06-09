@@ -8,7 +8,6 @@ import PatientDeleteConfirm from './PatientDeleteConfirm';
 import {IoMdAlert} from "react-icons/io"
 
 export default function PatientRow({ patient, index }) {
-  console.log(patient);
   const navigate = useNavigate();
   const [showContextMenu, setContextMenu] = useState(false);
   const queryClient = useQueryClient()

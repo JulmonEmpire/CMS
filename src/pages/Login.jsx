@@ -22,12 +22,16 @@ export default function Login() {
   const loginMutation = useMutation({
     mutationFn: async (data) => {
       const result = await signInWithEmailAndPassword(auth, data.email, data.password);
-      const userRef=doc(db,"users",result.user.uid);
-      const user=await getDoc(userRef);
+      const userRef = doc(db, "users", result.user.uid);
+      const user = await getDoc(userRef);
       return user.data()
       // return { email: result.user.email, uid: result.user.uid };
     },
     onSuccess: (data) => {
+      if (data === undefined) {
+        toast.error("Account not found!");
+        return
+      }
       queryClient.setQueryData(['user'], data);
       localStorage.setItem("user", JSON.stringify(data));
       if (data?.firstPasswordChange === false && data?.role === "Basic User") {
@@ -54,7 +58,7 @@ export default function Login() {
   const hideModal = () => {
     setShowPasswordChangeModal(false);
   }
-  
+
   const hideForgotPasswordModal = () => {
     setShowForgotPasswordModal(false);
   }
@@ -84,7 +88,7 @@ export default function Login() {
               <label className="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#595659]">Password</label>
               <input name="password" className="text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 passwordIcon" type="password" placeholder="Type your password" />
             </div>
-            <p onClick={()=> setShowForgotPasswordModal(true)} className='text-[12px] text-[#595659] hover:text-[#8AB4F8] mt-2 text-right font-bold cursor-pointer transition-colors duration-300'>Forgot Password?</p>
+            <p onClick={() => setShowForgotPasswordModal(true)} className='text-[12px] text-[#595659] hover:text-[#8AB4F8] mt-2 text-right font-bold cursor-pointer transition-colors duration-300'>Forgot Password?</p>
             <div className="flex flex-col items-center justify-center my-2">
               {loginMutation.isLoading === false &&
                 <button className={`h-[4.3518518518519vh] min-w-[150px] min-h-[30px] mt-[2.051vh] mb-[1.221vh] rounded-full py-1 w-[11.258vw] hover:bg-[#fff] hover:text-[#6C526F] border-2 border-[#6C526F] text-[clamp(14px,0.801vw,32.82px)] bg-[#6C526F] text-white uppercase font-bold transition-all duration-300`}>

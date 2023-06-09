@@ -61,7 +61,6 @@ export default function PatientsList() {
       return
     }
     const filteredData = searchRef.current.filter(obj => {
-      console.log(obj)
       if (id === obj.placesOfService.id && type === "placesOfService") {
         return obj
       }

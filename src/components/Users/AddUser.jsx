@@ -21,10 +21,10 @@ export default function AddUser() {
           await setDoc(doc(db, "users", userCredentials.user.uid), data);
         })
         .catch((error) => {
-          console.log(error);
         })
     },
-    onSuccess: () => {
+    onSuccess: (res) => {
+      console.log(res);
       queryClient.invalidateQueries(['users']);
       toast.success("User created successfully");
       navigate('/users');
@@ -50,7 +50,6 @@ export default function AddUser() {
       createdAt:time
     }
 
-    console.log(data);
     signupMutation.mutate(data);
   }
 

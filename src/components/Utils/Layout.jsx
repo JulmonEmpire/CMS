@@ -18,7 +18,10 @@ export default function Layout({ children }) {
   const queryClient = useQueryClient();
   const location = useLocation();
   const navigate = useNavigate();
-  const [user, setUsers] = useState(null)
+  const [user, setUsers] = useState(null);
+
+  const [userType,setUserType]=useState();
+
 
   useEffect(() => {
     const unsubscribe = queryClient.getQueryCache().subscribe(() => {
@@ -116,6 +119,7 @@ export default function Layout({ children }) {
 
     return [...alertData,...data];
   });
+
 
   return (
     <div className='w-full min-h-screen flex  bg-[#EEEEEE]'>

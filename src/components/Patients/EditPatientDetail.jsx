@@ -119,7 +119,6 @@ export default function EditPatientDetail() {
       navigate('/patients');
     },
     onError: () => {
-      console.log(error);
       toast.error("Error applying changes");
     }
   })

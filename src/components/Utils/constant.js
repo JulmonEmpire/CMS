@@ -225,7 +225,6 @@ export function countLast24HoursAge(data, selectorType, type) {
     hourStart.setHours(hourStart.getHours() + 1);
   }
 
-  console.log({ childCounts, adultCounts, elderlyCounts });
 
   if (type === "Child") {
     return childCounts
@@ -413,7 +412,6 @@ export function therapyTypeLast30Days(data, selectorType, type) {
       patient?.notes?.forEach(note => {
         let createdAt = new Date(note?.dateOfConsultation);
         createdAt=createdAt.getTime()
-        console.log(createdAt >= st && createdAt < endDate)
         if (createdAt >= st && createdAt < endDate) {
           if (note.therapyType === "Individual Therapy") {
             individual[i]++;

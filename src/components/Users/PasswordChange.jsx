@@ -22,7 +22,6 @@ export default function PasswordChange({ hideModal }) {
         const result = await updateDoc(userRef, { firstPasswordChange: true });
         return result;
       }).catch((error) => {
-        console.log(error);
       });
     },
     onSuccess: () => {
@@ -30,7 +29,6 @@ export default function PasswordChange({ hideModal }) {
     },
     onError: (error) => {
       toast.error("Error changing password");
-      console.log(error)
     }
   })
 

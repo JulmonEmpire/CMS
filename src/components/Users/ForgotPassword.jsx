@@ -13,7 +13,6 @@ export default function ForgotPassword({ hideForgotPasswordModal }) {
     setLoading(true);
     try {
       const result = await sendPasswordResetEmail(auth, formRef.current.email.value);
-      console.log("Password reset email sent successfully");
       toast.success("Password Change Email sent. Please check your inbox.");
       setLoading(false);
       hideForgotPasswordModal();

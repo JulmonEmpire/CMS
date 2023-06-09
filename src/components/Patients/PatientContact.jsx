@@ -46,7 +46,6 @@ export default function PatientContact() {
     },
     onError:(error)=>{
       toast.error("Error adding Patient");
-      console.log(error)
     }
   })
 

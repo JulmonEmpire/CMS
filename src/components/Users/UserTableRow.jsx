@@ -27,10 +27,8 @@ export default function UserTableRow({ user, index }) {
       const docRef = doc(db, "users", user.uid);
       return updateDoc(docRef, { isBlocked: true })
         .then(() => {
-          console.log("Document updated successfully");
         })
         .catch((error) => {
-          console.log(`Error updating document: ${error}`);
         });
     },
     onSuccess: () => {
@@ -51,10 +49,8 @@ export default function UserTableRow({ user, index }) {
       const docRef = doc(db, "users", user.uid);
       return updateDoc(docRef, { isBlocked: false })
         .then(() => {
-          console.log("Document updated successfully");
         })
         .catch((error) => {
-          console.log(`Error updating document: ${error}`);
         });
     },
     onSuccess: () => {

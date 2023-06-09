@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { MdManageAccounts } from 'react-icons/md'
 import { FaUserPlus } from 'react-icons/fa'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function Users() {
+  const queryClient = useQueryClient();
+  const [user,setUser]=useState()
+  useEffect(()=>{
+    setUser(queryClient.getQueryData(['user']));
+  },[]);
+  const navigate=useNavigate()
+
+  if(user?.role === "Super Admin"){
+    navigate("/dashboard");
+  }
+
   return (
     <div className='w-[100%] h-[100%] bg-[white] rounded-xl'>
       <ul className='flex items-center h-12 pt-2'>

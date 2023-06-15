@@ -101,12 +101,7 @@ export default function Layout({ children }) {
         const sixYearsAgo = new Date();
         sixYearsAgo.setFullYear(sixYearsAgo.getFullYear() - 6);
 
-        const oneDayAgo = new Date();
-        oneDayAgo.setDate(oneDayAgo.getDate() - 1);
-
-
-
-        if (new Date(latestConsultation.date) <= oneDayAgo) {
+        if (new Date(latestConsultation.date) <= sixYearsAgo) {
           medicalAiddata.alert = true;
           medicalAiddata.datesOfConsultaion.unshift(medicalAiddata.datesOfConsultaion.pop());
           alertData.push(medicalAiddata);

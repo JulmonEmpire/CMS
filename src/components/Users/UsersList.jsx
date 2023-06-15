@@ -1,19 +1,27 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../Utils/firebase';
 import UserTableRow from './UserTableRow';
 
 
 export default function UsersList() {
+
+  const [userData,setUserData]=useState()
+  const queryClient=useQueryClient()
+  useEffect(()=>{
+    setUserData(queryClient.getQueryData(['user']));
+  },[queryClient])
   
   const userQuery = useQuery(["users"], async () => {
-    let data = []
+    let data = [];
+    const u=queryClient.getQueryData(['user'])
+    console.log(u)
     const querySnapshot = await getDocs(collection(db, "users"));
 
     querySnapshot.forEach((doc) => {
       let usersdata = doc.data()
-      if (usersdata.role !== "Super User") {
+      if (usersdata?.uid !== u?.uid) {
         data.push(usersdata);
       }
     })
@@ -39,7 +47,8 @@ export default function UsersList() {
           </thead>
           <tbody>
             {userQuery?.data?.map((user, index) => {
-              if (user.role === "Super User") {
+              console.log(user?.uid,userData?.uid);
+              if (user?.uid === userData?.uid) {
                 return
               };
               return (

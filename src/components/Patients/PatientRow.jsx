@@ -54,7 +54,7 @@ export default function PatientRow({ patient, index }) {
         <td className='p-2'>{`${patient?.firstName}`}</td>
         <td className='p-2'>{patient?.email || "-"}</td>
         <td className='p-2'>{patient?.gender}</td>
-        <td className='p-2'>{patient?.refferingDoctor?.firstName}</td>
+        <td className='p-2'>{patient?.refferingDoctor?.lastName}</td>
         <td className='p-2'>{patient?.medicalAidName?.name}</td>
         <td className='p-2'>{patient?.placesOfService?.name}</td>
         <td className='p-2 flex justify-center relative'>

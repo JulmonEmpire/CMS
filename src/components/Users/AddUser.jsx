@@ -73,7 +73,7 @@ export default function AddUser() {
         <select className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' name='role'>
           <option selected disabled value={null}>User Role</option>
           <option value={"Basic User"}>Basic User</option>
-          <option value={"Advanced User"}>Advanced User</option>
+          <option value={"Super User"}>Advanced User</option>
         </select>
         {!signupMutation.isLoading &&
           <button type='submit' className='w-32 h-12 mt-4 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-xl text-white'>Submit</button>

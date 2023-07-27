@@ -19,7 +19,7 @@ export default function UsersList() {
     console.log(u)
     const querySnapshot = await getDocs(collection(db, "users"));
 
-    querySnapshot.forEach((doc) => {
+    querySnapshot?.forEach((doc) => {
       let usersdata = doc.data()
       if (usersdata?.uid !== u?.uid) {
         data.push(usersdata);

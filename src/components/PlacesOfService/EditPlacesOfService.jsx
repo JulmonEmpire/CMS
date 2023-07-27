@@ -32,7 +32,7 @@ export default function EditPlacesOfService() {
       batch.update(hospitalRef, data);
 
       const patientsSnapshot = await getDocs(hospitalQuery);
-      patientsSnapshot.forEach((doc) => {
+      patientsSnapshot?.forEach((doc) => {
         const docRef = doc.ref;
         const updatedPatient = {
           ...doc.data(),

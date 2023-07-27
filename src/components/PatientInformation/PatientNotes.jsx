@@ -22,7 +22,7 @@ export default function PatientNotes() {
   useEffect(() => {
     if (location?.state?.showAddButton && location?.state?.showAddButton === true) {
       let notesArray = []
-      location.state?.notes.forEach((note) => {
+      location?.state?.notes?.forEach((note) => {
         if (note.dateOfConsultationId === location.state.dateId) {
           notesArray.push(note);
         }

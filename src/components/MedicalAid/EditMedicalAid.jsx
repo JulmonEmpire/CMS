@@ -34,7 +34,7 @@ export default function EditMedicalAid() {
 
       // Update the medicalAid ID in all patients' records
       const patientsSnapshot = await getDocs(patientsQuery);
-      patientsSnapshot.forEach((doc) => {
+      patientsSnapshot?.forEach((doc) => {
         const docRef = doc.ref;
         const updatedPatient = {
           ...doc.data(),

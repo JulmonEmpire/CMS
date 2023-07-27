@@ -1,14 +1,17 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import React, { useState } from 'react'
 import { FaUserInjured } from 'react-icons/fa'
 import { toast } from 'react-toastify';
 import AddDateModal from './AddDateModal';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../Utils/firebase';
 
 export default function DatesOfConsultaion() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const queryClient=useQueryClient()
   const [showDateModal, setShowDateModal] = useState(false);
 
   const showAddModal = () => {
@@ -17,6 +20,32 @@ export default function DatesOfConsultaion() {
   const hideAddModal = () => {
     setShowDateModal(false)
   }
+
+  const deleteDateOfConsultation = async (patientId, dateId) => {
+    try {
+      const userRef = doc(db, "patients", patientId);
+
+      let patient = { ...location.state }
+
+      // Get the existing datesOfConsultaion array from the document data
+      const existingDates = patient?.datesOfConsultaion || [];
+
+      // Filter out the date with the provided dateId from the array
+      const updatedDates = existingDates.filter((date) => date.id !== dateId);
+
+      // Update the document with the modified datesOfConsultaion array
+      await updateDoc(userRef, { datesOfConsultaion: updatedDates });
+      console.log("Date of consultation deleted successfully.");
+      queryClient.invalidateQueries(['patients']);
+
+      patient.datesOfConsultaion = updatedDates
+      navigate('.', { state: { ...patient } });
+
+
+    } catch (error) {
+      console.error("Error deleting date of consultation:", error);
+    }
+  };
 
   return (
     <>
@@ -44,14 +73,28 @@ export default function DatesOfConsultaion() {
             const dateObj = new Date(date?.date);
             const formattedDate = dateObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 
+            // Calculate 6 years ago from today
+            const sixYearsAgo = new Date();
+            sixYearsAgo.setFullYear(sixYearsAgo.getFullYear() - 6);
+
+            // const sixYearsAgo = new Date();
+            // sixYearsAgo.setDate(sixYearsAgo.getDate() - 1);
+
+            // Check if the date is before 6 years ago
+            const isDateBefore6YearsAgo = d < sixYearsAgo;
             return (
-              <div onClick={() => navigate("/patients-information/notes", { state: { ...location.state, showAddButton: true, dateId: date.id, date: date.date } })} className='flex gap-10 cursor-pointer hover:opacity-70'>
-                <div className='flex gap-4'>
-                  <p className='text-lg font-[500]'>{`${index + 1}.`}</p>
-                  {/* <p className='text-lg'>{`${d.toString().slice(0, 24)}`}</p> */}
-                  <p className='text-lg'>{`${d.toString().slice(0, 15)} ${formattedDate}`}</p>
+              <div key={index} className='flex gap-10 justify-between items-center'>
+                <div onClick={() => navigate("/patients-information/notes", { state: { ...location.state, showAddButton: true, dateId: date.id, date: date.date } })} className='flex gap-10 cursor-pointer hover:opacity-70'>
+                  <div className='flex gap-4'>
+                    <p className='text-lg font-[500]'>{`${index + 1}.`}</p>
+                    {/* <p className='text-lg'>{`${d.toString().slice(0, 24)}`}</p> */}
+                    <p className='text-lg'>{`${d.toString().slice(0, 15)} ${formattedDate}`}</p>
+                  </div>
+                  <p>{date?.therapyType}</p>
                 </div>
-                <p>{date?.therapyType}</p>
+                {isDateBefore6YearsAgo && (
+                  <button className='cursor-pointer flex justify-center items-center w-24 h-8 rounded-sm bg-gradient-to-r from-[#6C526F] to-[#AE89A5] hover:bg-gradient-to-l text-lg text-white' onClick={(e) => { deleteDateOfConsultation(location.state.id, date.id); e.stopPropagation() }}>Delete</button>
+                )}
               </div>
             )
           })}

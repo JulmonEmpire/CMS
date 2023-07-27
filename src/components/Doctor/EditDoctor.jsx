@@ -36,7 +36,7 @@ export default function EditDoctor() {
       batch.update(doctorRef, data);
 
       const patientsSnapshot = await getDocs(doctorQuery);
-      patientsSnapshot.forEach((doc) => {
+      patientsSnapshot?.forEach((doc) => {
         const docRef = doc.ref;
         const updatedPatient = {
           ...doc.data(),

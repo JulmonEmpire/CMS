@@ -47,7 +47,7 @@ export default function Layout({ children }) {
   const medicalAidQuery = useQuery(["medicalAid"], async () => {
     let data = []
     const querySnapshot = await getDocs(collection(db, "medicalAid"));
-    querySnapshot.forEach((doc) => {
+    querySnapshot?.forEach((doc) => {
       let medicalAiddata = doc.data();
       medicalAiddata.id = doc.id;
       data.push(medicalAiddata);

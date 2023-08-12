@@ -97,7 +97,7 @@ export default function AddDateModal({ hideAddModal }) {
         </div>
         <form onSubmit={formHandler} ref={formRef} className='px-2 flex flex-col gap-4 pt-4 justify-center h-[80%]'>
           <div className='flex flex-col gap-[5px] w-full h-full overflow-auto'>
-            <input required className='w-[100%] p-2 text-[#595659] border-[rgba(0,0,0,0.1)] border-2' type={'datetime-local'} name='date' placeholder='Type Date'></input>
+            <input required className='w-[100%] p-2 text-[#595659] border-[rgba(0,0,0,0.1)] border-2' type={'date'} name='date' placeholder='Type Date'></input>
             <select name='therapyType' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
               <option selected disabled value={"null"}>Type of Therapy</option>
               <option value={"Individual Therapy"}>Individual Therapy</option>

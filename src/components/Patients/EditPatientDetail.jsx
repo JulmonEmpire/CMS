@@ -12,7 +12,6 @@ const validationSchema = Yup.object().shape({
   title: Yup.string().nullable(false).required('Title is required').notOneOf(["null"], "Select title from given values"),
   firstName: Yup.string().required('First name is required'),
   lastName: Yup.string().required('Last name is required'),
-  email: Yup.string().email('Invalid email address').required('Email is required'),
   refferingDoctor: Yup.object().nullable(false).required('Referring doctor is required'),
   placesOfService: Yup.object().nullable(false).required('places of service is required'),
   idNumber: Yup.string().required('ID number is required'),

@@ -48,14 +48,10 @@ function App() {
   useEffect(() => {
     window.addEventListener('storage', () => {
       const u = localStorage.getItem('user')
-      console.log(user)
       setUser(u)
     })
   }, []);
 
-
-  console.log(user?.role === "Super User");
-  console.log(queryClient.getQueryData(["user"])?.role === "Super User");
 
   return (
     <BrowserRouter>

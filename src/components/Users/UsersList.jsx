@@ -16,7 +16,6 @@ export default function UsersList() {
   const userQuery = useQuery(["users"], async () => {
     let data = [];
     const u=queryClient.getQueryData(['user'])
-    console.log(u)
     const querySnapshot = await getDocs(collection(db, "users"));
 
     querySnapshot?.forEach((doc) => {
@@ -47,7 +46,6 @@ export default function UsersList() {
           </thead>
           <tbody>
             {userQuery?.data?.map((user, index) => {
-              console.log(user?.uid,userData?.uid);
               if (user?.uid === userData?.uid) {
                 return
               };

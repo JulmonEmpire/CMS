@@ -37,7 +37,6 @@ export default function DatesOfConsultaion() {
 
       // Update the document with the modified datesOfConsultaion array
       await updateDoc(userRef, { datesOfConsultaion: updatedDates });
-      console.log("Date of consultation deleted successfully.");
       queryClient.invalidateQueries(['patients']);
 
       patient.datesOfConsultaion = updatedDates
@@ -94,7 +93,7 @@ export default function DatesOfConsultaion() {
                     <div className='flex gap-4'>
                       <p className='text-lg font-[500]'>{`${index + 1}.`}</p>
                       {/* <p className='text-lg'>{`${d.toString().slice(0, 24)}`}</p> */}
-                      <p className='text-lg w-[240px]'>{`${d.toString().slice(0, 15)} ${formattedDate}`}</p>
+                      <p className='text-lg w-[240px]'>{`${d.toString().slice(0, 15)}`}</p>
                     </div>
                     <p>{date?.therapyType}</p>
                   </div>

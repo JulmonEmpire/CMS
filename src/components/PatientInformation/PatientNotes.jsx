@@ -67,6 +67,7 @@ export default function PatientNotes() {
         toast.error("Error uploaded notes");
       }
     } catch (err) {
+      console.error(err)
     }
     setLoading(false);
   };

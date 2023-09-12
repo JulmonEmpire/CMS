@@ -42,8 +42,6 @@ export default function PatientRow({ patient, index }) {
     showPatientDeleteHandler();
   }
 
-  console.log(patient)
-
   return (
     <>
       {showPatientDelete &&

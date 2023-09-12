@@ -22,7 +22,6 @@ export default function Login() {
   const loginMutation = useMutation({
     mutationFn: async (data) => {
       const result = await signInWithEmailAndPassword(auth, data.email, data.password);
-      console.log(result.user.uid)
       const userRef = doc(db, "users", result.user.uid);
       const user = await getDoc(userRef);
       return user.data();

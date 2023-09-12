@@ -24,7 +24,6 @@ export default function AddUser() {
         })
     },
     onSuccess: (res) => {
-      console.log(res);
       queryClient.invalidateQueries(['users']);
       toast.success("User created successfully");
       navigate('/users');

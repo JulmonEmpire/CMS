@@ -13,7 +13,6 @@ const validationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
   firstName: Yup.string().required('First Name is required'),
   lastName: Yup.string().required('Last Name is required'),
-  email: Yup.string().email('Invalid email address').required('Email is required'),
   practiceNumber: Yup.string().required('Practice Number is required'),
   address: Yup.string().required('Address is required'),
   contactNumber: Yup.string().required('Contact Number is required'),

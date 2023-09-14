@@ -175,7 +175,7 @@ export default function EditPatientDetail() {
           <input defaultValue={formData?.firstName} name='firstName' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[50%]' placeholder='First Name' />
           <input defaultValue={formData?.lastName} name='lastName' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[50%]' placeholder='Last Name' />
         </div>
-        <input value={formData?.email} name='email' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Email' type={'email'} />
+        <input defaultValue={formData?.email} name='email' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]' placeholder='Email' type={'email'} />
         <select key={formData?.refferingDoctor?.id} defaultValue={formData?.refferingDoctor?.id} name='refferingDoctor' className='outline border-[2px] h-10 p-2 border-[rgba(0,0,0,0.1)] rounded-sm w-[100%]'>
           <option selected disabled value={"null"}>Referring Doctor</option>
           {doctors?.map((doctor) => {

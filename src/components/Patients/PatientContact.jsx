@@ -9,11 +9,7 @@ import { db } from '../Utils/firebase';
 import * as Yup from 'yup';
 
 const validationSchema = Yup.object().shape({
-  emergencyFirstName: Yup.string().nullable(true).required('First Name is required'),
-  emergencylastName: Yup.string().required('Last Name is required'),
-  emergencyrelationShipToPatient: Yup.string().required('Relationship to Patient is required'),
-  emergencyWorkPhone: Yup.string().required('Work Phone: is required'),
-  emergencyCellPhone: Yup.string().nullable(false).required('Cell Phone is required'),
+
 });
 
 export default function PatientContact() {
